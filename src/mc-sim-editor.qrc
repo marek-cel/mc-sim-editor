@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="/">
+    <file>mc-sim-editor.png</file>
+
+    <file>gui/html/about.html</file>
+  </qresource>
+</RCC>

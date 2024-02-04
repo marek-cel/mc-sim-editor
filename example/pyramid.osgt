@@ -1,0 +1,143 @@
+#Ascii Scene 
+#Version 161 
+#Generator OpenSceneGraph 3.6.5 
+
+osg::Group {
+  UniqueID 1 
+  Children 1 {
+    osg::Geode {
+      UniqueID 2 
+      Name "Cube_Cube.001" 
+      Drawables 1 {
+        osg::Geometry {
+          UniqueID 3 
+          DataVariance STATIC 
+          StateSet TRUE {
+            osg::StateSet {
+              UniqueID 4 
+              DataVariance STATIC 
+              AttributeList 1 {
+                osg::Material {
+                  UniqueID 5 
+                  Name "None" 
+                  Ambient TRUE Front 0.8 0.8 0.8 1 Back 0.8 0.8 0.8 1 
+                  Diffuse TRUE Front 0.8 0.8 0.8 1 Back 0.8 0.8 0.8 1 
+                  Specular TRUE Front 0.8 0.8 0.8 1 Back 0.8 0.8 0.8 1 
+                  Emission TRUE Front 0 0 0 1 Back 0 0 0 1 
+                  Shininess TRUE Front 64 Back 64 
+                }
+                Value OFF 
+              }
+            }
+          }
+          PrimitiveSetList 1 {
+            osg::DrawElementsUShort {
+              UniqueID 6 
+              BufferObject TRUE {
+                osg::ElementBufferObject {
+                  UniqueID 7 
+                  Target 34963 
+                }
+              }
+              Mode TRIANGLES 
+              vector 18 {
+                0 1 2 3 
+                4 5 6 7 
+                8 9 10 11 
+                12 13 14 12 
+                14 15 
+              }
+            }
+          }
+          VertexArray TRUE {
+            osg::Vec3Array {
+              UniqueID 8 
+              BufferObject TRUE {
+                osg::VertexBufferObject {
+                  UniqueID 9 
+                }
+              }
+              Binding BIND_PER_VERTEX 
+              vector 16 {
+                -0.5 -0.5 -0.5 
+                0 0 0.5 
+                -0.5 0.5 -0.5 
+                -0.5 0.5 -0.5 
+                0 0 0.5 
+                0.5 0.5 -0.5 
+                0.5 0.5 -0.5 
+                0 0 0.5 
+                0.5 -0.5 -0.5 
+                0.5 -0.5 -0.5 
+                0 0 0.5 
+                -0.5 -0.5 -0.5 
+                -0.5 0.5 -0.5 
+                0.5 0.5 -0.5 
+                0.5 -0.5 -0.5 
+                -0.5 -0.5 -0.5 
+              }
+            }
+          }
+          NormalArray TRUE {
+            osg::Vec3Array {
+              UniqueID 10 
+              BufferObject TRUE {
+                osg::VertexBufferObject {
+                  UniqueID 9 
+                }
+              }
+              Binding BIND_PER_VERTEX 
+              vector 16 {
+                -0.894427 0 0.447214 
+                -0.894427 0 0.447214 
+                -0.894427 0 0.447214 
+                0 0.894427 0.447214 
+                0 0.894427 0.447214 
+                0 0.894427 0.447214 
+                0.894427 0 0.447214 
+                0.894427 0 0.447214 
+                0.894427 0 0.447214 
+                0 -0.894427 0.447214 
+                0 -0.894427 0.447214 
+                0 -0.894427 0.447214 
+                0 0 -1 
+                0 0 -1 
+                0 0 -1 
+                0 0 -1 
+              }
+            }
+          }
+          TexCoordArrayList 1 {
+            osg::Vec2Array {
+              UniqueID 11 
+              BufferObject TRUE {
+                osg::VertexBufferObject {
+                  UniqueID 9 
+                }
+              }
+              Binding BIND_PER_VERTEX 
+              vector 16 {
+                0.375 0 
+                0.625 0.25 
+                0.375 0.25 
+                0.375 0.25 
+                0.625 0.5 
+                0.375 0.5 
+                0.375 0.5 
+                0.625 0.75 
+                0.375 0.75 
+                0.375 0.75 
+                0.625 1 
+                0.375 1 
+                0.125 0.5 
+                0.375 0.5 
+                0.375 0.75 
+                0.125 0.75 
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MC-Sim Editor</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../mc-sim-editor.qrc">
+    <normaloff>:/mc-sim-editor.png</normaloff>:/mc-sim-editor.png</iconset>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="QWidget" name="pageModel">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QSplitter" name="splitterHorModel">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <widget class="mc::gui::FormScene" name="widgetScene" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+          <widget class="QSplitter" name="splitterVerModel">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <widget class="mc::gui::WidgetCGI" name="widgetCGI" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>1</horstretch>
+              <verstretch>1</verstretch>
+             </sizepolicy>
+            </property>
+           </widget>
+           <widget class="mc::gui::FormAnim" name="widgetAnim" native="true"/>
+          </widget>
+          <widget class="mc::gui::FormComp" name="widgetComp" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page_2"/>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuProject">
+    <property name="title">
+     <string>Project</string>
+    </property>
+    <widget class="QMenu" name="menuRecentFiles">
+     <property name="title">
+      <string>Recent</string>
+     </property>
+    </widget>
+    <addaction name="actionNew"/>
+    <addaction name="actionOpen"/>
+    <addaction name="menuRecentFiles"/>
+    <addaction name="actionClearRecent"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSaveAs"/>
+    <addaction name="actionExport"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <widget class="QMenu" name="menuViewpoint">
+     <property name="title">
+      <string>Viewpoint</string>
+     </property>
+     <addaction name="actionViewDefault"/>
+     <addaction name="separator"/>
+     <addaction name="actionViewTop"/>
+     <addaction name="actionViewBottom"/>
+     <addaction name="separator"/>
+     <addaction name="actionViewLeft"/>
+     <addaction name="actionViewRight"/>
+     <addaction name="separator"/>
+     <addaction name="actionViewBack"/>
+     <addaction name="actionViewFront"/>
+    </widget>
+    <addaction name="actionRefresh"/>
+    <addaction name="separator"/>
+    <addaction name="actionShowGrid"/>
+    <addaction name="separator"/>
+    <addaction name="menuViewpoint"/>
+    <addaction name="separator"/>
+    <addaction name="actionViewOrbit"/>
+    <addaction name="actionViewTrack"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuProject"/>
+   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNew">
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionSaveAs">
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save (Ctrl+S)</string>
+   </property>
+  </action>
+  <action name="actionClearRecent">
+   <property name="text">
+    <string>Clear recent</string>
+   </property>
+  </action>
+  <action name="actionRefresh">
+   <property name="text">
+    <string>Refresh (Ctrl+R)</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionViewDefault">
+   <property name="text">
+    <string>Default (0)</string>
+   </property>
+  </action>
+  <action name="actionViewTop">
+   <property name="text">
+    <string>Top (7)</string>
+   </property>
+  </action>
+  <action name="actionViewBottom">
+   <property name="text">
+    <string>Bottom (Ctrl+7)</string>
+   </property>
+  </action>
+  <action name="actionViewLeft">
+   <property name="text">
+    <string>Left (1)</string>
+   </property>
+  </action>
+  <action name="actionViewRight">
+   <property name="text">
+    <string>Right (Ctrl+1)</string>
+   </property>
+  </action>
+  <action name="actionViewBack">
+   <property name="text">
+    <string>Back (3)</string>
+   </property>
+  </action>
+  <action name="actionViewFront">
+   <property name="text">
+    <string>Front (Ctrl+3)</string>
+   </property>
+  </action>
+  <action name="actionShowGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Show Grid</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export model as...</string>
+   </property>
+  </action>
+  <action name="actionViewOrbit">
+   <property name="text">
+    <string>Orbit</string>
+   </property>
+  </action>
+  <action name="actionViewTrack">
+   <property name="text">
+    <string>Track</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>mc::gui::WidgetCGI</class>
+   <extends>QWidget</extends>
+   <header>gui/WidgetCGI.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>mc::gui::FormScene</class>
+   <extends>QWidget</extends>
+   <header>gui/FormScene.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>mc::gui::FormComp</class>
+   <extends>QWidget</extends>
+   <header>gui/FormComp.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>mc::gui::FormAnim</class>
+   <extends>QWidget</extends>
+   <header>gui/FormAnim.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../mc-sim-editor.qrc"/>
+ </resources>
+ <connections/>
+</ui>
