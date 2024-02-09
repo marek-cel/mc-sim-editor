@@ -542,21 +542,21 @@
              </size>
             </property>
             <layout class="QGridLayout" name="gridLayout_23">
-             <item row="0" column="0">
-              <widget class="QLabel" name="labelAnimTimeMin">
+             <item row="3" column="0">
+              <widget class="QLabel" name="labelAnimT">
                <property name="text">
-                <string>Time Min [s]:</string>
+                <string>T [s]:</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
                <property name="buddy">
-                <cstring>spinBoxAnimTimeMin</cstring>
+                <cstring>spinBoxAnimT</cstring>
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QDoubleSpinBox" name="spinBoxAnimTimeMin">
+             <item row="10" column="1">
+              <widget class="QDoubleSpinBox" name="spinBoxAnimAy">
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
@@ -564,23 +564,62 @@
                 <number>4</number>
                </property>
                <property name="minimum">
-                <double>-99.989999999999995</double>
+                <double>-10000000.000000000000000</double>
                </property>
                <property name="maximum">
-                <double>1.000000000000000</double>
+                <double>10000000.000000000000000</double>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="labelAnimTimeMax">
+             <item row="7" column="1">
+              <widget class="QDoubleSpinBox" name="spinBoxAnimPz">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="decimals">
+                <number>4</number>
+               </property>
+               <property name="minimum">
+                <double>-10000000.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>10000000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QDoubleSpinBox" name="spinBoxAnimPx">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="decimals">
+                <number>4</number>
+               </property>
+               <property name="minimum">
+                <double>-10000000.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>10000000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QLabel" name="labelAnimAy">
                <property name="text">
-                <string>Time Max [s]:</string>
+                <string>RY [deg]:</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
                <property name="buddy">
-                <cstring>spinBoxAnimTimeMax</cstring>
+                <cstring>spinBoxAnimAy</cstring>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0" colspan="2">
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
@@ -634,16 +673,100 @@
                </item>
               </layout>
              </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="labelAnimT">
+             <item row="0" column="0">
+              <widget class="QLabel" name="labelAnimTimeMin">
                <property name="text">
-                <string>T [s]:</string>
+                <string>Time Min [s]:</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
                <property name="buddy">
-                <cstring>spinBoxAnimT</cstring>
+                <cstring>spinBoxAnimTimeMin</cstring>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QDoubleSpinBox" name="spinBoxAnimTimeMin">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="decimals">
+                <number>4</number>
+               </property>
+               <property name="minimum">
+                <double>-99.989999999999995</double>
+               </property>
+               <property name="maximum">
+                <double>1.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="0">
+              <widget class="QLabel" name="labelAnimAz">
+               <property name="text">
+                <string>RZ [deg]:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="buddy">
+                <cstring>spinBoxAnimAz</cstring>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QDoubleSpinBox" name="spinBoxAnimPy">
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="decimals">
+                <number>4</number>
+               </property>
+               <property name="minimum">
+                <double>-10000000.000000000000000</double>
+               </property>
+               <property name="maximum">
+                <double>10000000.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="labelAnimPy">
+               <property name="text">
+                <string>Y [m]:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="buddy">
+                <cstring>spinBoxAnimPy</cstring>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="labelAnimTimeMax">
+               <property name="text">
+                <string>Time Max [s]:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="buddy">
+                <cstring>spinBoxAnimTimeMax</cstring>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QLabel" name="labelAnimAx">
+               <property name="text">
+                <string>RX [deg]:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+               <property name="buddy">
+                <cstring>spinBoxAnimAx</cstring>
                </property>
               </widget>
              </item>
@@ -663,21 +786,8 @@
                </property>
               </widget>
              </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="labelAnimPx">
-               <property name="text">
-                <string>X [m]:</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="buddy">
-                <cstring>spinBoxAnimPx</cstring>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QDoubleSpinBox" name="spinBoxAnimPx">
+             <item row="11" column="1">
+              <widget class="QDoubleSpinBox" name="spinBoxAnimAz">
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
@@ -693,35 +803,19 @@
               </widget>
              </item>
              <item row="5" column="0">
-              <widget class="QLabel" name="labelAnimPy">
+              <widget class="QLabel" name="labelAnimPx">
                <property name="text">
-                <string>Y [m]:</string>
+                <string>X [m]:</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
                <property name="buddy">
-                <cstring>spinBoxAnimPy</cstring>
+                <cstring>spinBoxAnimPx</cstring>
                </property>
               </widget>
              </item>
-             <item row="5" column="1">
-              <widget class="QDoubleSpinBox" name="spinBoxAnimPy">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="decimals">
-                <number>4</number>
-               </property>
-               <property name="minimum">
-                <double>-10000000.000000000000000</double>
-               </property>
-               <property name="maximum">
-                <double>10000000.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
+             <item row="7" column="0">
               <widget class="QLabel" name="labelAnimPz">
                <property name="text">
                 <string>Z [m]:</string>
@@ -734,36 +828,7 @@
                </property>
               </widget>
              </item>
-             <item row="6" column="1">
-              <widget class="QDoubleSpinBox" name="spinBoxAnimPz">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="decimals">
-                <number>4</number>
-               </property>
-               <property name="minimum">
-                <double>-10000000.000000000000000</double>
-               </property>
-               <property name="maximum">
-                <double>10000000.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="labelAnimAx">
-               <property name="text">
-                <string>RX [deg]:</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="buddy">
-                <cstring>spinBoxAnimAx</cstring>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="1">
+             <item row="9" column="1">
               <widget class="QDoubleSpinBox" name="spinBoxAnimAx">
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -779,61 +844,10 @@
                </property>
               </widget>
              </item>
-             <item row="8" column="0">
-              <widget class="QLabel" name="labelAnimAy">
-               <property name="text">
-                <string>RY [deg]:</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="buddy">
-                <cstring>spinBoxAnimAy</cstring>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="1">
-              <widget class="QDoubleSpinBox" name="spinBoxAnimAy">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="decimals">
-                <number>4</number>
-               </property>
-               <property name="minimum">
-                <double>-10000000.000000000000000</double>
-               </property>
-               <property name="maximum">
-                <double>10000000.000000000000000</double>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="0">
-              <widget class="QLabel" name="labelAnimAz">
-               <property name="text">
-                <string>RZ [deg]:</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="buddy">
-                <cstring>spinBoxAnimAz</cstring>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="1">
-              <widget class="QDoubleSpinBox" name="spinBoxAnimAz">
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-               <property name="decimals">
-                <number>4</number>
-               </property>
-               <property name="minimum">
-                <double>-10000000.000000000000000</double>
-               </property>
-               <property name="maximum">
-                <double>10000000.000000000000000</double>
+             <item row="8" column="0" colspan="2">
+              <widget class="Line" name="line_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
@@ -1465,7 +1479,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroupConvention"/>
   <buttongroup name="buttonGroupRotorDir"/>
+  <buttongroup name="buttonGroupConvention"/>
  </buttongroups>
 </ui>
