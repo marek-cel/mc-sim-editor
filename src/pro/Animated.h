@@ -45,17 +45,26 @@ public:
 
     std::shared_ptr<Animation> GetAnimation() { return animation_; }
 
+    bool GetAnimationEnabled() const { return enabled_; }
+
     virtual void SetAnimationTime(double time) override;
+
+    inline void SetAnimationEnabled(bool enabled) { enabled_ = enabled; }
 
 protected:
 
     double time_ = 0.0;
+
+    bool enabled_ = true;
 
     std::shared_ptr<Animation> animation_;
 
     Result ReadAnimation(const QDomElement* node);
 
     Result SaveAnimation(QDomDocument* doc, QDomElement* parent);
+
+    virtual Result ReadParameters(const QDomElement* node) override;
+    virtual Result SaveParameters(QDomDocument* doc, QDomElement* node) override;
 };
 
 } // namespace pro

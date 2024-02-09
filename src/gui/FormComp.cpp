@@ -154,6 +154,8 @@ void FormComp::updateParametersAnim(std::shared_ptr<pro::Component> comp)
     {
         ui_->widgetWrapAnim->show();
 
+        ui_->checkBoxAnimEnabled->setChecked(anim->GetAnimationEnabled());
+
         ui_->spinBoxAnimTimeMin->setValue(anim->GetAnimation()->GetTimeMin());
         ui_->spinBoxAnimTimeMax->setValue(anim->GetAnimation()->GetTimeMax());
 
@@ -800,6 +802,21 @@ void FormComp::on_spinBoxTransAz_valueChanged(double arg1)
     if ( trans )
     {
         trans->SetAz(arg1);
+        emit(projectChanged());
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void FormComp::on_checkBoxAnimEnabled_toggled(bool checked)
+{
+    if ( comp_.expired() ) return;
+
+    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Animated> anim = std::dynamic_pointer_cast<pro::Animated>(comp);
+    if ( anim )
+    {
+        anim->SetAnimationEnabled(checked);
         emit(projectChanged());
     }
 }

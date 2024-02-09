@@ -54,6 +54,8 @@ public:
 
     virtual void SetAnimationTime(double time) override;
 
+    virtual void SetChildrenAnimationState(bool enabled) override;
+
     Result Read(const QDomElement* node) override;
     Result Save(QDomDocument* doc, QDomElement* parent) override;
 

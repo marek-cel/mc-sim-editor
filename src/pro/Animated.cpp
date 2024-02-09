@@ -88,7 +88,11 @@ void Animated::SetAnimationTime(double time)
     Group::SetAnimationTime(time);
     //////////////////////////////
 
-    time_ = time;
+    if ( enabled_ )
+    {
+        time_ = time;
+    }
+
     animation_->SetTime(time_);
 }
 
@@ -114,6 +118,36 @@ Result Animated::ReadAnimation(const QDomElement* node)
 Result Animated::SaveAnimation(QDomDocument* doc, QDomElement* parent)
 {
     return animation_->Save(doc, parent);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+Result Animated::ReadParameters(const QDomElement* node)
+{
+    ////////////////////////////////////////////
+    Result result = Group::ReadParameters(node);
+    ////////////////////////////////////////////
+
+    enabled_ = node->attribute("anim_enabled").toInt();
+
+    return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+Result Animated::SaveParameters(QDomDocument* doc, QDomElement* node)
+{
+    /////////////////////////////////////////////////
+    Result result = Group::SaveParameters(doc, node);
+    /////////////////////////////////////////////////
+
+    if ( result == Result::Failure ) return result;
+
+    QDomAttr node_enabled = doc->createAttribute("anim_enabled");
+    node_enabled.setValue(QString::number(enabled_ ? 1 : 0));
+    node->setAttributeNode(node_enabled);
+
+    return result;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

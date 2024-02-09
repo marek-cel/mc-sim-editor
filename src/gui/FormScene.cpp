@@ -199,12 +199,17 @@ void FormScene::createSceneMenu()
 
     action_rename_ = new QAction(tr("Rename (F2)"), this);
     action_remove_ = new QAction(tr("Remove (Del)"), this);
-
     connect(action_rename_, SIGNAL(triggered()), this, SLOT(actionRename_triggered()));
     connect(action_remove_, SIGNAL(triggered()), this, SLOT(actionRemove_triggered()));
-
     scene_menu_->addAction(action_rename_);
     scene_menu_->addAction(action_remove_);
+
+    action_anims_turn_on_  = new QAction(tr("Enable all children animations"  ), this);
+    action_anims_turn_off_ = new QAction(tr("Disable all children animations" ), this);
+    connect(action_anims_turn_on_  , SIGNAL(triggered()), this, SLOT(actionAnimsOn_triggered()));
+    connect(action_anims_turn_off_ , SIGNAL(triggered()), this, SLOT(actionAnimsOff_triggered()));
+    scene_menu_->addAction(action_anims_turn_on_);
+    scene_menu_->addAction(action_anims_turn_off_);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -265,6 +270,30 @@ void FormScene::actionRemove_triggered()
     if ( result == QMessageBox::Yes )
     {
         removeComponent();
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void FormScene::actionAnimsOn_triggered()
+{
+    QModelIndex index = ui_->treeScene->currentIndex();
+    std::shared_ptr<pro::Component> comp = getComponentByIndex(index);
+    if ( comp )
+    {
+        comp->SetChildrenAnimationState(true);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void FormScene::actionAnimsOff_triggered()
+{
+    QModelIndex index = ui_->treeScene->currentIndex();
+    std::shared_ptr<pro::Component> comp = getComponentByIndex(index);
+    if ( comp )
+    {
+        comp->SetChildrenAnimationState(false);
     }
 }
 

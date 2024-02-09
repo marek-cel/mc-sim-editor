@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
  <assembly>
-  <group depth_sorted_bin_state="1" name="Root" depth_sorted_bin_value="2">
-   <group depth_sorted_bin_state="0" name="Group" depth_sorted_bin_value="1">
-    <file file="pyramid.osgt" depth_sorted_bin_state="0" name="File" depth_sorted_bin_value="1"/>
+  <group depth_sorted_bin_value="2" name="Root" depth_sorted_bin_state="1">
+   <group depth_sorted_bin_value="1" name="Group" depth_sorted_bin_state="0">
+    <file depth_sorted_bin_value="1" file="pyramid.osgt" name="File" depth_sorted_bin_state="0"/>
    </group>
-   <pat az="0.000000000000" pz="0.000000" convention="0" depth_sorted_bin_state="0" ax="0.000000000000" name="PAT" px="-2.000000" depth_sorted_bin_value="1" py="0.000000" ay="0.000000000000">
-    <box depth_sorted_bin_state="0" name="Box" depth_sorted_bin_value="1"/>
+   <pat anim_enabled="0" pz="0.000000" depth_sorted_bin_value="1" px="-2.000000" ay="0.000000000000" name="PAT" py="0.000000" depth_sorted_bin_state="0" ax="0.000000000000" convention="0" az="0.000000000000">
+    <box depth_sorted_bin_value="1" name="Box" depth_sorted_bin_state="0"/>
    </pat>
-   <lod interval_2="60" interval_1="40" depth_sorted_bin_state="0" name="LOD" depth_sorted_bin_value="1" interval_0="20">
-    <pat az="0.000000000000" pz="2.000000" convention="0" depth_sorted_bin_state="0" ax="0.000000000000" name="PAT" px="0.000000" depth_sorted_bin_value="1" py="0.000000" ay="0.000000000000">
-     <box depth_sorted_bin_state="0" name="Box" depth_sorted_bin_value="1"/>
+   <lod interval_0="20" depth_sorted_bin_value="1" interval_1="40" name="LOD" depth_sorted_bin_state="0" interval_2="60">
+    <pat anim_enabled="0" pz="2.000000" depth_sorted_bin_value="1" px="0.000000" ay="0.000000000000" name="PAT" py="0.000000" depth_sorted_bin_state="0" ax="0.000000000000" convention="0" az="0.000000000000">
+     <box depth_sorted_bin_value="1" name="Box" depth_sorted_bin_state="0"/>
     </pat>
-    <pat az="0.000000000000" pz="4.000000" convention="0" depth_sorted_bin_state="0" ax="0.000000000000" name="PAT" px="0.000000" depth_sorted_bin_value="1" py="0.000000" ay="0.000000000000">
-     <box depth_sorted_bin_state="0" name="Box" depth_sorted_bin_value="1"/>
+    <pat anim_enabled="0" pz="4.000000" depth_sorted_bin_value="1" px="0.000000" ay="0.000000000000" name="PAT" py="0.000000" depth_sorted_bin_state="0" ax="0.000000000000" convention="0" az="0.000000000000">
+     <box depth_sorted_bin_value="1" name="Box" depth_sorted_bin_state="0"/>
     </pat>
-    <pat az="0.000000000000" pz="6.000000" convention="0" depth_sorted_bin_state="0" ax="0.000000000000" name="PAT" px="0.000000" depth_sorted_bin_value="1" py="0.000000" ay="0.000000000000">
-     <box depth_sorted_bin_state="0" name="Box" depth_sorted_bin_value="1"/>
+    <pat anim_enabled="0" pz="6.000000" depth_sorted_bin_value="1" px="0.000000" ay="0.000000000000" name="PAT" py="0.000000" depth_sorted_bin_state="0" ax="0.000000000000" convention="0" az="0.000000000000">
+     <box depth_sorted_bin_value="1" name="Box" depth_sorted_bin_state="0"/>
     </pat>
    </lod>
-   <switch visible="1" depth_sorted_bin_state="0" name="Switch" depth_sorted_bin_value="1">
-    <pat az="0.000000000000" pz="0.000000" convention="0" depth_sorted_bin_state="0" ax="0.000000000000" name="PAT" px="0.000000" depth_sorted_bin_value="1" py="-2.000000" ay="0.000000000000">
-     <box depth_sorted_bin_state="0" name="Box" depth_sorted_bin_value="1"/>
+   <switch depth_sorted_bin_value="1" visible="1" name="Switch" depth_sorted_bin_state="0">
+    <pat anim_enabled="0" pz="0.000000" depth_sorted_bin_value="1" px="0.000000" ay="0.000000000000" name="PAT" py="-2.000000" depth_sorted_bin_state="0" ax="0.000000000000" convention="0" az="0.000000000000">
+     <box depth_sorted_bin_value="1" name="Box" depth_sorted_bin_state="0"/>
     </pat>
    </switch>
-   <rotor az="0.000000000000" pz="-2.000000" direction="0" convention="0" file_blade="blade.osgt" file_shaft="shaft.osgt" depth_sorted_bin_state="0" ax="0.000000000000" name="Rotor" blades_no="4" px="0.000000" hinge_offset="1" depth_sorted_bin_value="1" py="0.000000" ay="0.000000000000"/>
-   <matrix_trans az="0.000000000000" pz="-1.000000" depth_sorted_bin_state="0" ax="0.000000000000" name="Matrix Transform" px="0.000000" depth_sorted_bin_value="1" py="0.000000" ay="0.000000000000">
-    <animation t_max="1.0000" t_min="0.0000">
-     <keyframe az="0.000000000000" pz="-1.000000" t="0.0000" ax="0.000000000000" px="0.000000" py="0.000000" ay="0.000000000000"/>
-     <keyframe az="0.000000000000" pz="-1.000000" t="0.5000" ax="0.000000000000" px="1.000000" py="0.000000" ay="0.000000000000"/>
-     <keyframe az="0.000000000000" pz="-1.000000" t="1.0000" ax="0.000000000000" px="2.000000" py="0.000000" ay="0.000000000000"/>
+   <rotor direction="0" blades_no="4" anim_enabled="0" pz="-2.000000" depth_sorted_bin_value="1" hinge_offset="1" file_shaft="shaft.osgt" px="0.000000" ay="0.000000000000" file_blade="blade.osgt" name="Rotor" py="0.000000" depth_sorted_bin_state="0" ax="0.000000000000" convention="0" az="0.000000000000"/>
+   <matrix_trans anim_enabled="1" pz="-1.000000" depth_sorted_bin_value="1" px="0.000000" ay="0.000000000000" name="Matrix Transform" py="0.000000" depth_sorted_bin_state="0" ax="0.000000000000" az="0.000000000000">
+    <animation t_min="0.0000" t_max="1.0000">
+     <keyframe t="0.0000" pz="-1.000000" px="0.000000" ay="0.000000000000" py="0.000000" ax="0.000000000000" az="0.000000000000"/>
+     <keyframe t="0.5000" pz="-1.000000" px="1.000000" ay="0.000000000000" py="0.000000" ax="0.000000000000" az="0.000000000000"/>
+     <keyframe t="1.0000" pz="-1.000000" px="2.000000" ay="0.000000000000" py="0.000000" ax="0.000000000000" az="0.000000000000"/>
     </animation>
-    <box depth_sorted_bin_state="0" name="Box" depth_sorted_bin_value="1"/>
+    <box depth_sorted_bin_value="1" name="Box" depth_sorted_bin_state="0"/>
    </matrix_trans>
-   <flols az="0.000000000000" pz="0.000000" convention="0" depth_sorted_bin_state="0" ax="0.000000000000" name="FLOLS" px="0.000000" depth_sorted_bin_value="1" py="0.000000" ay="0.000000000000"/>
+   <flols anim_enabled="0" pz="0.000000" depth_sorted_bin_value="1" px="0.000000" ay="0.000000000000" name="FLOLS" py="0.000000" depth_sorted_bin_state="0" ax="0.000000000000" convention="0" az="0.000000000000"/>
   </group>
  </assembly>
- <playback time_start="0.000000" time_end="1.000000" speed="0.500000" current_time="0.500000"/>
+ <playback current_time="0.500000" time_end="1.000000" time_start="0.000000" speed="0.500000"/>
 </project>

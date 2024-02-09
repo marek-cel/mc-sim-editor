@@ -132,10 +132,12 @@ private slots:
     void on_spinBoxTransAx_valueChanged(double arg1);
     void on_spinBoxTransAy_valueChanged(double arg1);
     void on_spinBoxTransAz_valueChanged(double arg1);
+
+// slots specific for Animation
+    void on_checkBoxAnimEnabled_toggled(bool checked);
     void on_spinBoxAnimTimeMin_valueChanged(double arg1);
     void on_spinBoxAnimTimeMax_valueChanged(double arg1);
 
-    // slots specific for Animation
     void on_listKeyframes_currentRowChanged(int currentRow);
     void on_pushButtonAnimAdd_clicked();
     void on_pushButtonAnimSave_clicked();

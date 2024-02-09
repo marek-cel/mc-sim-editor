@@ -19,6 +19,7 @@
 
 #include <pro/Group.h>
 
+#include <pro/Animated.h>
 #include <pro/Components.h>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -64,6 +65,23 @@ void Group::SetAnimationTime(double time)
     for ( auto child : children_ )
     {
         child->SetAnimationTime(time);
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void Group::SetChildrenAnimationState(bool enabled)
+{
+    for ( auto child : children_ )
+    {
+        child->SetChildrenAnimationState(enabled);
+
+        std::shared_ptr<pro::Animated> anim
+                = std::dynamic_pointer_cast<pro::Animated>(child);
+        if ( anim )
+        {
+            anim->SetAnimationEnabled(enabled);
+        }
     }
 }
 

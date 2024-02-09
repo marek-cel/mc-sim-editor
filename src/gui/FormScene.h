@@ -71,6 +71,9 @@ private:
     QAction* action_rename_ = nullptr;
     QAction* action_remove_ = nullptr;
 
+    QAction* action_anims_turn_on_  = nullptr;
+    QAction* action_anims_turn_off_ = nullptr;
+
     QShortcut* shortcut_remove_ = nullptr;
 
     std::weak_ptr<pro::Project> proj_;
@@ -93,6 +96,9 @@ private slots:
 
     void actionRename_triggered();
     void actionRemove_triggered();
+
+    void actionAnimsOn_triggered();
+    void actionAnimsOff_triggered();
 
     void on_buttonAdd_clicked();
 

@@ -83,6 +83,8 @@ public:
     void SetDepthSortedBinValue(int value);
     void SetDepthSortedBinState(bool state);
 
+    virtual void SetChildrenAnimationState(bool enabled) {}
+
     Component& operator=(const Component& component) = delete;
     Component& operator=(Component&&) = delete;
 
