@@ -78,11 +78,20 @@ QString FormComp::getFile(QString file)
 
     std::shared_ptr<pro::Project> proj = proj_.lock();
     QDir proj_dir = QFileInfo(proj->GetFile()).absoluteDir();
+    QString proj_path = proj_dir.absolutePath();
 
-    QString old_file = proj_dir.absoluteFilePath(file);
+    QString dir = ".";
+    if ( proj_path.length() > 0 )
+    {
+        dir = proj_path;
+    }
+    if ( file.length() > 0 )
+    {
+        QString old_file = proj_dir.absoluteFilePath(file);
+        dir = QFileInfo(old_file).path();
+    }
 
     QString caption = "Browse";
-    QString dir = ( file.length() > 0 ) ? QFileInfo(old_file).path() : ".";
     QString filter;
     QString selected_filter;
 
