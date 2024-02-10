@@ -26,12 +26,8 @@
 
 #include <cgi/Model.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace gui {
 
 WidgetCGI::WidgetCGI(QWidget* parent)
     : WidgetOSG(parent)
@@ -60,16 +56,12 @@ WidgetCGI::WidgetCGI(QWidget* parent)
     timer_id_ = startTimer(1000.0 / 60.0);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 WidgetCGI::~WidgetCGI()
 {
     if ( timer_id_ ) killTimer(timer_id_);
 
     if ( manager_cgi_ ) { delete manager_cgi_; } manager_cgi_ = nullptr;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void WidgetCGI::resetView()
 {
@@ -81,8 +73,6 @@ void WidgetCGI::resetView()
     manipulator->setCenter(osg::Vec3d(0.0,0.0,0.0));
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void WidgetCGI::topView()
 {
     osg::ref_ptr<osgGA::OrbitManipulator> manipulator =
@@ -91,8 +81,6 @@ void WidgetCGI::topView()
     manipulator->setHeading(0.0);
     manipulator->setElevation(M_PI_2);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void WidgetCGI::bottomView()
 {
@@ -103,8 +91,6 @@ void WidgetCGI::bottomView()
     manipulator->setElevation(-M_PI_2);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void WidgetCGI::frontView()
 {
     osg::ref_ptr<osgGA::OrbitManipulator> manipulator =
@@ -113,8 +99,6 @@ void WidgetCGI::frontView()
     manipulator->setHeading(-M_PI_2);
     manipulator->setElevation(0.0);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void WidgetCGI::backView()
 {
@@ -125,8 +109,6 @@ void WidgetCGI::backView()
     manipulator->setElevation(0.0);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void WidgetCGI::leftView()
 {
     osg::ref_ptr<osgGA::OrbitManipulator> manipulator =
@@ -136,8 +118,6 @@ void WidgetCGI::leftView()
     manipulator->setElevation(0.0);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void WidgetCGI::rightView()
 {
     osg::ref_ptr<osgGA::OrbitManipulator> manipulator =
@@ -146,8 +126,6 @@ void WidgetCGI::rightView()
     manipulator->setHeading(M_PI);
     manipulator->setElevation(0.0);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void WidgetCGI::setProject(std::shared_ptr<pro::Project> proj)
 {
@@ -171,14 +149,10 @@ void WidgetCGI::setProject(std::shared_ptr<pro::Project> proj)
     resetView();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void WidgetCGI::setAnimationTime(double time)
 {
     anim_time_ = time;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void WidgetCGI::setCameraManipulatorOrbit()
 {
@@ -186,15 +160,11 @@ void WidgetCGI::setCameraManipulatorOrbit()
     getOsgViewer()->setCameraManipulator(manager_cgi_->GetCameraManipulator());
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void WidgetCGI::setCameraManipulatorTrack()
 {
     manager_cgi_->SetCameraManipulatorTrack();
     getOsgViewer()->setCameraManipulator(manager_cgi_->GetCameraManipulator());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void WidgetCGI::resizeEvent(QResizeEvent* event)
 {
@@ -205,8 +175,6 @@ void WidgetCGI::resizeEvent(QResizeEvent* event)
     manager_cgi_->SetWinHeight(event->size().height());
     manager_cgi_->SetWinWidth(event->size().width());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void WidgetCGI::timerEvent(QTimerEvent* event)
 {
@@ -224,8 +192,6 @@ void WidgetCGI::timerEvent(QTimerEvent* event)
     manager_cgi_->Update();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 QWidget* WidgetCGI::addViewWidget()
 {
     createCameras();
@@ -239,8 +205,6 @@ QWidget* WidgetCGI::addViewWidget()
 
     return gwin_->getGLWidget();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void WidgetCGI::createCameras()
 {
@@ -274,8 +238,6 @@ void WidgetCGI::createCameras()
 
     getOsgViewer()->addSlave(camera_hud_, false);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace gui
 } // namespace mc

@@ -21,19 +21,13 @@
 
 #include <osg/CullFace>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 Component::Component(osg::Node* node)
 {
     node_ = node;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Component::Read(const QDomElement* node)
 {
@@ -45,8 +39,6 @@ Result Component::Read(const QDomElement* node)
     return ReadParameters(node);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result Component::Save(QDomDocument* doc, QDomElement* parent)
 {
     QDomElement node = doc->createElement(GetTagName());
@@ -55,11 +47,7 @@ Result Component::Save(QDomDocument* doc, QDomElement* parent)
     return SaveParameters(doc, &node);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Component::Update() {}
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Component::SetName(QString name)
 {
@@ -67,18 +55,12 @@ void Component::SetName(QString name)
     node_->setName(name.toStdString());
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Component::SetParent(std::shared_ptr<Component> parent)
 {
     parent_ = parent;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Component::SetAnimationTime(double time) {}
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Component::SetDepthSortedBinValue(int value)
 {
@@ -91,8 +73,6 @@ void Component::SetDepthSortedBinValue(int value)
 
     SetTransparencyMode(node_.get());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Component::SetDepthSortedBinState(bool state)
 {
@@ -111,8 +91,6 @@ void Component::SetDepthSortedBinState(bool state)
     SetTransparencyMode(node_.get());
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result Component::ReadParameters(const QDomElement* node)
 {
     int  depth_sorted_bin_value = node->attribute("depth_sorted_bin_value").toInt();
@@ -124,8 +102,6 @@ Result Component::ReadParameters(const QDomElement* node)
 
     return Result::Success;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Component::SaveParameters(QDomDocument* doc, QDomElement* node)
 {
@@ -144,8 +120,6 @@ Result Component::SaveParameters(QDomDocument* doc, QDomElement* node)
 
     return Result::Success;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Component::SetTransparencyMode(osg::Node* node)
 {
@@ -169,8 +143,6 @@ void Component::SetTransparencyMode(osg::Node* node)
         ss->setRenderingHint(osg::StateSet::DEFAULT_BIN);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

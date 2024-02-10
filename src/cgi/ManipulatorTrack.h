@@ -19,14 +19,10 @@
 #ifndef MC_SIM_EDITOR_CGI_MANIPULATORTRACK_H_
 #define MC_SIM_EDITOR_CGI_MANIPULATORTRACK_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <osgGA/TrackballManipulator>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi
-{
+namespace mc {
+namespace cgi {
 
 /** */
 class ManipulatorTrack : public osgGA::TrackballManipulator
@@ -53,7 +49,5 @@ private:
 
 } // namespace cgi
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_CGI_MANIPULATORTRACK_H_

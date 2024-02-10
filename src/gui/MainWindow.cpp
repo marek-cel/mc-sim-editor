@@ -28,12 +28,8 @@
 #include <cgi/Models.h>
 #include <cgi/Textures.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace gui {
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -58,8 +54,6 @@ MainWindow::MainWindow(QWidget* parent)
     newProject();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 MainWindow::~MainWindow()
 {
     settingsSave();
@@ -67,14 +61,10 @@ MainWindow::~MainWindow()
     if ( ui_ ) { delete ui_; } ui_ = nullptr;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::openFileFromCommandLine(QString filename)
 {
     readProject(filename);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::projectChanged()
 {
@@ -82,8 +72,6 @@ void MainWindow::projectChanged()
     ui_->widgetCGI->setAnimationTime(ui_->widgetAnim->getCurrentTime());
     updateWindowTitle();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
@@ -93,8 +81,6 @@ void MainWindow::closeEvent(QCloseEvent* event)
     QMainWindow::closeEvent(event);
     ///////////////////////////////
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::addRecentFile(QString file)
 {
@@ -134,8 +120,6 @@ void MainWindow::addRecentFile(QString file)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::askIfSave()
 {
     if ( !saved_ )
@@ -154,8 +138,6 @@ void MainWindow::askIfSave()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::newProject()
 {
     askIfSave();
@@ -164,8 +146,6 @@ void MainWindow::newProject()
     emit projectCreated(proj_);
     updateWindowTitle();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::openProject()
 {
@@ -188,8 +168,6 @@ void MainWindow::openProject()
     updateWindowTitle();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::saveProject()
 {
     if ( proj_->GetFile().length() > 0 )
@@ -201,8 +179,6 @@ void MainWindow::saveProject()
         saveProjectAs();
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::saveProjectAs()
 {
@@ -220,8 +196,6 @@ void MainWindow::saveProjectAs()
         saveProject(newFile);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::exportModel()
 {
@@ -249,8 +223,6 @@ void MainWindow::exportModel()
         exportModel(fileName);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::readProject(QString file)
 {
@@ -283,8 +255,6 @@ void MainWindow::readProject(QString file)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::saveProject(QString file)
 {
     if ( Result::Success == proj_->Save(file) )
@@ -301,8 +271,6 @@ void MainWindow::saveProject(QString file)
     updateWindowTitle();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::exportModel(QString file)
 {
     if ( Result::Failure == proj_->GetAssembly()->Export(file) )
@@ -311,8 +279,6 @@ void MainWindow::exportModel(QString file)
                              tr("Cannot export file %1.").arg(file));
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::settingsRead()
 {
@@ -334,8 +300,6 @@ void MainWindow::settingsRead()
     settings.endGroup();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::settingsRead_RecentFiles(QSettings& settings)
 {
     QStringList recent_files = settings.value("recent_files").toStringList();
@@ -347,8 +311,6 @@ void MainWindow::settingsRead_RecentFiles(QSettings& settings)
         ui_->menuRecentFiles->addAction(action);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::settingsSave()
 {
@@ -369,8 +331,6 @@ void MainWindow::settingsSave()
     settings.endGroup();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::settingsSave_RecentFiles(QSettings& settings)
 {
     QStringList recent_files;
@@ -381,8 +341,6 @@ void MainWindow::settingsSave_RecentFiles(QSettings& settings)
 
     settings.setValue("recent_files", recent_files);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::updateWindowTitle()
 {
@@ -404,21 +362,15 @@ void MainWindow::updateWindowTitle()
     setWindowTitle(title);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::on_actionNew_triggered()
 {
     newProject();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::on_actionOpen_triggered()
 {
     openProject();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::on_actionClearRecent_triggered()
 {
@@ -430,35 +382,25 @@ void MainWindow::on_actionClearRecent_triggered()
     ui_->menuRecentFiles->clear();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::on_actionSave_triggered()
 {
     saveProject();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::on_actionSaveAs_triggered()
 {
     saveProjectAs();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::on_actionExport_triggered()
 {
     exportModel();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::on_actionExit_triggered()
 {
     close();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::on_actionRefresh_triggered()
 {
@@ -467,63 +409,45 @@ void MainWindow::on_actionRefresh_triggered()
     readProject(proj_->GetFile());
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::on_actionShowGrid_toggled(bool checked)
 {
     ui_->widgetCGI->getManagerCGI()->SetGridVisibility(checked);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::on_actionViewDefault_triggered()
 {
     ui_->widgetCGI->resetView();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::on_actionViewTop_triggered()
 {
     ui_->widgetCGI->topView();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::on_actionViewBottom_triggered()
 {
     ui_->widgetCGI->bottomView();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::on_actionViewBack_triggered()
 {
     ui_->widgetCGI->backView();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::on_actionViewFront_triggered()
 {
     ui_->widgetCGI->frontView();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::on_actionViewLeft_triggered()
 {
     ui_->widgetCGI->leftView();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::on_actionViewRight_triggered()
 {
     ui_->widgetCGI->rightView();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::on_actionViewOrbit_triggered()
 {
@@ -531,15 +455,11 @@ void MainWindow::on_actionViewOrbit_triggered()
     ui_->widgetCGI->resetView();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::on_actionViewTrack_triggered()
 {
     ui_->widgetCGI->setCameraManipulatorTrack();
     ui_->widgetCGI->resetView();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::on_actionAbout_triggered()
 {
@@ -559,15 +479,11 @@ void MainWindow::on_actionAbout_triggered()
     QMessageBox::about(this, about_win_title, about_info_text);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::recentFile_triggered(RecentAction* action)
 {
     askIfSave();
     readProject(action->file());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace gui
 } // namespace mc

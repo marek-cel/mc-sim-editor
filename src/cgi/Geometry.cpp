@@ -19,12 +19,9 @@
 
 #include <cgi/Geometry.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi { namespace Geometry
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace cgi {
+namespace Geometry {
 
 void CreateLine(osg::Geometry* geom, const osg::Vec3& b, const osg::Vec3& e,
                 const osg::Vec4& color)
@@ -46,8 +43,6 @@ void CreateLine(osg::Geometry* geom, const osg::Vec3& b, const osg::Vec3& e,
     geom->setColorArray(c.get());
     geom->setColorBinding(osg::Geometry::BIND_OVERALL);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace Geometry
 } // namespace cgi

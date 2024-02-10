@@ -19,8 +19,6 @@
 #ifndef MC_SIM_EDITOR_GUI_UTILS_H_
 #define MC_SIM_EDITOR_GUI_UTILS_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <QCheckBox>
 #include <QDoubleSpinBox>
 #include <QLineEdit>
@@ -29,10 +27,9 @@
 #include <QToolButton>
 #include <QWidget>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui { namespace Utils
-{
+namespace mc {
+namespace gui {
+namespace Utils {
 
 void setNoEmitChecked(QCheckBox* checkBox, bool checked);
 
@@ -49,7 +46,5 @@ void setVisibility(QToolButton* button, QWidget* widget, bool visibility);
 } // namespace Utils
 } // namespace gui
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_GUI_UTILS_H_

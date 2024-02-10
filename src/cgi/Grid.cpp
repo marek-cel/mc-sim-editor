@@ -25,12 +25,8 @@
 
 #include <cgi/Colors.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace cgi {
 
 Grid::Grid(std::shared_ptr<Data> data)
     : Component(data)
@@ -45,8 +41,6 @@ Grid::Grid(std::shared_ptr<Data> data)
 
     CreateGrid();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Grid::Update()
 {
@@ -74,15 +68,11 @@ void Grid::Update()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Grid::CreateGrid()
 {
     CreateGridAuxLines();
     CreateGridMainLines();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Grid::CreateGridAuxLines()
 {
@@ -134,8 +124,6 @@ void Grid::CreateGridAuxLines()
     geode->getOrCreateStateSet()->setAttributeAndModes(lineWidth, osg::StateAttribute::ON);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Grid::CreateGridMainLines()
 {
     osg::ref_ptr<osg::Geode> geode = new osg::Geode();
@@ -163,6 +151,14 @@ void Grid::CreateGridMainLines()
     v->push_back( lat_b );
     v->push_back( lat_e );
 
+    osg::Vec3d ver_b( 0.0, 0.0, -size_ );
+    osg::Vec3d ver_e( 0.0, 0.0,  size_ );
+    c->push_back( osg::Vec4( Colors::blue, 1.0 ) );
+    c->push_back( osg::Vec4( Colors::blue, 1.0 ) );
+
+    v->push_back( ver_b );
+    v->push_back( ver_e );
+
     n->push_back( osg::Vec3( 0.0f, 0.0f, 1.0f ) );
 
     geometry->setVertexArray( v.get() );
@@ -179,8 +175,6 @@ void Grid::CreateGridMainLines()
 
     geode->getOrCreateStateSet()->setAttributeAndModes( lineWidth, osg::StateAttribute::ON );
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace cgi
 } // namespace mc

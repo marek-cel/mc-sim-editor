@@ -22,12 +22,8 @@
 #include <pro/Animated.h>
 #include <pro/Components.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 Group::Group(osg::Group* group)
     : Component(group ? group : new osg::Group())
@@ -36,8 +32,6 @@ Group::Group(osg::Group* group)
     SetName("Group");
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 std::unique_ptr<Component> Group::Clone() const
 {
     std::unique_ptr<Group> group = std::make_unique<Group>();
@@ -45,8 +39,6 @@ std::unique_ptr<Component> Group::Clone() const
     group->CloneChildren(&children_);
     return group;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Group::SetProjFile(QString proj_file)
 {
@@ -58,8 +50,6 @@ void Group::SetProjFile(QString proj_file)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Group::SetAnimationTime(double time)
 {
     for ( auto child : children_ )
@@ -67,8 +57,6 @@ void Group::SetAnimationTime(double time)
         child->SetAnimationTime(time);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Group::SetChildrenAnimationState(bool enabled)
 {
@@ -85,8 +73,6 @@ void Group::SetChildrenAnimationState(bool enabled)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result Group::Read(const QDomElement* node)
 {
     Result result = Component::Read(node);
@@ -101,8 +87,6 @@ Result Group::Read(const QDomElement* node)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result Group::Save(QDomDocument* doc, QDomElement* parent)
 {
     QDomElement node = doc->createElement(GetTagName());
@@ -115,8 +99,6 @@ Result Group::Save(QDomDocument* doc, QDomElement* parent)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Group::Update()
 {
     for ( auto child : children_ )
@@ -125,8 +107,6 @@ void Group::Update()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result Group::AddChild(std::shared_ptr<Component> child)
 {
     child->SetParent(shared_from_this());
@@ -134,8 +114,6 @@ Result Group::AddChild(std::shared_ptr<Component> child)
     group_->addChild(child->GetNode());
     return Result::Success;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Group::RemoveChild(std::shared_ptr<Component> child)
 {
@@ -158,8 +136,6 @@ Result Group::RemoveChild(std::shared_ptr<Component> child)
     return Result::Failure;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Group::CloneChildren(const Children* children)
 {
     for ( auto child : *children )
@@ -167,8 +143,6 @@ void Group::CloneChildren(const Children* children)
         AddChild(std::shared_ptr<Component>(child->Clone()));
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Group::ReadChild(QDomElement* node)
 {
@@ -188,8 +162,6 @@ Result Group::ReadChild(QDomElement* node)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result Group::SaveChildren(QDomDocument* doc, QDomElement* parent)
 {
     Result result = Result::Success;
@@ -200,16 +172,12 @@ Result Group::SaveChildren(QDomDocument* doc, QDomElement* parent)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result Group::SaveParameters(QDomDocument* doc, QDomElement* node)
 {
     ////////////////////////////////////////////
     return Component::SaveParameters(doc, node);
     ////////////////////////////////////////////
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

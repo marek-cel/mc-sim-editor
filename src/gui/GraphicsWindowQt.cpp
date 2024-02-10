@@ -25,12 +25,8 @@
 
 #include <gui/KeyMap.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace gui {
 
 GraphicsWindowQt::GraphicsWindowQt(osg::GraphicsContext::Traits* traits)
 {
@@ -129,8 +125,6 @@ GraphicsWindowQt::GraphicsWindowQt(osg::GraphicsContext::Traits* traits)
 #   endif
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 GraphicsWindowQt::~GraphicsWindowQt()
 {
     if ( widget_ )
@@ -140,16 +134,12 @@ GraphicsWindowQt::~GraphicsWindowQt()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 bool GraphicsWindowQt::setWindowRectangleImplementation(int x, int y, int w, int h)
 {
     if ( widget_ == nullptr ) return false;
     widget_->setGeometry(x, y, w, h);
     return true;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::getWindowRectangle(int& x, int& y, int& w, int& h)
 {
@@ -164,28 +154,20 @@ void GraphicsWindowQt::getWindowRectangle(int& x, int& y, int& w, int& h)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void GraphicsWindowQt::grabFocus()
 {
     if ( widget_ ) widget_->setFocus(Qt::ActiveWindowFocusReason);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::grabFocusIfPointerInWindow()
 {
     if ( widget_->underMouse() ) widget_->setFocus(Qt::ActiveWindowFocusReason);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void GraphicsWindowQt::raiseWindow()
 {
     if ( widget_ ) widget_->raise();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::useCursor(bool cursorOn)
 {
@@ -199,8 +181,6 @@ void GraphicsWindowQt::useCursor(bool cursorOn)
             widget_->setCursor(currentCursor_);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::setCursor(MouseCursor cursor)
 {
@@ -239,14 +219,10 @@ void GraphicsWindowQt::setCursor(MouseCursor cursor)
     if ( widget_ ) widget_->setCursor(currentCursor_);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 bool GraphicsWindowQt::valid() const
 {
     return widget_ && widget_->isValid();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 bool GraphicsWindowQt::realizeImplementation()
 {
@@ -295,22 +271,16 @@ bool GraphicsWindowQt::realizeImplementation()
     return true;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 bool GraphicsWindowQt::isRealizedImplementation() const
 {
     return realized_;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::closeImplementation()
 {
     if ( widget_ ) widget_->close();
     realized_ = false;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 bool GraphicsWindowQt::makeCurrentImplementation()
 {
@@ -324,15 +294,11 @@ bool GraphicsWindowQt::makeCurrentImplementation()
     return true;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 bool GraphicsWindowQt::releaseContextImplementation()
 {
     widget_->doneCurrent();
     return true;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::swapBuffersImplementation()
 {
@@ -349,8 +315,6 @@ void GraphicsWindowQt::swapBuffersImplementation()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void GraphicsWindowQt::runOperations()
 {
     if ( widget_->getNumDeferredEvents() > 0 )
@@ -366,8 +330,6 @@ void GraphicsWindowQt::runOperations()
     GraphicsWindow::runOperations();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void GraphicsWindowQt::requestWarpPointer(float x, float y)
 {
     if ( widget_ )
@@ -376,16 +338,12 @@ void GraphicsWindowQt::requestWarpPointer(float x, float y)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 GraphicsWindowQt::GLWidget::GLWidget(const QGLFormat& format,
                                      QWidget* parent, const QGLWidget* shareWidget,
                                      Qt::WindowFlags flags)
     : QGLWidget(format, parent, shareWidget, flags)
     , gwin_( nullptr )
 {}
-
-////////////////////////////////////////////////////////////////////////////////
 
 GraphicsWindowQt::GLWidget::~GLWidget()
 {
@@ -396,8 +354,6 @@ GraphicsWindowQt::GLWidget::~GLWidget()
         gwin_ = nullptr;
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::GLWidget::setKeyboardModifiers(QInputEvent* event)
 {
@@ -411,8 +367,6 @@ void GraphicsWindowQt::GLWidget::setKeyboardModifiers(QInputEvent* event)
 
     gwin_->getEventQueue()->getCurrentEventState()->setModKeyMask(mask);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 bool GraphicsWindowQt::GLWidget::event(QEvent* event)
 {
@@ -436,15 +390,11 @@ bool GraphicsWindowQt::GLWidget::event(QEvent* event)
     return QGLWidget::event(event);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void GraphicsWindowQt::GLWidget::keyPressEvent(QKeyEvent* event)
 {
     setKeyboardModifiers(event);
     gwin_->getEventQueue()->keyPress(KeyMap::remapOSG(event->key()));
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::GLWidget::keyReleaseEvent(QKeyEvent* event)
 {
@@ -458,8 +408,6 @@ void GraphicsWindowQt::GLWidget::keyReleaseEvent(QKeyEvent* event)
         gwin_->getEventQueue()->keyRelease(KeyMap::remapOSG(event->key()));
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::GLWidget::mousePressEvent(QMouseEvent* event)
 {
@@ -478,8 +426,6 @@ void GraphicsWindowQt::GLWidget::mousePressEvent(QMouseEvent* event)
     gwin_->getEventQueue()->mouseButtonPress(event->x(), event->y(), button);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void GraphicsWindowQt::GLWidget::mouseReleaseEvent(QMouseEvent* event)
 {
     int button = 0;
@@ -496,8 +442,6 @@ void GraphicsWindowQt::GLWidget::mouseReleaseEvent(QMouseEvent* event)
     setKeyboardModifiers(event);
     gwin_->getEventQueue()->mouseButtonRelease(event->x(), event->y(), button);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::GLWidget::mouseDoubleClickEvent(QMouseEvent* event)
 {
@@ -516,15 +460,11 @@ void GraphicsWindowQt::GLWidget::mouseDoubleClickEvent(QMouseEvent* event)
     gwin_->getEventQueue()->mouseDoubleButtonPress(event->x(), event->y(), button);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void GraphicsWindowQt::GLWidget::mouseMoveEvent(QMouseEvent* event)
 {
     setKeyboardModifiers(event);
     gwin_->getEventQueue()->mouseMotion(event->x(), event->y());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::GLWidget::moveEvent(QMoveEvent* event)
 {
@@ -534,8 +474,6 @@ void GraphicsWindowQt::GLWidget::moveEvent(QMoveEvent* event)
     gwin_->getEventQueue()->windowResize(pos.x(), pos.y(), width(), height());
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void GraphicsWindowQt::GLWidget::resizeEvent(QResizeEvent* event)
 {
     const QSize& size = event->size();
@@ -544,8 +482,6 @@ void GraphicsWindowQt::GLWidget::resizeEvent(QResizeEvent* event)
     gwin_->getEventQueue()->windowResize(x(), y(), size.width(), size.height());
     gwin_->requestRedraw();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::GLWidget::wheelEvent(QWheelEvent* event)
 {
@@ -561,22 +497,16 @@ void GraphicsWindowQt::GLWidget::wheelEvent(QWheelEvent* event)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void GraphicsWindowQt::GLWidget::glDraw()
 {
     gwin_->requestRedraw();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 int GraphicsWindowQt::GLWidget::getNumDeferredEvents()
 {
     QMutexLocker lock(&deferredEventQueueMutex_);
     return deferredEventQueue_.count();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void GraphicsWindowQt::GLWidget::enqueueDeferredEvent(QEvent::Type eventType,
                                                       QEvent::Type removeEventType)
@@ -598,8 +528,6 @@ void GraphicsWindowQt::GLWidget::enqueueDeferredEvent(QEvent::Type eventType,
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void GraphicsWindowQt::GLWidget::processDeferredEvents()
 {
     QQueue<QEvent::Type> deferredEventQueueCopy;
@@ -617,8 +545,6 @@ void GraphicsWindowQt::GLWidget::processDeferredEvents()
         QGLWidget::event(&event);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace gui
 } // namespace mc

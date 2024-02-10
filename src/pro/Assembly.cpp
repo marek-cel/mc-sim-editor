@@ -24,12 +24,8 @@
 
 #include <pro/Components.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 Result Assembly::Export(QString file)
 {
@@ -52,8 +48,6 @@ Result Assembly::Export(QString file)
 
     return Result::Success;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Assembly::Read(const QDomElement* node)
 {
@@ -86,8 +80,6 @@ Result Assembly::Read(const QDomElement* node)
     return root_->Read(&root_node);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result Assembly::Save(QDomDocument* doc, QDomElement* parent)
 {
     QDomElement node = doc->createElement("assembly");
@@ -95,8 +87,6 @@ Result Assembly::Save(QDomDocument* doc, QDomElement* parent)
 
     return root_->Save(doc, &node);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Assembly::SetProjFile(QString proj_file)
 {
@@ -108,8 +98,6 @@ void Assembly::SetAnimationTime(double time)
 {
     root_->SetAnimationTime(time);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

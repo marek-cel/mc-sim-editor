@@ -19,8 +19,6 @@
 #ifndef MC_SIM_EDITOR_GUI_FORMSCENE_H_
 #define MC_SIM_EDITOR_GUI_FORMSCENE_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <QAction>
 #include <QMenu>
 #include <QShortcut>
@@ -30,17 +28,12 @@
 #include <pro/Component.h>
 #include <pro/Project.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace Ui
-{
+namespace Ui {
 class FormScene;
 } // namespace Ui
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui
-{
+namespace mc {
+namespace gui {
 
 /** */
 class FormScene : public QWidget
@@ -110,7 +103,5 @@ private slots:
 
 } // namespace gui
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_GUI_FORMSCENE_H_

@@ -19,12 +19,8 @@
 
 #include <pro/Switch.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 Switch::Switch(osg::Switch* pat)
     : Group(pat ? pat : new osg::Switch())
@@ -33,8 +29,6 @@ Switch::Switch(osg::Switch* pat)
     SetName("Switch");
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 std::unique_ptr<Component> Switch::Clone() const
 {
     std::unique_ptr<Switch> sw = std::make_unique<Switch>();
@@ -42,8 +36,6 @@ std::unique_ptr<Component> Switch::Clone() const
     sw->CloneChildren(&children_);
     return sw;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Switch::SetVisible(bool visible)
 {
@@ -59,8 +51,6 @@ void Switch::SetVisible(bool visible)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result Switch::ReadParameters(const QDomElement* node)
 {
     ////////////////////////////////////////////
@@ -74,8 +64,6 @@ Result Switch::ReadParameters(const QDomElement* node)
 
     return result;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Switch::SaveParameters(QDomDocument* doc, QDomElement* node)
 {
@@ -91,8 +79,6 @@ Result Switch::SaveParameters(QDomDocument* doc, QDomElement* node)
 
     return result;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

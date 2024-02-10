@@ -24,20 +24,14 @@
 
 #include <cgi/Models.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 Rotor::Rotor()
     : PAT()
 {
     SetName("Rotor");
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 std::unique_ptr<Component> Rotor::Clone() const
 {
@@ -46,16 +40,12 @@ std::unique_ptr<Component> Rotor::Clone() const
     return rotor;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Rotor::SetBladesNo(int blades_no)
 {
     Clear();
     blades_no_ = std::max(2, blades_no);
     Create();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Rotor::SetHingeOffset(double offset)
 {
@@ -64,16 +54,12 @@ void Rotor::SetHingeOffset(double offset)
     Create();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Rotor::SetDirection(Direction direction)
 {
     Clear();
     direction_ = direction;
     Create();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Rotor::SetFileBlade(const QString& file)
 {
@@ -82,16 +68,12 @@ void Rotor::SetFileBlade(const QString& file)
     Create();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Rotor::SetFileShaft(const QString& file)
 {
     Clear();
     file_shaft_ = file;
     Create();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Rotor::ReadParameters(const QDomElement* node)
 {
@@ -115,8 +97,6 @@ Result Rotor::ReadParameters(const QDomElement* node)
 
     return result;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Rotor::SaveParameters(QDomDocument* doc, QDomElement* node)
 {
@@ -150,8 +130,6 @@ Result Rotor::SaveParameters(QDomDocument* doc, QDomElement* node)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Rotor::Clear()
 {
     if ( shaft_.valid() )
@@ -162,15 +140,11 @@ void Rotor::Clear()
     shaft_ = nullptr;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Rotor::Create()
 {
     CreateShaft();
     CreateBlades();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Rotor::CreateShaft()
 {
@@ -189,8 +163,6 @@ void Rotor::CreateShaft()
         shaft_->addChild(node.get());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Rotor::CreateBlades()
 {
@@ -233,8 +205,6 @@ void Rotor::CreateBlades()
         blades_.push_back(pat_flap.get());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

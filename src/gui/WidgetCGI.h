@@ -19,18 +19,14 @@
 #ifndef MC_SIM_EDITOR_GUI_WIDGETCGI_H_
 #define MC_SIM_EDITOR_GUI_WIDGETCGI_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <QShortcut>
 
 #include <cgi/Manager.h>
 #include <gui/WidgetOSG.h>
 #include <pro/Project.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui
-{
+namespace mc {
+namespace gui {
 
 /**
  * @brief CGI widget class.
@@ -103,7 +99,5 @@ private:
 
 } // namespace gui
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_GUI_WIDGETCGI_H_

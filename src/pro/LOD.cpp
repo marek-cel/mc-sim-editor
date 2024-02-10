@@ -19,12 +19,8 @@
 
 #include <pro/LOD.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 LOD::LOD(osg::LOD* lod)
     : Group(lod ? lod : new osg::LOD())
@@ -33,8 +29,6 @@ LOD::LOD(osg::LOD* lod)
     SetName("LOD");
     AddInterval(1000.0);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result LOD::AddChild(std::shared_ptr<Component> child)
 {
@@ -46,8 +40,6 @@ Result LOD::AddChild(std::shared_ptr<Component> child)
     return Result::Success;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 std::unique_ptr<Component> LOD::Clone() const
 {
     std::unique_ptr<LOD> lod = std::make_unique<LOD>();
@@ -56,15 +48,11 @@ std::unique_ptr<Component> LOD::Clone() const
     return lod;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void LOD::AddInterval(double value)
 {
     intervals_.push_back(value);
     InflateLOD();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void LOD::EditInterval(int index, double value)
 {
@@ -72,29 +60,21 @@ void LOD::EditInterval(int index, double value)
     InflateLOD();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 double LOD::GetInterval(int index) const
 {
     return intervals_.at(index);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 int LOD::GetIntervalsCount() const
 {
     return intervals_.size();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void LOD::RemoveInterval(int index)
 {
     intervals_.erase(intervals_.begin() + index);
     InflateLOD();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void LOD::InflateLOD()
 {
@@ -114,8 +94,6 @@ void LOD::InflateLOD()
         lod_->addChild(children_.at(i)->GetNode(), r0, r1);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result LOD::ReadParameters(const QDomElement* node)
 {
@@ -140,8 +118,6 @@ Result LOD::ReadParameters(const QDomElement* node)
     return index > 0 ? Result::Success : Result::Failure;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result LOD::SaveParameters(QDomDocument* doc, QDomElement* node)
 {
     /////////////////////////////////////////////////
@@ -164,8 +140,6 @@ Result LOD::SaveParameters(QDomDocument* doc, QDomElement* node)
 
     return result;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

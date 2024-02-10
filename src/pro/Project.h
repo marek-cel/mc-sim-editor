@@ -19,8 +19,6 @@
 #ifndef MC_SIM_PRO_PROJECT_H_
 #define MC_SIM_PRO_PROJECT_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <memory>
 
 #include <QString>
@@ -30,10 +28,8 @@
 #include <pro/Assembly.h>
 #include <pro/Playback.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
+namespace mc {
+namespace pro {
 
 class Project
 {
@@ -63,7 +59,5 @@ private:
 
 } // namespace pro
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_PRO_PROJECT_H_

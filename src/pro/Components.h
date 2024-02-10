@@ -19,8 +19,6 @@
 #ifndef MC_SIM_PRO_COMPONENTS_H_
 #define MC_SIM_PRO_COMPONENTS_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <memory>
 #include <vector>
 
@@ -28,10 +26,8 @@
 
 #include <pro/Component.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
+namespace mc {
+namespace pro {
 
 class Components
 {
@@ -74,7 +70,5 @@ private:
 
 } // namespace pro
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_PRO_COMPONENTS_H_

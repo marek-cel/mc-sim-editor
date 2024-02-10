@@ -23,12 +23,8 @@
 #include <cgi/Model.h>
 #include <cgi/ViewGizmo.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace cgi {
 
 void Builder::BuildCGI(std::shared_ptr<Data> data, std::shared_ptr<Component> root)
 {
@@ -41,16 +37,12 @@ void Builder::BuildCGI(std::shared_ptr<Data> data, std::shared_ptr<Component> ro
     root->AddChild(mod);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Builder::BuildHUD(std::shared_ptr<Data> data, std::shared_ptr<Component> root)
 {
     // gizmo
     std::shared_ptr<ViewGizmo> gizmo = std::make_shared<ViewGizmo>(data);
     root->AddChild(gizmo);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace cgi
 } // namespace mc

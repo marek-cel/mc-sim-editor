@@ -19,12 +19,8 @@
 
 #include <pro/Trans.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 Trans::Trans(osg::MatrixTransform* mt)
     : Animated(mt ? mt : new osg::MatrixTransform())
@@ -32,8 +28,6 @@ Trans::Trans(osg::MatrixTransform* mt)
     mt_ = dynamic_cast<osg::MatrixTransform*>(node_.get());
     SetName("Matrix Transform");
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 std::unique_ptr<Component> Trans::Clone() const
 {
@@ -43,15 +37,11 @@ std::unique_ptr<Component> Trans::Clone() const
     return mt;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Trans::SetPx(double px)
 {
     px_ = px;
     UpdateTransformMatrix();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Trans::SetPy(double py)
 {
@@ -59,15 +49,11 @@ void Trans::SetPy(double py)
     UpdateTransformMatrix();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Trans::SetPz(double pz)
 {
     pz_ = pz;
     UpdateTransformMatrix();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Trans::SetAx(double ax)
 {
@@ -75,23 +61,17 @@ void Trans::SetAx(double ax)
     UpdateTransformMatrix();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Trans::SetAy(double ay)
 {
     ay_ = ay;
     UpdateTransformMatrix();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Trans::SetAz(double az)
 {
     az_ = az;
     UpdateTransformMatrix();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Trans::ReadParameters(const QDomElement* node)
 {
@@ -113,8 +93,6 @@ Result Trans::ReadParameters(const QDomElement* node)
 
     return result;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Trans::SaveParameters(QDomDocument* doc, QDomElement* node)
 {
@@ -151,8 +129,6 @@ Result Trans::SaveParameters(QDomDocument* doc, QDomElement* node)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Trans::UpdateTransformMatrix()
 {
     osg::Matrix mr;
@@ -165,8 +141,6 @@ void Trans::UpdateTransformMatrix()
 
     mt_->setMatrix(mr*mt);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

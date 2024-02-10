@@ -24,12 +24,8 @@
 
 #include <pro/Components.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace gui {
 
 FormScene::FormScene(QWidget* parent)
     : QWidget(parent)
@@ -43,14 +39,10 @@ FormScene::FormScene(QWidget* parent)
     populateComboBoxTypes();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 FormScene::~FormScene()
 {
     if ( ui_ ) { delete ui_; } ui_ = nullptr;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormScene::setProject(std::shared_ptr<pro::Project> proj)
 {
@@ -58,8 +50,6 @@ void FormScene::setProject(std::shared_ptr<pro::Project> proj)
     updateTreeWidgetScene();
     ui_->buttonAdd->setEnabled(false);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 std::shared_ptr<pro::Component> FormScene::getComponentByIndex(QModelIndex index)
 {
@@ -99,8 +89,6 @@ std::shared_ptr<pro::Component> FormScene::getComponentByIndex(QModelIndex index
     return comp;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormScene::addComponent()
 {
     int index = ui_->comboTypes->currentIndex();
@@ -117,8 +105,6 @@ void FormScene::addComponent()
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormScene::removeComponent()
 {
@@ -147,8 +133,6 @@ void FormScene::removeComponent()
         }
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormScene::addTreeWidgetSceneItem(pro::Component* comp, int index,
                                        QTreeWidgetItem* parent)
@@ -191,8 +175,6 @@ void FormScene::addTreeWidgetSceneItem(pro::Component* comp, int index,
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormScene::createSceneMenu()
 {
     scene_menu_ = new QMenu(this);
@@ -212,8 +194,6 @@ void FormScene::createSceneMenu()
     scene_menu_->addAction(action_anims_turn_off_);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormScene::populateComboBoxTypes()
 {
     for ( auto type : pro::Components::Instance()->types() )
@@ -228,8 +208,6 @@ void FormScene::populateComboBoxTypes()
         }
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormScene::updateTreeWidgetScene()
 {
@@ -249,15 +227,11 @@ void FormScene::updateTreeWidgetScene()
     ui_->treeScene->blockSignals(false);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormScene::actionRename_triggered()
 {
     QTreeWidgetItem* item = ui_->treeScene->currentItem();
     ui_->treeScene->editItem(item);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormScene::actionRemove_triggered()
 {
@@ -273,8 +247,6 @@ void FormScene::actionRemove_triggered()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormScene::actionAnimsOn_triggered()
 {
     QModelIndex index = ui_->treeScene->currentIndex();
@@ -284,8 +256,6 @@ void FormScene::actionAnimsOn_triggered()
         comp->SetChildrenAnimationState(true);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormScene::actionAnimsOff_triggered()
 {
@@ -297,14 +267,10 @@ void FormScene::actionAnimsOff_triggered()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormScene::on_buttonAdd_clicked()
 {
     addComponent();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormScene::on_treeScene_currentItemChanged(QTreeWidgetItem*,
                                                 QTreeWidgetItem*)
@@ -317,14 +283,10 @@ void FormScene::on_treeScene_currentItemChanged(QTreeWidgetItem*,
     emit(componentChanged(comp));
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormScene::on_treeScene_customContextMenuRequested(const QPoint& pos)
 {
     scene_menu_->exec(ui_->treeScene->mapToGlobal(pos));
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormScene::on_treeScene_itemChanged(QTreeWidgetItem* item, int column)
 {
@@ -337,8 +299,6 @@ void FormScene::on_treeScene_itemChanged(QTreeWidgetItem* item, int column)
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace gui
 } // namespace mc

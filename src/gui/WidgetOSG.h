@@ -19,8 +19,6 @@
 #ifndef MC_SIM_EDITOR_GUI_WIDGETOSG_H_
 #define MC_SIM_EDITOR_GUI_WIDGETOSG_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <QDateTime>
 #include <QGridLayout>
 #include <QWidget>
@@ -32,10 +30,8 @@
 
 #include <gui/GraphicsWindowQt.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui
-{
+namespace mc {
+namespace gui {
 
 /**
  * @brief OSG common widget class.
@@ -73,7 +69,5 @@ protected:
 
 } // namespace gui
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_GUI_WIDGETOSG_H_

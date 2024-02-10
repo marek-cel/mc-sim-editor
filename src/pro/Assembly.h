@@ -19,8 +19,6 @@
 #ifndef MC_SIM_PRO_ASSEMBLY_H_
 #define MC_SIM_PRO_ASSEMBLY_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <osg/Node>
 
 #include <QDomElement>
@@ -30,10 +28,8 @@
 
 #include <pro/Group.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
+namespace mc {
+namespace pro {
 
 class Assembly
 {
@@ -63,7 +59,5 @@ private:
 
 } // namespace pro
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_PRO_ASSEMBLY_H_

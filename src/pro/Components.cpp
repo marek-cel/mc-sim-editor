@@ -32,16 +32,10 @@
 #ifdef MCSIM_EDITOR_EXTRA_COMPONENTS
 #endif // MCSIM_EDITOR_EXTRA_COMPONENTS
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 std::shared_ptr<Components> Components::instance_;
-
-////////////////////////////////////////////////////////////////////////////////
 
 std::shared_ptr<Components> Components::Instance()
 {
@@ -54,8 +48,6 @@ std::shared_ptr<Components> Components::Instance()
 
     return instance_;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Components::AddType(QString name, std::shared_ptr<Component> comp,
                          bool extra)
@@ -70,8 +62,6 @@ void Components::AddType(QString name, std::shared_ptr<Component> comp,
 
     types_.push_back(type);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Components::AddTypes()
 {
@@ -88,8 +78,6 @@ void Components::AddTypes()
 #   endif // MCSIM_EDITOR_EXTRA_COMPONENTS
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Components::Type Components::GetComponentByTagName(QString tag_name)
 {
     for ( auto type : types_ )
@@ -103,8 +91,6 @@ Components::Type Components::GetComponentByTagName(QString tag_name)
     return Type();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 int Components::GetIndexByTagName(QString tag_name)
 {
     for ( size_t i = 0; i < types_.size(); ++i )
@@ -117,8 +103,6 @@ int Components::GetIndexByTagName(QString tag_name)
 
     return -1;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

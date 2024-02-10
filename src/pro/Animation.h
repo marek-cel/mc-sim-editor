@@ -19,8 +19,6 @@
 #ifndef MC_SIM_PRO_ANIMATION_H_
 #define MC_SIM_PRO_ANIMATION_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <memory>
 
 #include <osg/Node>
@@ -31,10 +29,8 @@
 #include <Result.h>
 #include <pro/Keyframe.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
+namespace mc {
+namespace pro {
 
 class Animation
 {
@@ -88,7 +84,5 @@ protected:
 
 } // namespace pro
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_PRO_ANIMATION_H_

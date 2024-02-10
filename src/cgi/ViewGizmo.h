@@ -19,16 +19,12 @@
 #ifndef MC_SIM_EDITOR_CGI_VIEWGIZMO_H_
 #define MC_SIM_EDITOR_CGI_VIEWGIZMO_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <osg/PositionAttitudeTransform>
 
 #include <cgi/Component.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi
-{
+namespace mc {
+namespace cgi {
 
 class ViewGizmo : public Component
 {
@@ -58,7 +54,5 @@ private:
 
 } // namespace cgi
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_CGI_VIEWGIZMO_H_

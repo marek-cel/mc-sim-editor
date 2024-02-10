@@ -19,21 +19,16 @@
 #ifndef MC_SIM_EDITOR_GUI_KEYMAP_H_
 #define MC_SIM_EDITOR_GUI_KEYMAP_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <osgGA/GUIEventAdapter>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui { namespace KeyMap
-{
+namespace mc {
+namespace gui {
+namespace KeyMap {
 
 osgGA::GUIEventAdapter::KeySymbol remapOSG(int key_qt);
 
 } // namespace KeyMap
 } // namespace gui
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_GUI_KEYMAP_H_

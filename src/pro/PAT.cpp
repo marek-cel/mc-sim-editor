@@ -19,12 +19,8 @@
 
 #include <pro/PAT.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 PAT::PAT(osg::PositionAttitudeTransform* pat)
     : Animated(pat ? pat : new osg::PositionAttitudeTransform())
@@ -32,8 +28,6 @@ PAT::PAT(osg::PositionAttitudeTransform* pat)
     pat_ = dynamic_cast<osg::PositionAttitudeTransform*>(node_.get());
     SetName("PAT");
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 std::unique_ptr<Component> PAT::Clone() const
 {
@@ -43,15 +37,11 @@ std::unique_ptr<Component> PAT::Clone() const
     return pat;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void PAT::SetPx(double px)
 {
     px_ = px;
     UpdatePositionAndAttitude();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void PAT::SetPy(double py)
 {
@@ -59,15 +49,11 @@ void PAT::SetPy(double py)
     UpdatePositionAndAttitude();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void PAT::SetPz(double pz)
 {
     pz_ = pz;
     UpdatePositionAndAttitude();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void PAT::SetAx(double ax)
 {
@@ -75,15 +61,11 @@ void PAT::SetAx(double ax)
     UpdatePositionAndAttitude();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void PAT::SetAy(double ay)
 {
     ay_ = ay;
     UpdatePositionAndAttitude();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void PAT::SetAz(double az)
 {
@@ -91,15 +73,11 @@ void PAT::SetAz(double az)
     UpdatePositionAndAttitude();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void PAT::SetConvention(Convention convention)
 {
     convention_ = convention;
     UpdatePositionAndAttitude();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result PAT::ReadParameters(const QDomElement* node)
 {
@@ -130,8 +108,6 @@ Result PAT::ReadParameters(const QDomElement* node)
 
     return result;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result PAT::SaveParameters(QDomDocument* doc, QDomElement* node)
 {
@@ -174,8 +150,6 @@ Result PAT::SaveParameters(QDomDocument* doc, QDomElement* node)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void PAT::UpdatePositionAndAttitude()
 {
     osg::Vec3d pos(px_, py_, pz_);
@@ -197,8 +171,6 @@ void PAT::UpdatePositionAndAttitude()
     pat_->setPosition(pos);
     pat_->setAttitude(att);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

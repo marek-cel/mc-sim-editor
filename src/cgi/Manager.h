@@ -19,21 +19,15 @@
 #ifndef MC_SIM_EDITOR_CGI_MANAGER_H_
 #define MC_SIM_EDITOR_CGI_MANAGER_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <cgi/ManipulatorOrbit.h>
 #include <cgi/ManipulatorTrack.h>
 
 #include <cgi/CGI.h>
 #include <cgi/HUD.h>
 
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
 
-namespace mc
-{
-
-namespace pro
-{
+namespace pro {
     class Project;
 } // namespace pro
 
@@ -93,7 +87,5 @@ private:
 
 } // namespace cgi
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_CGI_MANAGER_H_

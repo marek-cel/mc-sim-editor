@@ -19,8 +19,6 @@
 #ifndef MC_SIM_PRO_COMPONENT_H_
 #define MC_SIM_PRO_COMPONENT_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <memory>
 
 #include <osg/Node>
@@ -29,10 +27,8 @@
 
 #include <Result.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
+namespace mc {
+namespace pro {
 
 class Component : public std::enable_shared_from_this<Component>
 {
@@ -109,7 +105,5 @@ protected:
 
 } // namespace pro
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_PRO_COMPONENT_H_

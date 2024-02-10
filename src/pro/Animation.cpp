@@ -21,19 +21,13 @@
 
 #include <iostream>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 Animation::Animation(osg::ref_ptr<osg::Node> node)
 {
     node_ = node;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Animation::Read(const QDomElement* node)
 {
@@ -54,8 +48,6 @@ Result Animation::Read(const QDomElement* node)
 
     return result;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Animation::Save(QDomDocument* doc, QDomElement* parent)
 {
@@ -84,8 +76,6 @@ Result Animation::Save(QDomDocument* doc, QDomElement* parent)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Animation::AddKeyframe(std::shared_ptr<Keyframe> keyframe)
 {
     keyframes_.push_back(keyframe);
@@ -93,15 +83,11 @@ void Animation::AddKeyframe(std::shared_ptr<Keyframe> keyframe)
     UpdateAnimationPath();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Animation::RemoveKeyframe(int index)
 {
     keyframes_.erase(keyframes_.begin() + index);
     UpdateAnimationPath();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Animation::SetKeyframe(int index, std::shared_ptr<Keyframe> keyframe)
 {
@@ -110,21 +96,15 @@ void Animation::SetKeyframe(int index, std::shared_ptr<Keyframe> keyframe)
     UpdateAnimationPath();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Animation::SetTimeMin(double t_min)
 {
     t_min_ = std::min(t_min, t_max_);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Animation::SetTimeMax(double t_max)
 {
     t_max_ = std::max(t_max, t_min_);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Animation::SetTime(double time)
 {
@@ -134,8 +114,6 @@ void Animation::SetTime(double time)
         apcb_->setTimeOffset(-time);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Animation::ReadKeyframe(const QDomElement* node)
 {
@@ -153,8 +131,6 @@ Result Animation::ReadKeyframe(const QDomElement* node)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Animation::SortKeyframes()
 {
     std::sort(keyframes_.begin(), keyframes_.end(),
@@ -163,8 +139,6 @@ void Animation::SortKeyframes()
             return a->t() < b->t();
     });
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Animation::UpdateAnimationPath()
 {
@@ -204,8 +178,6 @@ void Animation::UpdateAnimationPath()
         node_->setUpdateCallback(apcb_.get());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

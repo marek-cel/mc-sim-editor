@@ -21,12 +21,9 @@
 
 #include <qnamespace.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui { namespace KeyMap
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace gui {
+namespace KeyMap {
 
 osgGA::GUIEventAdapter::KeySymbol remapOSG(int key_qt)
 {
@@ -269,8 +266,6 @@ osgGA::GUIEventAdapter::KeySymbol remapOSG(int key_qt)
 
     return (osgGA::GUIEventAdapter::KeySymbol)(-1);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace KeyMap
 } // namespace gui

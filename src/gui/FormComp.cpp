@@ -31,29 +31,21 @@
 #include <pro/Switch.h>
 #include <pro/Trans.h>
 
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace gui {
 
-namespace mc { namespace gui
-{
-
-////////////////////////////////////////////////////////////////////////////////
-
-FormComp::FormComp(QWidget* parent) :
-    QWidget(parent),
-    ui_(new Ui::FormComp)
+FormComp::FormComp(QWidget* parent)
+    : QWidget(parent)
+    , ui_(new Ui::FormComp)
 {
     ui_->setupUi(this);
     hideAllProperties();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 FormComp::~FormComp()
 {
     if ( ui_ ) { delete ui_; } ui_ = nullptr;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::setComponent(std::shared_ptr<pro::Component> comp)
 {
@@ -61,16 +53,12 @@ void FormComp::setComponent(std::shared_ptr<pro::Component> comp)
     updateParameters(comp);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::setProject(std::shared_ptr<pro::Project> proj)
 {
     proj_ = proj;
     comp_ = std::weak_ptr<pro::Component>();
     hideAllProperties();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 QString FormComp::getFile(QString file)
 {
@@ -112,8 +100,6 @@ QString FormComp::getFile(QString file)
     return proj_dir.relativeFilePath(new_file);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::hideAllProperties()
 {
     ui_->widgetWrapAnim->hide();
@@ -125,8 +111,6 @@ void FormComp::hideAllProperties()
     ui_->widgetWrapSwitch->hide();
     ui_->widgetWrapTrans->hide();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::updateParameters(std::shared_ptr<pro::Component> comp)
 {
@@ -143,8 +127,6 @@ void FormComp::updateParameters(std::shared_ptr<pro::Component> comp)
 #   ifdef MCSIM_EDITOR_EXTRA_COMPONENTS
 #   endif // MCSIM_EDITOR_EXTRA_COMPONENTS
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::updateParametersAnim(std::shared_ptr<pro::Component> comp)
 {
@@ -182,8 +164,6 @@ void FormComp::updateParametersAnim(std::shared_ptr<pro::Component> comp)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::updateParametersComp(std::shared_ptr<pro::Component> comp)
 {
     if ( comp )
@@ -199,8 +179,6 @@ void FormComp::updateParametersComp(std::shared_ptr<pro::Component> comp)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::updateParametersFile(std::shared_ptr<pro::Component> comp)
 {
     std::shared_ptr<pro::File> file = std::dynamic_pointer_cast<pro::File>(comp);
@@ -212,8 +190,6 @@ void FormComp::updateParametersFile(std::shared_ptr<pro::Component> comp)
         Utils::setNoEmitText(ui_->lineEditFilePath, file->GetFile());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::updateParametersLOD(std::shared_ptr<pro::Component> comp)
 {
@@ -232,8 +208,6 @@ void FormComp::updateParametersLOD(std::shared_ptr<pro::Component> comp)
         }
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::updateParametersPAT(std::shared_ptr<pro::Component> comp)
 {
@@ -256,8 +230,6 @@ void FormComp::updateParametersPAT(std::shared_ptr<pro::Component> comp)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::updateParametersRotor(std::shared_ptr<pro::Component> comp)
 {
     std::shared_ptr<pro::Rotor> rotor = std::dynamic_pointer_cast<pro::Rotor>(comp);
@@ -277,8 +249,6 @@ void FormComp::updateParametersRotor(std::shared_ptr<pro::Component> comp)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::updateParametersSwitch(std::shared_ptr<pro::Component> comp)
 {
     std::shared_ptr<pro::Switch> sw = std::dynamic_pointer_cast<pro::Switch>(comp);
@@ -290,8 +260,6 @@ void FormComp::updateParametersSwitch(std::shared_ptr<pro::Component> comp)
         Utils::setNoEmitChecked(ui_->checkBoxSwitchVisible, sw->GetVisible());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::updateParametersTrans(std::shared_ptr<pro::Component> comp)
 {
@@ -311,63 +279,45 @@ void FormComp::updateParametersTrans(std::shared_ptr<pro::Component> comp)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_buttonComp_toggled(bool checked)
 {
     Utils::setVisibility(ui_->buttonComp, ui_->widgetComp, checked);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_buttonFile_toggled(bool checked)
 {
     Utils::setVisibility(ui_->buttonFile, ui_->widgetFile, checked);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_buttonLOD_toggled(bool checked)
 {
     Utils::setVisibility(ui_->buttonLOD, ui_->widgetLOD, checked);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_buttonPAT_toggled(bool checked)
 {
     Utils::setVisibility(ui_->buttonPAT, ui_->widgetPAT, checked);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_buttonRotor_toggled(bool checked)
 {
     Utils::setVisibility(ui_->buttonRotor, ui_->widgetRotor, checked);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_buttonSwitch_toggled(bool checked)
 {
     Utils::setVisibility(ui_->buttonSwitch, ui_->widgetSwitch, checked);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_buttonTrans_toggled(bool checked)
 {
     Utils::setVisibility(ui_->buttonTrans, ui_->widgetTrans, checked);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_buttonAnim_toggled(bool checked)
 {
     Utils::setVisibility(ui_->buttonAnim, ui_->widgetAnim, checked);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_checkBoxDepthSortedBin_toggled(bool checked)
 {
@@ -387,8 +337,6 @@ void FormComp::on_checkBoxDepthSortedBin_toggled(bool checked)
     emit(projectChanged());
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_spinBoxDepthSortedBin_valueChanged(int arg1)
 {
     if ( comp_.expired() ) return;
@@ -397,8 +345,6 @@ void FormComp::on_spinBoxDepthSortedBin_valueChanged(int arg1)
     comp->SetDepthSortedBinValue(arg1);
     emit(projectChanged());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_radioXYZ_toggled(bool checked)
 {
@@ -413,8 +359,6 @@ void FormComp::on_radioXYZ_toggled(bool checked)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_spinBoxPx_valueChanged(double arg1)
 {
     if ( comp_.expired() ) return;
@@ -427,8 +371,6 @@ void FormComp::on_spinBoxPx_valueChanged(double arg1)
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_spinBoxPy_valueChanged(double arg1)
 {
@@ -443,8 +385,6 @@ void FormComp::on_spinBoxPy_valueChanged(double arg1)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_spinBoxPz_valueChanged(double arg1)
 {
     if ( comp_.expired() ) return;
@@ -457,8 +397,6 @@ void FormComp::on_spinBoxPz_valueChanged(double arg1)
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_spinBoxAx_valueChanged(double arg1)
 {
@@ -473,8 +411,6 @@ void FormComp::on_spinBoxAx_valueChanged(double arg1)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_spinBoxAy_valueChanged(double arg1)
 {
     if ( comp_.expired() ) return;
@@ -488,8 +424,6 @@ void FormComp::on_spinBoxAy_valueChanged(double arg1)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_spinBoxAz_valueChanged(double arg1)
 {
     if ( comp_.expired() ) return;
@@ -502,8 +436,6 @@ void FormComp::on_spinBoxAz_valueChanged(double arg1)
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_listIntervals_currentRowChanged(int currentRow)
 {
@@ -530,8 +462,6 @@ void FormComp::on_listIntervals_currentRowChanged(int currentRow)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_pushButtonIntervalAdd_clicked()
 {
     if ( comp_.expired() ) return;
@@ -545,8 +475,6 @@ void FormComp::on_pushButtonIntervalAdd_clicked()
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_pushButtonIntervalSave_clicked()
 {
@@ -562,8 +490,6 @@ void FormComp::on_pushButtonIntervalSave_clicked()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_pushButtonIntervalRemove_clicked()
 {
     if ( comp_.expired() ) return;
@@ -578,8 +504,6 @@ void FormComp::on_pushButtonIntervalRemove_clicked()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_toolButtonBrowseFiles_clicked()
 {
     QString new_file = getFile(ui_->lineEditFilePath->text());
@@ -588,8 +512,6 @@ void FormComp::on_toolButtonBrowseFiles_clicked()
         ui_->lineEditFilePath->setText(new_file);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_lineEditFilePath_textChanged(const QString &arg1)
 {
@@ -604,8 +526,6 @@ void FormComp::on_lineEditFilePath_textChanged(const QString &arg1)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_checkBoxSwitchVisible_toggled(bool checked)
 {
     if ( comp_.expired() ) return;
@@ -619,8 +539,6 @@ void FormComp::on_checkBoxSwitchVisible_toggled(bool checked)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_toolButtonBrowseBladeFiles_clicked()
 {
     QString new_file = getFile(ui_->lineEditBladeFile->text());
@@ -630,8 +548,6 @@ void FormComp::on_toolButtonBrowseBladeFiles_clicked()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_toolButtonBrowseShaftFiles_clicked()
 {
     QString new_file = getFile(ui_->lineEditShaftFile->text());
@@ -640,8 +556,6 @@ void FormComp::on_toolButtonBrowseShaftFiles_clicked()
         ui_->lineEditShaftFile->setText(new_file);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_lineEditBladeFile_textChanged(const QString &arg1)
 {
@@ -656,8 +570,6 @@ void FormComp::on_lineEditBladeFile_textChanged(const QString &arg1)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_lineEditShaftFile_textChanged(const QString &arg1)
 {
     if ( comp_.expired() ) return;
@@ -670,8 +582,6 @@ void FormComp::on_lineEditShaftFile_textChanged(const QString &arg1)
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_spinBoxBladesNo_valueChanged(int arg1)
 {
@@ -686,8 +596,6 @@ void FormComp::on_spinBoxBladesNo_valueChanged(int arg1)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_spinBoxHingeOffset_valueChanged(double arg1)
 {
     if ( comp_.expired() ) return;
@@ -700,8 +608,6 @@ void FormComp::on_spinBoxHingeOffset_valueChanged(double arg1)
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_radioButtonCW_toggled(bool checked)
 {
@@ -716,8 +622,6 @@ void FormComp::on_radioButtonCW_toggled(bool checked)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_spinBoxTransPx_valueChanged(double arg1)
 {
     if ( comp_.expired() ) return;
@@ -730,8 +634,6 @@ void FormComp::on_spinBoxTransPx_valueChanged(double arg1)
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_spinBoxTransPy_valueChanged(double arg1)
 {
@@ -746,8 +648,6 @@ void FormComp::on_spinBoxTransPy_valueChanged(double arg1)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_spinBoxTransPz_valueChanged(double arg1)
 {
     if ( comp_.expired() ) return;
@@ -760,8 +660,6 @@ void FormComp::on_spinBoxTransPz_valueChanged(double arg1)
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_spinBoxTransAx_valueChanged(double arg1)
 {
@@ -776,8 +674,6 @@ void FormComp::on_spinBoxTransAx_valueChanged(double arg1)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_spinBoxTransAy_valueChanged(double arg1)
 {
     if ( comp_.expired() ) return;
@@ -790,8 +686,6 @@ void FormComp::on_spinBoxTransAy_valueChanged(double arg1)
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_spinBoxTransAz_valueChanged(double arg1)
 {
@@ -806,8 +700,6 @@ void FormComp::on_spinBoxTransAz_valueChanged(double arg1)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_checkBoxAnimEnabled_toggled(bool checked)
 {
     if ( comp_.expired() ) return;
@@ -820,8 +712,6 @@ void FormComp::on_checkBoxAnimEnabled_toggled(bool checked)
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_spinBoxAnimTimeMin_valueChanged(double arg1)
 {
@@ -838,8 +728,6 @@ void FormComp::on_spinBoxAnimTimeMin_valueChanged(double arg1)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_spinBoxAnimTimeMax_valueChanged(double arg1)
 {
     if ( comp_.expired() ) return;
@@ -854,8 +742,6 @@ void FormComp::on_spinBoxAnimTimeMax_valueChanged(double arg1)
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_listKeyframes_currentRowChanged(int currentRow)
 {
@@ -904,8 +790,6 @@ void FormComp::on_listKeyframes_currentRowChanged(int currentRow)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_pushButtonAnimAdd_clicked()
 {
     if ( comp_.expired() ) return;
@@ -933,8 +817,6 @@ void FormComp::on_pushButtonAnimAdd_clicked()
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormComp::on_pushButtonAnimSave_clicked()
 {
@@ -966,8 +848,6 @@ void FormComp::on_pushButtonAnimSave_clicked()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormComp::on_pushButtonAnimRemove_clicked()
 {
     if ( comp_.expired() ) return;
@@ -981,8 +861,6 @@ void FormComp::on_pushButtonAnimRemove_clicked()
         emit(projectChanged());
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace gui
 } // namespace mc

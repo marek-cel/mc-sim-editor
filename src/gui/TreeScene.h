@@ -21,10 +21,8 @@
 
 #include <QTreeWidget>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui
-{
+namespace mc {
+namespace gui {
 
 class TreeScene : public QTreeWidget
 {
@@ -41,7 +39,5 @@ public:
 
 } // namespace gui
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_GUI_TREESCENE_H_

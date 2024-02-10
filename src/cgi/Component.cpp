@@ -19,12 +19,8 @@
 
 #include <cgi/Component.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace cgi {
 
 Component::Component(std::shared_ptr<Data> data)
     : data_(data)
@@ -34,22 +30,16 @@ Component::Component(std::shared_ptr<Data> data)
     children_.clear();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Component::~Component()
 {
     RemoveAllChildren();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Component::AddChild(std::shared_ptr<Component> child)
 {
     children_.push_back(child);
     root_->addChild(child->root().get());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Component::Update()
 {
@@ -59,8 +49,6 @@ void Component::Update()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Component::SetProject(std::shared_ptr<pro::Project> proj)
 {
     for ( auto child : children_ )
@@ -68,8 +56,6 @@ void Component::SetProject(std::shared_ptr<pro::Project> proj)
         child->SetProject(proj);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Component::RemoveAllChildren()
 {
@@ -84,8 +70,6 @@ void Component::RemoveAllChildren()
         it = children_.erase(it);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace cgi
 } // namespace mc

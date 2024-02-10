@@ -19,12 +19,8 @@
 
 #include "Playback.h"
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 Result Playback::Read(const QDomElement* node)
 {
@@ -35,8 +31,6 @@ Result Playback::Read(const QDomElement* node)
 
     return Result::Success;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Playback::Save(QDomDocument* doc, QDomElement* parent)
 {
@@ -61,8 +55,6 @@ Result Playback::Save(QDomDocument* doc, QDomElement* parent)
 
     return Result::Success;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

@@ -19,20 +19,14 @@
 
 #include <pro/Animated.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace pro {
 
 Animated::Animated(osg::Group* group)
     : Group(group)
 {
     animation_ = std::make_shared<Animation>(node_);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Animated::Read(const QDomElement* node)
 {
@@ -56,8 +50,6 @@ Result Animated::Read(const QDomElement* node)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result Animated::Save(QDomDocument* doc, QDomElement* parent)
 {
     Result result = Component::Save(doc, parent);
@@ -69,8 +61,6 @@ Result Animated::Save(QDomDocument* doc, QDomElement* parent)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void Animated::Update()
 {
     ////////////////
@@ -79,8 +69,6 @@ void Animated::Update()
 
     animation_->SetTime(time_);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void Animated::SetAnimationTime(double time)
 {
@@ -95,8 +83,6 @@ void Animated::SetAnimationTime(double time)
 
     animation_->SetTime(time_);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Animated::ReadAnimation(const QDomElement* node)
 {
@@ -113,14 +99,10 @@ Result Animated::ReadAnimation(const QDomElement* node)
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 Result Animated::SaveAnimation(QDomDocument* doc, QDomElement* parent)
 {
     return animation_->Save(doc, parent);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Animated::ReadParameters(const QDomElement* node)
 {
@@ -132,8 +114,6 @@ Result Animated::ReadParameters(const QDomElement* node)
 
     return result;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 Result Animated::SaveParameters(QDomDocument* doc, QDomElement* node)
 {
@@ -149,8 +129,6 @@ Result Animated::SaveParameters(QDomDocument* doc, QDomElement* node)
 
     return result;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

@@ -19,18 +19,14 @@
 #ifndef MC_SIM_PRO_GROUP_H_
 #define MC_SIM_PRO_GROUP_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <osg/Group>
 
 #include <Result.h>
 
 #include <pro/Component.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
+namespace mc {
+namespace pro {
 
 class Group : public Component
 {
@@ -82,7 +78,5 @@ protected:
 
 } // namespace pro
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_PRO_GROUP_H_

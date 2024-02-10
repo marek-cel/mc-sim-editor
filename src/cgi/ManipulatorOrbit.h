@@ -19,14 +19,10 @@
 #ifndef MC_SIM_EDITOR_CGI_MANIPULATORORBIT_H_
 #define MC_SIM_EDITOR_CGI_MANIPULATORORBIT_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <osgGA/NodeTrackerManipulator>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi
-{
+namespace mc {
+namespace cgi {
 
 /** */
 class ManipulatorOrbit : public osgGA::NodeTrackerManipulator
@@ -53,7 +49,5 @@ private:
 
 } // namespace cgi
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_CGI_MANIPULATORORBIT_H_

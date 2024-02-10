@@ -22,15 +22,11 @@
 #include <cgi/Colors.h>
 #include <cgi/Textures.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
+namespace mc {
+namespace pro {
 
 const double FLOLS::kSectorDegFrom = osg::DegreesToRadians(70.0f);
 const double FLOLS::kSectorDegUnto = osg::DegreesToRadians(110.0f);
-
-////////////////////////////////////////////////////////////////////////////////
 
 FLOLS::FLOLS()
     : PAT()
@@ -39,16 +35,12 @@ FLOLS::FLOLS()
     Create();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 std::unique_ptr<Component> FLOLS::Clone() const
 {
     std::unique_ptr<FLOLS> rotor = std::make_unique<FLOLS>();
     rotor->SetName(GetName());
     return rotor;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FLOLS::Create()
 {
@@ -67,8 +59,6 @@ void FLOLS::Create()
     pat_->addChild(lpn.get());
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FLOLS::CreateIFLOLS(osgSim::LightPointNode* lpn)
 {
     CreateIFLOLS_Datum(lpn);
@@ -76,8 +66,6 @@ void FLOLS::CreateIFLOLS(osgSim::LightPointNode* lpn)
     CreateIFLOLS_WaveOff(lpn);
     CreateIFLOLS_CutOff(lpn);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FLOLS::CreateIFLOLS_Datum(osgSim::LightPointNode* lpn)
 {
@@ -110,8 +98,6 @@ void FLOLS::CreateIFLOLS_Datum(osgSim::LightPointNode* lpn)
         lpn->addLightPoint(lpr);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FLOLS::CreateIFLOLS_Ball(osgSim::LightPointNode* lpn)
 {
@@ -225,8 +211,6 @@ void FLOLS::CreateIFLOLS_Ball(osgSim::LightPointNode* lpn)
     lpn->addLightPoint(lp_8);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FLOLS::CreateIFLOLS_WaveOff(osgSim::LightPointNode* lpn)
 {
     const double radius    = 4.0 * 0.3;
@@ -295,8 +279,6 @@ void FLOLS::CreateIFLOLS_WaveOff(osgSim::LightPointNode* lpn)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FLOLS::CreateIFLOLS_CutOff(osgSim::LightPointNode* lpn)
 {
     const double radius    = 4.0 * 0.3;
@@ -338,8 +320,6 @@ void FLOLS::CreateIFLOLS_CutOff(osgSim::LightPointNode* lpn)
     lpn->addLightPoint(lp_R1);
     lpn->addLightPoint(lp_R2);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace pro
 } // namespace mc

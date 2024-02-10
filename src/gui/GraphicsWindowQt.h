@@ -19,8 +19,6 @@
 #ifndef MC_SIM_EDITOR_GUI_GRAPHICSWINDOWQT_H_
 #define MC_SIM_EDITOR_GUI_GRAPHICSWINDOWQT_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <osg/Version>
 
 #include <osgViewer/GraphicsWindow>
@@ -34,10 +32,8 @@
 
 #include <defs.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui
-{
+namespace mc {
+namespace gui {
 
 /** */
 class GraphicsWindowQt : public osgViewer::GraphicsWindow
@@ -157,7 +153,5 @@ private:
 
 } // namespace gui
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_GUI_GRAPHICSWINDOWQT_H_

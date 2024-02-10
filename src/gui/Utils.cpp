@@ -19,12 +19,9 @@
 
 #include <gui/Utils.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui { namespace Utils
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace gui {
+namespace Utils {
 
 void setNoEmitChecked(QCheckBox* checkBox, bool checked)
 {
@@ -33,16 +30,12 @@ void setNoEmitChecked(QCheckBox* checkBox, bool checked)
     checkBox->blockSignals(false);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void setNoEmitChecked(QRadioButton* button, bool checked)
 {
     button->blockSignals(true);
     button->setChecked(checked);
     button->blockSignals(false);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void setNoEmitText(QLineEdit* lineEdit, QString text)
 {
@@ -51,16 +44,12 @@ void setNoEmitText(QLineEdit* lineEdit, QString text)
     lineEdit->blockSignals(false);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void setNoEmitValue(QDoubleSpinBox* spinBox, double value)
 {
     spinBox->blockSignals(true);
     spinBox->setValue(value);
     spinBox->blockSignals(false);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void setNoEmitValue(QSpinBox* spinBox, int value)
 {
@@ -69,15 +58,11 @@ void setNoEmitValue(QSpinBox* spinBox, int value)
     spinBox->blockSignals(false);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void setVisibility(QToolButton* button, QWidget* widget, bool visibility)
 {
     button->setArrowType(!visibility ? Qt::ArrowType::RightArrow : Qt::ArrowType::DownArrow);
     widget->setHidden(!visibility);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace Utils
 } // namespace gui

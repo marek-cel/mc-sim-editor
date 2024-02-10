@@ -19,20 +19,14 @@
 
 #include <cgi/ManipulatorTrack.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace cgi {
 
 ManipulatorTrack::ManipulatorTrack()
     : osgGA::TrackballManipulator()
 {
     setWheelZoomFactor(-getWheelZoomFactor());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 bool ManipulatorTrack::handleFrame(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us)
 {
@@ -45,16 +39,12 @@ bool ManipulatorTrack::handleFrame(const osgGA::GUIEventAdapter& ea, osgGA::GUIA
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 bool ManipulatorTrack::performMovementRightMouseButton(const double /*eventTimeDelta*/,
                                                        const double /*dx*/,
                                                        const double /*dy*/)
 {
     return true;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void ManipulatorTrack::boundDistance()
 {
@@ -67,8 +57,6 @@ void ManipulatorTrack::boundDistance()
         setDistance(0.1);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace cgi
 } // namespace mc

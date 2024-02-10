@@ -20,24 +20,18 @@
 #include <gui/FormAnim.h>
 #include <ui_FormAnim.h>
 
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace gui {
 
-namespace mc { namespace gui
-{
-
-////////////////////////////////////////////////////////////////////////////////
-
-FormAnim::FormAnim(QWidget *parent) :
-    QWidget(parent),
-    ui_(new Ui::FormAnim)
+FormAnim::FormAnim(QWidget* parent)
+    : QWidget(parent)
+    , ui_(new Ui::FormAnim)
 {
     ui_->setupUi(this);
 
     timer_id_ = startTimer(1000.0 / 60.0);
     _timer.start();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 FormAnim::~FormAnim()
 {
@@ -46,15 +40,11 @@ FormAnim::~FormAnim()
     if ( ui_ ) { delete ui_; } ui_ = nullptr;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormAnim::setProject(std::shared_ptr<pro::Project> proj)
 {
     proj_ = proj;
     updateAnimation();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormAnim::timerEvent(QTimerEvent* event)
 {
@@ -83,8 +73,6 @@ void FormAnim::timerEvent(QTimerEvent* event)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormAnim::updateAnimation()
 {
     if ( !proj_.expired() )
@@ -104,8 +92,6 @@ void FormAnim::updateAnimation()
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormAnim::on_pushButtonPlay_toggled(bool checked)
 {
     if ( checked )
@@ -117,8 +103,6 @@ void FormAnim::on_pushButtonPlay_toggled(bool checked)
         ui_->pushButtonPlay->setText(tr("Play"));
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormAnim::on_sliderTime_valueChanged(int value)
 {
@@ -137,8 +121,6 @@ void FormAnim::on_sliderTime_valueChanged(int value)
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 void FormAnim::on_spinBoxStartTime_valueChanged(double arg1)
 {
     ui_->spinBoxEndTime->setMinimum(arg1);
@@ -149,8 +131,6 @@ void FormAnim::on_spinBoxStartTime_valueChanged(double arg1)
     }
     emit(projectChanged());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void FormAnim::on_spinBoxEndTime_valueChanged(double arg1)
 {
@@ -163,7 +143,6 @@ void FormAnim::on_spinBoxEndTime_valueChanged(double arg1)
     emit(projectChanged());
 }
 
-
 void FormAnim::on_spinBoxSpeed_valueChanged(double arg1)
 {
     if ( !proj_.expired() )
@@ -173,8 +152,6 @@ void FormAnim::on_spinBoxSpeed_valueChanged(double arg1)
     }
     emit(projectChanged());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace gui
 } // namespace mc

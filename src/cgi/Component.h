@@ -19,8 +19,6 @@
 #ifndef MC_SIM_EDITOR_CGI_COMPONENT_H_
 #define MC_SIM_EDITOR_CGI_COMPONENT_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <memory>
 
 #include <osg/Group>
@@ -28,13 +26,10 @@
 #include <defs.h>
 
 #include <cgi/Data.h>
-
 #include <pro/Project.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi
-{
+namespace mc {
+namespace cgi {
 
 /**
  * @brief CGI component base class.
@@ -80,7 +75,5 @@ private:
 
 } // namespace cgi
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_CGI_COMPONENT_H_

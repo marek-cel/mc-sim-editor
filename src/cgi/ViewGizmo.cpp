@@ -25,12 +25,8 @@
 
 #include <cgi/Colors.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace cgi {
 
 ViewGizmo::ViewGizmo(std::shared_ptr<Data> data)
     : Component(data)
@@ -42,8 +38,6 @@ ViewGizmo::ViewGizmo(std::shared_ptr<Data> data)
 
     CreateGizmo();
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void ViewGizmo::Update()
 {
@@ -72,8 +66,6 @@ void ViewGizmo::Update()
         pat_->setPosition(osg::Vec3d(x, y, 0.0));
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void ViewGizmo::CreateGizmo()
 {
@@ -122,8 +114,6 @@ void ViewGizmo::CreateGizmo()
 
     geode->getOrCreateStateSet()->setAttributeAndModes(lineWidth, osg::StateAttribute::ON);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace cgi
 } // namespace mc

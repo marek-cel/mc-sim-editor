@@ -19,25 +19,18 @@
 #ifndef MC_SIM_EDITOR_GUI_FORMCOMP_H_
 #define MC_SIM_EDITOR_GUI_FORMCOMP_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <QToolButton>
 #include <QWidget>
 
 #include <pro/Component.h>
 #include <pro/Project.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace Ui
-{
+namespace Ui {
 class FormComp;
 } // namespace Ui
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui
-{
+namespace mc {
+namespace gui {
 
 class FormComp : public QWidget
 {
@@ -146,7 +139,5 @@ private slots:
 
 } // namespace gui
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_GUI_FORMCOMP_H_

@@ -19,10 +19,7 @@
 #ifndef MC_SIM_EDITOR_RESULT_H_
 #define MC_SIM_EDITOR_RESULT_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc
-{
+namespace mc {
 
 /**
  * @brief The Result enum
@@ -34,7 +31,5 @@ enum class Result : int
 };
 
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_RESULT_H_

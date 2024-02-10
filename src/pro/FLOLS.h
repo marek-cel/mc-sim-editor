@@ -19,16 +19,12 @@
 #ifndef MC_SIM_PRO_FLOLS_H_
 #define MC_SIM_PRO_FLOLS_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <osgSim/LightPointNode>
 
 #include <pro/PAT.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace pro
-{
+namespace mc {
+namespace pro {
 
 /** Improved Fresnel Lens Optical Landing System - IFLOLS */
 class FLOLS : public PAT
@@ -62,7 +58,5 @@ protected:
 
 } // namespace pro
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_PRO_FLOLS_H_

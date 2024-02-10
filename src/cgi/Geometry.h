@@ -19,16 +19,13 @@
 #ifndef MC_SIM_EDITOR_CGI_GEOMETRY_H_
 #define MC_SIM_EDITOR_CGI_GEOMETRY_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <osg/Geode>
 #include <osg/Geometry>
 #include <osg/Group>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi { namespace Geometry
-{
+namespace mc {
+namespace cgi {
+namespace Geometry {
 
 /**
  * @brief Creates line.
@@ -43,7 +40,5 @@ void CreateLine(osg::Geometry* geom, const osg::Vec3& b, const osg::Vec3& e,
 } // namespace Geometry
 } // namespace cgi
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_CGI_GEOMETRY_H_

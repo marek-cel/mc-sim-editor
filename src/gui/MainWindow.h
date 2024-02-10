@@ -19,8 +19,6 @@
 #ifndef MC_SIM_EDITOR_GUI_MAINWINDOW_H_
 #define MC_SIM_EDITOR_GUI_MAINWINDOW_H_
 
-////////////////////////////////////////////////////////////////////////////////
-
 #include <memory>
 
 #include <QMainWindow>
@@ -31,17 +29,12 @@
 
 #include <pro/Project.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace Ui
-{
+namespace Ui {
 class MainWindow;
-}
+} // namespace Ui
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace gui
-{
+namespace mc {
+namespace gui {
 
 class MainWindow : public QMainWindow
 {
@@ -135,7 +128,5 @@ private slots:
 
 } // namespace gui
 } // namespace mc
-
-////////////////////////////////////////////////////////////////////////////////
 
 #endif // MC_SIM_EDITOR_GUI_MAINWINDOW_H_

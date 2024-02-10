@@ -19,12 +19,8 @@
 
 #include <cgi/ManipulatorOrbit.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-namespace mc { namespace cgi
-{
-
-////////////////////////////////////////////////////////////////////////////////
+namespace mc {
+namespace cgi {
 
 ManipulatorOrbit::ManipulatorOrbit()
     : osgGA::NodeTrackerManipulator()
@@ -33,8 +29,6 @@ ManipulatorOrbit::ManipulatorOrbit()
 
     setWheelZoomFactor(-getWheelZoomFactor());
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 bool ManipulatorOrbit::handleFrame(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us)
 {
@@ -47,16 +41,12 @@ bool ManipulatorOrbit::handleFrame(const osgGA::GUIEventAdapter& ea, osgGA::GUIA
     return result;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
 bool ManipulatorOrbit::performMovementRightMouseButton(const double /*eventTimeDelta*/,
                                                        const double /*dx*/,
                                                        const double /*dy*/)
 {
     return true;
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 void ManipulatorOrbit::boundDistance()
 {
@@ -69,8 +59,6 @@ void ManipulatorOrbit::boundDistance()
         setDistance(0.1);
     }
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 } // namespace cgi
 } // namespace mc
