@@ -51,6 +51,13 @@ void setNoEmitValue(QDoubleSpinBox* spinBox, double value)
     spinBox->blockSignals(false);
 }
 
+void setNoEmitValue(QSlider* slider, int value)
+{
+    slider->blockSignals(true);
+    slider->setValue(value);
+    slider->blockSignals(false);
+}
+
 void setNoEmitValue(QSpinBox* spinBox, int value)
 {
     spinBox->blockSignals(true);

@@ -136,10 +136,10 @@ void FormComp::updateParametersAnim(std::shared_ptr<pro::Component> comp)
     {
         ui_->widgetWrapAnim->show();
 
-        ui_->checkBoxAnimEnabled->setChecked(anim->GetAnimationEnabled());
+        Utils::setNoEmitChecked(ui_->checkBoxAnimEnabled, anim->GetAnimationEnabled());
 
-        ui_->spinBoxAnimTimeMin->setValue(anim->GetAnimation()->GetTimeMin());
-        ui_->spinBoxAnimTimeMax->setValue(anim->GetAnimation()->GetTimeMax());
+        Utils::setNoEmitValue(ui_->spinBoxAnimTimeMin, anim->GetAnimation()->GetTimeMin());
+        Utils::setNoEmitValue(ui_->spinBoxAnimTimeMax, anim->GetAnimation()->GetTimeMax());
 
         ui_->listKeyframes->clear();
         pro::Animation::Keyframes keyframes = anim->GetAnimation()->GetKeyframes();

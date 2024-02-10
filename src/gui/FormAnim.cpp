@@ -20,6 +20,8 @@
 #include <gui/FormAnim.h>
 #include <ui_FormAnim.h>
 
+#include <gui/Utils.h>
+
 namespace mc {
 namespace gui {
 
@@ -81,14 +83,14 @@ void FormAnim::updateAnimation()
 
         currentTime_ = proj->GetPlayback()->current_time();
 
-        ui_->spinBoxStartTime->setValue(proj->GetPlayback()->time_start());
-        ui_->spinBoxEndTime->setValue(proj->GetPlayback()->time_end());
-        ui_->spinBoxSpeed->setValue(proj->GetPlayback()->speed());
-        ui_->spinBoxCurrentTime->setValue(currentTime_);
+        Utils::setNoEmitValue(ui_->spinBoxStartTime, proj->GetPlayback()->time_start());
+        Utils::setNoEmitValue(ui_->spinBoxEndTime, proj->GetPlayback()->time_end());
+        Utils::setNoEmitValue(ui_->spinBoxSpeed, proj->GetPlayback()->speed());
+        Utils::setNoEmitValue(ui_->spinBoxCurrentTime, currentTime_);
 
         double frac = (currentTime_ - ui_->spinBoxStartTime->value())
                     / (ui_->spinBoxEndTime->value() - ui_->spinBoxStartTime->value());
-        ui_->sliderTime->setValue(100*frac);
+        Utils::setNoEmitValue(ui_->sliderTime, 100*frac);
     }
 }
 

@@ -23,6 +23,7 @@
 #include <QDoubleSpinBox>
 #include <QLineEdit>
 #include <QRadioButton>
+#include <QSlider>
 #include <QSpinBox>
 #include <QToolButton>
 #include <QWidget>
@@ -38,6 +39,8 @@ void setNoEmitChecked(QRadioButton* button, bool checked);
 void setNoEmitText(QLineEdit* lineEdit, QString text);
 
 void setNoEmitValue(QDoubleSpinBox* spinBox, double value);
+
+void setNoEmitValue(QSlider* slider, int value);
 
 void setNoEmitValue(QSpinBox* spinBox, int value);
 
