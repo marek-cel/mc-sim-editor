@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mcedit>
+ <assembly>
+  <group name="Root" depth_sorted_bin_state="1" depth_sorted_bin_value="2">
+   <group name="Group" depth_sorted_bin_state="0" depth_sorted_bin_value="1">
+    <file file="pyramid.osgt" name="File" depth_sorted_bin_state="0" depth_sorted_bin_value="1"/>
+   </group>
+   <pat name="PAT" depth_sorted_bin_state="0" anim_enabled="0" py="0.000000" ay="0.000000000000" px="-2.000000" depth_sorted_bin_value="1" az="0.000000000000" convention="0" ax="0.000000000000" pz="0.000000">
+    <box name="Box" depth_sorted_bin_state="0" depth_sorted_bin_value="1"/>
+   </pat>
+   <lod interval_1="40" name="LOD" depth_sorted_bin_state="0" interval_2="60" depth_sorted_bin_value="1" interval_0="20">
+    <pat name="PAT" depth_sorted_bin_state="0" anim_enabled="0" py="0.000000" ay="0.000000000000" px="0.000000" depth_sorted_bin_value="1" az="0.000000000000" convention="0" ax="0.000000000000" pz="2.000000">
+     <box name="Box" depth_sorted_bin_state="0" depth_sorted_bin_value="1"/>
+    </pat>
+    <pat name="PAT" depth_sorted_bin_state="0" anim_enabled="0" py="0.000000" ay="0.000000000000" px="0.000000" depth_sorted_bin_value="1" az="0.000000000000" convention="0" ax="0.000000000000" pz="4.000000">
+     <box name="Box" depth_sorted_bin_state="0" depth_sorted_bin_value="1"/>
+    </pat>
+    <pat name="PAT" depth_sorted_bin_state="0" anim_enabled="0" py="0.000000" ay="0.000000000000" px="0.000000" depth_sorted_bin_value="1" az="0.000000000000" convention="0" ax="0.000000000000" pz="6.000000">
+     <box name="Box" depth_sorted_bin_state="0" depth_sorted_bin_value="1"/>
+    </pat>
+   </lod>
+   <switch name="Switch" depth_sorted_bin_state="0" depth_sorted_bin_value="1" visible="1">
+    <pat name="PAT" depth_sorted_bin_state="0" anim_enabled="0" py="-2.000000" ay="0.000000000000" px="0.000000" depth_sorted_bin_value="1" az="0.000000000000" convention="0" ax="0.000000000000" pz="0.000000">
+     <box name="Box" depth_sorted_bin_state="0" depth_sorted_bin_value="1"/>
+    </pat>
+   </switch>
+   <rotor blades_no="4" name="Rotor" depth_sorted_bin_state="0" anim_enabled="0" py="0.000000" ay="0.000000000000" file_blade="blade.osgt" px="0.000000" depth_sorted_bin_value="1" file_shaft="shaft.osgt" az="0.000000000000" direction="0" convention="0" ax="0.000000000000" pz="-2.000000" hinge_offset="1"/>
+   <matrix_trans name="Matrix Transform" depth_sorted_bin_state="0" anim_enabled="1" py="0.000000" ay="0.000000000000" px="0.000000" depth_sorted_bin_value="1" az="0.000000000000" ax="0.000000000000" pz="-1.000000">
+    <animation t_min="0.0000" t_max="1.0000">
+     <keyframe py="0.000000" ay="0.000000000000" px="0.000000" az="0.000000000000" t="0.0000" ax="0.000000000000" pz="-1.000000"/>
+     <keyframe py="0.000000" ay="0.000000000000" px="1.000000" az="0.000000000000" t="0.5000" ax="0.000000000000" pz="-1.000000"/>
+     <keyframe py="0.000000" ay="0.000000000000" px="2.000000" az="0.000000000000" t="1.0000" ax="0.000000000000" pz="-1.000000"/>
+    </animation>
+    <box name="Box" depth_sorted_bin_state="0" depth_sorted_bin_value="1"/>
+   </matrix_trans>
+   <flols name="FLOLS" depth_sorted_bin_state="0" anim_enabled="0" py="0.000000" ay="0.000000000000" px="0.000000" depth_sorted_bin_value="1" az="0.000000000000" convention="0" ax="0.000000000000" pz="0.000000"/>
+  </group>
+ </assembly>
+ <playback time_end="1.000000" speed="0.500000" current_time="0.500000" time_start="0.000000"/>
+</mcedit>

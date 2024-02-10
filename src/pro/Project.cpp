@@ -44,7 +44,7 @@ Result Project::Read(const QString& file)
     doc.setContent(&dev_file, false);
 
     QDomElement node_root = doc.documentElement();
-    if ( node_root.tagName() != "project" )
+    if ( node_root.tagName() != "mcedit" )
     {
         return Result::Failure;
     }
@@ -84,9 +84,9 @@ Result Project::Save(const QString& file)
 {
     QString file_temp = file;
 
-    if ( QFileInfo(file_temp).suffix() != QString("pro") )
+    if ( QFileInfo(file_temp).suffix() != QString("mcedit") )
     {
-        file_temp += ".pro";
+        file_temp += ".mcedit";
     }
 
     QFile dev_file(file_temp);
@@ -99,10 +99,10 @@ Result Project::Save(const QString& file)
         out.setDevice( &dev_file );
         out.setCodec("UTF-8");
 
-        QDomDocument doc("project");
+        QDomDocument doc("mcedit");
         doc.setContent(&dev_file, false);
 
-        QDomElement root_node = doc.createElement("project");
+        QDomElement root_node = doc.createElement("mcedit");
         doc.appendChild(root_node);
 
 #       ifdef MCSIM_EDITOR_MODEL_ASSEMBLER

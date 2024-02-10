@@ -55,6 +55,8 @@ public:
 
     ~MainWindow();
 
+    void openFileFromCommandLine(QString filename);
+
 public slots:
 
     void projectChanged();
@@ -77,6 +79,8 @@ private:
     RecentActions recent_actions_;          ///< recent action items
 
     std::shared_ptr<pro::Project> proj_;    ///< current project
+
+    int recent_files_max_ = 10;
 
     bool saved_ = true;                     ///< specifies if current file is saved or if there are unsaved changes
 

@@ -24,9 +24,6 @@
 
 #include <gui/MainWindow.h>
 
-////////////////////////////////////////////////////////////////////////////////
-
-/** This is application main function. */
 int main(int argc, char* argv[])
 {
     setlocale( LC_ALL, "C" );
@@ -42,6 +39,11 @@ int main(int argc, char* argv[])
     QSharedPointer<mc::gui::MainWindow> win(new mc::gui::MainWindow());
 
     win->show();
+
+    if ( argc > 1 )
+    {
+        win->openFileFromCommandLine(argv[1]);
+    }
 
     int result = app->exec();
 

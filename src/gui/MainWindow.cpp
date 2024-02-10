@@ -69,6 +69,13 @@ MainWindow::~MainWindow()
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void MainWindow::openFileFromCommandLine(QString filename)
+{
+    readProject(filename);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void MainWindow::projectChanged()
 {
     saved_ = false;
@@ -117,7 +124,7 @@ void MainWindow::addRecentFile(QString file)
         }
     }
 
-    for ( int i = 0; i < recent_files.size() && i < 4; ++i )
+    for ( int i = 0; i < recent_files.size() && i < recent_files_max_; ++i )
     {
         RecentAction* action = new RecentAction(recent_files.at(i), ui_->menuRecentFiles);
         recent_actions_.push_back(action);
@@ -169,7 +176,7 @@ void MainWindow::openProject()
     QString filter;
     QString selectedFilter;
 
-    filter += selectedFilter = "(*.pro)";
+    filter += selectedFilter = "(*.mcedit)";
 
     QString file = QFileDialog::getOpenFileName(this, caption, dir, filter, &selectedFilter);
 
@@ -204,7 +211,7 @@ void MainWindow::saveProjectAs()
     QString filter;
     QString selectedFilter;
 
-    filter += selectedFilter = "(*.pro)";
+    filter += selectedFilter = "(*.mcedit)";
 
     QString newFile = QFileDialog::getSaveFileName(this, caption, dir, filter, &selectedFilter);
 
@@ -247,8 +254,13 @@ void MainWindow::exportModel()
 
 void MainWindow::readProject(QString file)
 {
-    if ( file.length() > 0 && QFileInfo(file).suffix() == QString("pro") )
+    QFileInfo fileInfo(file);
+
+    if ( file.length() > 0 && fileInfo.suffix() == QString("mcedit") )
     {
+        QDir proj_dir = fileInfo.absoluteDir();
+        QString fileFullPath = proj_dir.absoluteFilePath(fileInfo.fileName());
+
         std::shared_ptr<pro::Project> proj_temp = std::make_shared<pro::Project>();
         if ( Result::Success == proj_temp->Read(file) )
         {
