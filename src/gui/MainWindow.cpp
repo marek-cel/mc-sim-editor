@@ -262,7 +262,7 @@ void MainWindow::readProject(QString file)
         QString fileFullPath = proj_dir.absoluteFilePath(fileInfo.fileName());
 
         std::shared_ptr<pro::Project> proj_temp = std::make_shared<pro::Project>();
-        if ( Result::Success == proj_temp->Read(file) )
+        if ( Result::Success == proj_temp->Read(fileFullPath) )
         {
             proj_ = proj_temp;
             saved_ = true;
