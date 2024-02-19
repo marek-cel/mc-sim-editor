@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuProject">
@@ -141,7 +141,7 @@
      <addaction name="actionViewBack"/>
      <addaction name="actionViewFront"/>
     </widget>
-    <addaction name="actionRefresh"/>
+    <addaction name="actionReload"/>
     <addaction name="separator"/>
     <addaction name="actionShowGrid"/>
     <addaction name="separator"/>
@@ -191,9 +191,12 @@
     <string>Clear recent</string>
    </property>
   </action>
-  <action name="actionRefresh">
+  <action name="actionReload">
    <property name="text">
-    <string>Refresh (Ctrl+R)</string>
+    <string>Reload (Ctrl+R)</string>
+   </property>
+   <property name="toolTip">
+    <string>Reload (Ctrl+R)</string>
    </property>
   </action>
   <action name="actionAbout">

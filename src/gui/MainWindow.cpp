@@ -37,7 +37,8 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui_->setupUi(this);
 
-    shortcut_save_ = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this, SLOT(on_actionSave_triggered()));
+    shortcut_save_   = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this, SLOT(on_actionSave_triggered()));
+    shortcut_reload_ = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_R), this, SLOT(on_actionReload_triggered()));
 
     connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), ui_->widgetComp  , SLOT(setProject(std::shared_ptr<pro::Project>)));
     connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), ui_->widgetScene , SLOT(setProject(std::shared_ptr<pro::Project>)));
@@ -402,7 +403,7 @@ void MainWindow::on_actionExit_triggered()
     close();
 }
 
-void MainWindow::on_actionRefresh_triggered()
+void MainWindow::on_actionReload_triggered()
 {
     cgi::Models::Reset();
     cgi::Textures::Reset();

@@ -67,7 +67,8 @@ private:
 
     Ui::MainWindow* ui_ = nullptr;
 
-    QShortcut* shortcut_save_ = nullptr;    ///< save shortcut
+    QShortcut* shortcut_save_   = nullptr;  ///< save shortcut
+    QShortcut* shortcut_reload_ = nullptr;  ///< reload shortcut
 
     RecentActions recent_actions_;          ///< recent action items
 
@@ -109,7 +110,7 @@ private slots:
     void on_actionExport_triggered();
     void on_actionExit_triggered();
 
-    void on_actionRefresh_triggered();
+    void on_actionReload_triggered();
     void on_actionShowGrid_toggled(bool checked);
     void on_actionViewDefault_triggered();
     void on_actionViewTop_triggered();
