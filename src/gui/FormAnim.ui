@@ -175,6 +175,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>pushButtonPlay</tabstop>
+  <tabstop>spinBoxStartTime</tabstop>
+  <tabstop>spinBoxEndTime</tabstop>
+  <tabstop>spinBoxSpeed</tabstop>
+  <tabstop>spinBoxCurrentTime</tabstop>
+  <tabstop>sliderTime</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

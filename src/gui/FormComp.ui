@@ -1486,6 +1486,63 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>buttonComp</tabstop>
+  <tabstop>buttonPAT</tabstop>
+  <tabstop>buttonLOD</tabstop>
+  <tabstop>buttonFile</tabstop>
+  <tabstop>buttonSwitch</tabstop>
+  <tabstop>buttonRotor</tabstop>
+  <tabstop>buttonTrans</tabstop>
+  <tabstop>buttonAnim</tabstop>
+  <tabstop>checkBoxDepthSortedBin</tabstop>
+  <tabstop>spinBoxDepthSortedBin</tabstop>
+  <tabstop>radioXYZ</tabstop>
+  <tabstop>radioZYX</tabstop>
+  <tabstop>spinBoxPx</tabstop>
+  <tabstop>spinBoxPy</tabstop>
+  <tabstop>spinBoxPz</tabstop>
+  <tabstop>spinBoxAx</tabstop>
+  <tabstop>spinBoxAy</tabstop>
+  <tabstop>spinBoxAz</tabstop>
+  <tabstop>spinBoxInterval</tabstop>
+  <tabstop>pushButtonIntervalAdd</tabstop>
+  <tabstop>pushButtonIntervalSave</tabstop>
+  <tabstop>pushButtonIntervalRemove</tabstop>
+  <tabstop>listIntervals</tabstop>
+  <tabstop>lineEditFilePath</tabstop>
+  <tabstop>toolButtonBrowseFiles</tabstop>
+  <tabstop>checkBoxSwitchVisible</tabstop>
+  <tabstop>lineEditBladeFile</tabstop>
+  <tabstop>toolButtonBrowseBladeFiles</tabstop>
+  <tabstop>lineEditShaftFile</tabstop>
+  <tabstop>toolButtonBrowseShaftFiles</tabstop>
+  <tabstop>spinBoxBladesNo</tabstop>
+  <tabstop>spinBoxHingeOffset</tabstop>
+  <tabstop>radioCW</tabstop>
+  <tabstop>radioCCW</tabstop>
+  <tabstop>spinBoxTransPx</tabstop>
+  <tabstop>spinBoxTransPy</tabstop>
+  <tabstop>spinBoxTransPz</tabstop>
+  <tabstop>spinBoxTransAx</tabstop>
+  <tabstop>spinBoxTransAy</tabstop>
+  <tabstop>spinBoxTransAz</tabstop>
+  <tabstop>checkBoxAnimEnabled</tabstop>
+  <tabstop>spinBoxAnimTimeMin</tabstop>
+  <tabstop>spinBoxAnimTimeMax</tabstop>
+  <tabstop>listKeyframes</tabstop>
+  <tabstop>pushButtonAnimAdd</tabstop>
+  <tabstop>pushButtonAnimSave</tabstop>
+  <tabstop>pushButtonAnimRemove</tabstop>
+  <tabstop>spinBoxAnimT</tabstop>
+  <tabstop>spinBoxAnimPx</tabstop>
+  <tabstop>spinBoxAnimPy</tabstop>
+  <tabstop>spinBoxAnimPz</tabstop>
+  <tabstop>spinBoxAnimAx</tabstop>
+  <tabstop>spinBoxAnimAy</tabstop>
+  <tabstop>spinBoxAnimAz</tabstop>
+  <tabstop>scrollArea</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
  <buttongroups>

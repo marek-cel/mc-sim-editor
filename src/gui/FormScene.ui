@@ -88,6 +88,12 @@
    <header>gui/TreeScene.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>comboTypes</tabstop>
+  <tabstop>buttonAdd</tabstop>
+  <tabstop>treeScene</tabstop>
+  <tabstop>scrollAreaScene</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
