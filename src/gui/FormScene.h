@@ -64,6 +64,8 @@ private:
     QAction* action_rename_ = nullptr;
     QAction* action_remove_ = nullptr;
 
+    QAction* action_change_parent_ = nullptr;
+
     QAction* action_anims_turn_on_  = nullptr;
     QAction* action_anims_turn_off_ = nullptr;
 
@@ -89,6 +91,8 @@ private slots:
 
     void actionRename_triggered();
     void actionRemove_triggered();
+
+    void actionChangeParent_triggered();
 
     void actionAnimsOn_triggered();
     void actionAnimsOff_triggered();

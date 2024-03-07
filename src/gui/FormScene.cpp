@@ -186,6 +186,13 @@ void FormScene::createSceneMenu()
     scene_menu_->addAction(action_rename_);
     scene_menu_->addAction(action_remove_);
 
+//    scene_menu_->addSeparator();
+//    action_change_parent_ = new QAction(tr("Change parent"), this);
+//    action_change_parent_->setEnabled(false);
+//    connect(action_change_parent_, SIGNAL(triggered()), this, SLOT(actionChangeParent_triggered()));
+//    scene_menu_->addAction(action_change_parent_);
+
+    scene_menu_->addSeparator();
     action_anims_turn_on_  = new QAction(tr("Enable all children animations"  ), this);
     action_anims_turn_off_ = new QAction(tr("Disable all children animations" ), this);
     connect(action_anims_turn_on_  , SIGNAL(triggered()), this, SLOT(actionAnimsOn_triggered()));
@@ -245,6 +252,11 @@ void FormScene::actionRemove_triggered()
     {
         removeComponent();
     }
+}
+
+void FormScene::actionChangeParent_triggered()
+{
+    // TODO
 }
 
 void FormScene::actionAnimsOn_triggered()
