@@ -5,6 +5,7 @@ HEADERS += \
     $$PWD/GraphicsWindowQt.h \
     $$PWD/KeyMap.h \
     $$PWD/MainWindow.h \
+    $$PWD/MoveAction.h \
     $$PWD/RecentAction.h \
     $$PWD/TreeScene.h \
     $$PWD/Utils.h \
@@ -18,6 +19,7 @@ SOURCES += \
     $$PWD/GraphicsWindowQt.cpp \
     $$PWD/KeyMap.cpp \
     $$PWD/MainWindow.cpp \
+    $$PWD/MoveAction.cpp \
     $$PWD/RecentAction.cpp \
     $$PWD/TreeScene.cpp \
     $$PWD/Utils.cpp \

@@ -28,6 +28,8 @@
 #include <pro/Component.h>
 #include <pro/Project.h>
 
+#include <gui/MoveAction.h>
+
 namespace Ui {
 class FormScene;
 } // namespace Ui
@@ -64,7 +66,7 @@ private:
     QAction* action_rename_ = nullptr;
     QAction* action_remove_ = nullptr;
 
-    QAction* action_change_parent_ = nullptr;
+    QAction* action_move_ = nullptr;
 
     QAction* action_anims_turn_on_  = nullptr;
     QAction* action_anims_turn_off_ = nullptr;
@@ -78,12 +80,16 @@ private:
     void addComponent();
     void removeComponent();
 
+    void moveComponent(std::shared_ptr<pro::Group> new_parent);
+
     void addTreeWidgetSceneItem(pro::Component* comp, int index = 0,
                                 QTreeWidgetItem* parent = nullptr);
 
     void createSceneMenu();
 
     void populateComboBoxTypes();
+
+    void populateMoveMenu(QMenu* menu, std::shared_ptr<pro::Group> group);
 
     void updateTreeWidgetScene();
 
@@ -92,7 +98,7 @@ private slots:
     void actionRename_triggered();
     void actionRemove_triggered();
 
-    void actionChangeParent_triggered();
+    void actionMove_triggered();
 
     void actionAnimsOn_triggered();
     void actionAnimsOff_triggered();
@@ -103,6 +109,8 @@ private slots:
                                          QTreeWidgetItem* previous);
     void on_treeScene_customContextMenuRequested(const QPoint& pos);
     void on_treeScene_itemChanged(QTreeWidgetItem* item, int column);
+
+    void moveHere_triggered(MoveAction* action);
 };
 
 } // namespace gui

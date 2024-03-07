@@ -134,6 +134,35 @@ void FormScene::removeComponent()
     }
 }
 
+void FormScene::moveComponent(std::shared_ptr<pro::Group> new_parent)
+{
+    QModelIndex index = ui_->treeScene->currentIndex();
+    std::shared_ptr<pro::Component> comp = getComponentByIndex(index);
+
+    if ( comp )
+    {
+        if ( comp->GetParent().expired() )
+        {
+            return;
+        }
+
+        std::shared_ptr<pro::Component> parent = comp->GetParent().lock();
+        if ( parent )
+        {
+            std::shared_ptr<pro::Group> group = std::dynamic_pointer_cast<pro::Group>(parent);
+
+            if ( group )
+            {
+                group->RemoveChild(comp);
+            }
+        }
+
+        new_parent->AddChild(comp);
+        updateTreeWidgetScene();
+        emit(projectChanged());
+    }
+}
+
 void FormScene::addTreeWidgetSceneItem(pro::Component* comp, int index,
                                        QTreeWidgetItem* parent)
 {
@@ -186,11 +215,11 @@ void FormScene::createSceneMenu()
     scene_menu_->addAction(action_rename_);
     scene_menu_->addAction(action_remove_);
 
-//    scene_menu_->addSeparator();
-//    action_change_parent_ = new QAction(tr("Change parent"), this);
-//    action_change_parent_->setEnabled(false);
-//    connect(action_change_parent_, SIGNAL(triggered()), this, SLOT(actionChangeParent_triggered()));
-//    scene_menu_->addAction(action_change_parent_);
+    scene_menu_->addSeparator();
+    action_move_ = new QAction(tr("Move"), this);
+    action_move_->setEnabled(false);
+    connect(action_move_, SIGNAL(triggered()), this, SLOT(actionMove_triggered()));
+    scene_menu_->addAction(action_move_);
 
     scene_menu_->addSeparator();
     action_anims_turn_on_  = new QAction(tr("Enable all children animations"  ), this);
@@ -212,6 +241,37 @@ void FormScene::populateComboBoxTypes()
         else
         {
             ui_->comboTypes->addItem(type.name);
+        }
+    }
+}
+
+void FormScene::populateMoveMenu(QMenu* menu, std::shared_ptr<pro::Group> group)
+{
+    if ( group )
+    {
+        QMenu* group_menu = new QMenu(group->GetName(), menu);
+        menu->addMenu(group_menu);
+
+        QAction* action = new MoveAction(group, tr("Move here."), group_menu);
+        group_menu->addAction(action);
+        connect(action, SIGNAL(triggered(MoveAction*)), SLOT(moveHere_triggered(MoveAction*)));
+
+        int count = 0;
+        for ( int i = 0; i < group->GetChildrenCount(); ++i )
+        {
+            std::shared_ptr<pro::Component> child = group->GetChild(i);
+            std::shared_ptr<pro::Group> cg = std::dynamic_pointer_cast<pro::Group>(child);
+
+            if ( cg )
+            {
+                if ( count == 0 )
+                {
+                    group_menu->addSeparator();
+                }
+                count++;
+            }
+
+            populateMoveMenu(group_menu, cg);
         }
     }
 }
@@ -254,9 +314,19 @@ void FormScene::actionRemove_triggered()
     }
 }
 
-void FormScene::actionChangeParent_triggered()
+void FormScene::actionMove_triggered()
 {
-    // TODO
+    QMenu menu(this);
+
+    if ( !proj_.expired() )
+    {
+        std::shared_ptr<pro::Project> proj = proj_.lock();
+        std::shared_ptr<pro::Component> root = proj->GetAssembly()->GetRoot();
+        std::shared_ptr<pro::Group> rg = std::dynamic_pointer_cast<pro::Group>(root);
+        populateMoveMenu(&menu, rg);
+    }
+
+    menu.exec(QCursor::pos());
 }
 
 void FormScene::actionAnimsOn_triggered()
@@ -292,6 +362,12 @@ void FormScene::on_treeScene_currentItemChanged(QTreeWidgetItem*,
     std::shared_ptr<pro::Component> comp = getComponentByIndex(ui_->treeScene->currentIndex());
     ui_->buttonAdd->setEnabled(comp->CanBeParent());
 
+    action_move_->setEnabled(false);
+    if ( !comp->IsRoot() )
+    {
+        action_move_->setEnabled(true);
+    }
+
     emit(componentChanged(comp));
 }
 
@@ -309,6 +385,15 @@ void FormScene::on_treeScene_itemChanged(QTreeWidgetItem* item, int column)
         comp->SetName(item->text(0));
         updateTreeWidgetScene();
         emit(projectChanged());
+    }
+}
+
+void FormScene::moveHere_triggered(MoveAction* action)
+{
+    if ( !action->group().expired() )
+    {
+        std::shared_ptr<pro::Group> group = action->group().lock();
+        moveComponent(group);
     }
 }
 

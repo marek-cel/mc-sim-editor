@@ -59,6 +59,8 @@ public:
     /** */
     virtual void Update();
 
+    virtual bool IsRoot() const;
+
     virtual inline QString GetName() const { return name_; }
 
     virtual inline std::weak_ptr<Component> GetParent() const { return parent_; }

@@ -49,6 +49,16 @@ Result Component::Save(QDomDocument* doc, QDomElement* parent)
 
 void Component::Update() {}
 
+bool Component::IsRoot() const
+{
+    if ( parent_.expired() )
+    {
+        return true;
+    }
+
+    return false;
+}
+
 void Component::SetName(QString name)
 {
     name_ = name;
