@@ -1,0 +1,27 @@
+{
+	"name": "mc-sim-editor-dev-env",
+	
+	"build": {
+		"context": "..",
+		"dockerfile": "../Dockerfile"
+	},
+
+	"customizations":
+	{
+		"vscode" : {
+			"settings": {},
+			"extensions": [
+				"ms-vscode.cpptools",
+				"ms-vscode.cpptools-extension-pack",
+				"ms-vscode.cmake-tools",
+				"ms-python.python",
+				"ms-azuretools.vscode-docker",
+				"twxs.cmake"
+			]
+		}
+	},
+
+	"remoteUser": "vscode",
+	"containerUser" : "vscode",
+	"updateRemoteUserUID": true
+}
