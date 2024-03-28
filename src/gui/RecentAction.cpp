@@ -24,7 +24,7 @@ namespace gui {
 
 RecentAction::RecentAction(QString file, QObject* parent)
     : QAction(file, parent)
-    , file_(file)
+    , _file(file)
 {
     connect(this, SIGNAL(triggered()), this, SLOT(trigger()));
 }

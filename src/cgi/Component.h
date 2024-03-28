@@ -46,31 +46,30 @@ public:
      */
     Component(std::shared_ptr<Data> data);
 
-    /** @brief Destructor. */
     virtual ~Component();
 
     /** @brief Adds child to the component. */
-    virtual void AddChild(std::shared_ptr<Component> child);
+    virtual void addChild(std::shared_ptr<Component> child);
 
     /** @brief Updates component and all its children. */
-    virtual void Update();
+    virtual void update();
 
-    virtual void SetProject(std::shared_ptr<pro::Project> proj);
+    virtual void setProject(std::shared_ptr<pro::Project> proj);
 
     /** @brief Returns component root node.  */
-    inline osg::ref_ptr<osg::Group> root() { return root_; }
+    inline osg::ref_ptr<osg::Group> root() { return _root; }
 
 protected:
 
-    std::weak_ptr<Data> data_;              ///< data
+    std::weak_ptr<Data> _data;              ///< data
 
-    osg::ref_ptr<osg::Group> root_;         ///< OSG module root node
-    List children_;                         ///< children nodes
+    osg::ref_ptr<osg::Group> _root;         ///< OSG module root node
+    List _children;                         ///< children nodes
 
 private:
 
     /** Removes all children. */
-    void RemoveAllChildren();
+    void removeAllChildren();
 };
 
 } // namespace cgi

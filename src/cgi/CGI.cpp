@@ -25,9 +25,9 @@ namespace cgi {
 CGI::CGI(std::shared_ptr<Data> data)
     : Component(data)
 {
-    root_->setName("SceneRoot");
+    _root->setName("SceneRoot");
 
-    osg::ref_ptr<osg::StateSet> rootStateSet = root_->getOrCreateStateSet();
+    osg::ref_ptr<osg::StateSet> rootStateSet = _root->getOrCreateStateSet();
     rootStateSet->setMode(GL_RESCALE_NORMAL , osg::StateAttribute::ON);
     rootStateSet->setMode(GL_LIGHT0         , osg::StateAttribute::ON);
     rootStateSet->setMode(GL_LIGHT1         , osg::StateAttribute::ON);

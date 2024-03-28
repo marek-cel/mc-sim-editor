@@ -26,22 +26,22 @@
 namespace mc {
 namespace cgi {
 
-std::shared_ptr<Models> Models::instance_;
+std::shared_ptr<Models> Models::_instance;
 
-std::shared_ptr<Models> Models::Instance()
+std::shared_ptr<Models> Models::instance()
 {
-    if ( !instance_ )
+    if ( !_instance )
     {
         Models* instance = new Models();
-        instance_ = std::shared_ptr<Models>(instance);
+        _instance = std::shared_ptr<Models>(instance);
     }
 
-    return instance_;
+    return _instance;
 }
 
-osg::Node* Models::Get(std::string file)
+osg::Node* Models::get(std::string file)
 {
-    osg::ref_ptr<osg::Node> model = GetMapItemByKey(&Instance()->list_, file);
+    osg::ref_ptr<osg::Node> model = GetMapItemByKey(&instance()->_list, file);
 
     if ( model.valid() )
     {
@@ -52,7 +52,7 @@ osg::Node* Models::Get(std::string file)
 
     if ( model.valid() )
     {
-        AddMapItem(&Instance()->list_, file, model);
+        AddMapItem(&instance()->_list, file, model);
         return model.get();
     }
     else
@@ -63,9 +63,9 @@ osg::Node* Models::Get(std::string file)
     return nullptr;
 }
 
-void Models::Reset()
+void Models::reset()
 {
-    Instance()->list_.clear();
+    instance()->_list.clear();
 }
 
 } // namespace cgi

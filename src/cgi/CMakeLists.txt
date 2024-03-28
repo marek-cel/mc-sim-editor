@@ -5,7 +5,6 @@ set(MODULE_NAME cgi)
 set(CPP_FILES
     Builder.cpp
     CGI.cpp
-    Colors.cpp
     Component.cpp
     Geometry.cpp
     Grid.cpp

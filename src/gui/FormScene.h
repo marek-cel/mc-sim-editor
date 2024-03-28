@@ -37,7 +37,6 @@ class FormScene;
 namespace mc {
 namespace gui {
 
-/** */
 class FormScene : public QWidget
 {
     Q_OBJECT
@@ -59,7 +58,7 @@ signals:
 
 private:
 
-    Ui::FormScene* ui_ = nullptr;
+    Ui::FormScene* _ui = nullptr;
 
     QMenu* scene_menu_ = nullptr;
 
@@ -73,7 +72,7 @@ private:
 
     QShortcut* shortcut_remove_ = nullptr;
 
-    std::weak_ptr<pro::Project> proj_;
+    std::weak_ptr<pro::Project> _proj;
 
     std::shared_ptr<pro::Component> getComponentByIndex(QModelIndex index);
 

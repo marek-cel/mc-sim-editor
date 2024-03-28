@@ -28,22 +28,16 @@
 namespace mc {
 namespace gui {
 
-/**
- * @brief CGI widget class.
- */
 class WidgetCGI : public WidgetOSG
 {
     Q_OBJECT
 
 public:
 
-    /** @brief Constructor. */
     explicit WidgetCGI(QWidget* parent = nullptr);
-
-    /** @brief Destructor. */
     virtual ~WidgetCGI();
 
-    cgi::Manager* getManagerCGI() { return manager_cgi_; }
+    cgi::Manager* getManagerCGI() { return _manager_cgi; }
 
 public slots:
 
@@ -64,34 +58,30 @@ public slots:
 
 protected:
 
-    /** */
     void resizeEvent(QResizeEvent* event) override;
-
-    /** */
     void timerEvent(QTimerEvent* event) override;
 
 private:
 
-    QShortcut* shortcut_view_default_ = nullptr;    ///<
-    QShortcut* shortcut_view_top_     = nullptr;    ///<
-    QShortcut* shortcut_view_back_    = nullptr;    ///<
-    QShortcut* shortcut_view_left_    = nullptr;    ///<
-    QShortcut* shortcut_view_bottom_  = nullptr;    ///<
-    QShortcut* shortcut_view_front_   = nullptr;    ///<
-    QShortcut* shortcut_view_right_   = nullptr;    ///<
+    QShortcut* _shortcut_view_default = nullptr;
+    QShortcut* _shortcut_view_top     = nullptr;
+    QShortcut* _shortcut_view_back    = nullptr;
+    QShortcut* _shortcut_view_left    = nullptr;
+    QShortcut* _shortcut_view_bottom  = nullptr;
+    QShortcut* _shortcut_view_front   = nullptr;
+    QShortcut* _shortcut_view_right   = nullptr;
 
-    cgi::Manager* manager_cgi_ = nullptr;           ///<
+    cgi::Manager* _manager_cgi = nullptr;
 
-    osg::ref_ptr<osg::Camera> camera_cgi_;          ///<
-    osg::ref_ptr<osg::Camera> camera_hud_;          ///<
+    osg::ref_ptr<osg::Camera> _camera_cgi;
+    osg::ref_ptr<osg::Camera> _camera_hud;
 
-    std::weak_ptr<pro::Project> proj_;
+    std::weak_ptr<pro::Project> _proj;
 
-    double anim_time_ = 0.0;
+    double _anim_time = 0.0;
 
-    int timer_id_ = 0;                              ///< timer ID
+    int _timerId = 0;
 
-    /** */
     QWidget* addViewWidget();
 
     void createCameras();

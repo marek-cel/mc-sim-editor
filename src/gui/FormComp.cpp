@@ -36,35 +36,35 @@ namespace gui {
 
 FormComp::FormComp(QWidget* parent)
     : QWidget(parent)
-    , ui_(new Ui::FormComp)
+    , _ui(new Ui::FormComp)
 {
-    ui_->setupUi(this);
+    _ui->setupUi(this);
     hideAllProperties();
 }
 
 FormComp::~FormComp()
 {
-    if ( ui_ ) { delete ui_; } ui_ = nullptr;
+    if ( _ui ) { delete _ui; } _ui = nullptr;
 }
 
 void FormComp::setComponent(std::shared_ptr<pro::Component> comp)
 {
-    comp_ = comp;
+    _comp = comp;
     updateParameters(comp);
 }
 
 void FormComp::setProject(std::shared_ptr<pro::Project> proj)
 {
-    proj_ = proj;
-    comp_ = std::weak_ptr<pro::Component>();
+    _proj = proj;
+    _comp = std::weak_ptr<pro::Component>();
     hideAllProperties();
 }
 
 QString FormComp::getFile(QString file)
 {
-    if ( proj_.expired() ) return QString();
+    if ( _proj.expired() ) return QString();
 
-    std::shared_ptr<pro::Project> proj = proj_.lock();
+    std::shared_ptr<pro::Project> proj = _proj.lock();
     QDir proj_dir = QFileInfo(proj->GetFile()).absoluteDir();
     QString proj_path = proj_dir.absolutePath();
 
@@ -102,14 +102,14 @@ QString FormComp::getFile(QString file)
 
 void FormComp::hideAllProperties()
 {
-    ui_->widgetWrapAnim->hide();
-    ui_->widgetWrapComp->hide();
-    ui_->widgetWrapFile->hide();
-    ui_->widgetWrapLOD->hide();
-    ui_->widgetWrapPAT->hide();
-    ui_->widgetWrapRotor->hide();
-    ui_->widgetWrapSwitch->hide();
-    ui_->widgetWrapTrans->hide();
+    _ui->widgetWrapAnim->hide();
+    _ui->widgetWrapComp->hide();
+    _ui->widgetWrapFile->hide();
+    _ui->widgetWrapLOD->hide();
+    _ui->widgetWrapPAT->hide();
+    _ui->widgetWrapRotor->hide();
+    _ui->widgetWrapSwitch->hide();
+    _ui->widgetWrapTrans->hide();
 }
 
 void FormComp::updateParameters(std::shared_ptr<pro::Component> comp)
@@ -134,14 +134,14 @@ void FormComp::updateParametersAnim(std::shared_ptr<pro::Component> comp)
 
     if ( anim )
     {
-        ui_->widgetWrapAnim->show();
+        _ui->widgetWrapAnim->show();
 
-        Utils::setNoEmitChecked(ui_->checkBoxAnimEnabled, anim->GetAnimationEnabled());
+        Utils::setNoEmitChecked(_ui->checkBoxAnimEnabled, anim->GetAnimationEnabled());
 
-        Utils::setNoEmitValue(ui_->spinBoxAnimTimeMin, anim->GetAnimation()->GetTimeMin());
-        Utils::setNoEmitValue(ui_->spinBoxAnimTimeMax, anim->GetAnimation()->GetTimeMax());
+        Utils::setNoEmitValue(_ui->spinBoxAnimTimeMin, anim->GetAnimation()->GetTimeMin());
+        Utils::setNoEmitValue(_ui->spinBoxAnimTimeMax, anim->GetAnimation()->GetTimeMax());
 
-        ui_->listKeyframes->clear();
+        _ui->listKeyframes->clear();
         pro::Animation::Keyframes keyframes = anim->GetAnimation()->GetKeyframes();
         int index = 0;
         for ( int i = 0; i < keyframes.size(); ++i )
@@ -157,9 +157,9 @@ void FormComp::updateParametersAnim(std::shared_ptr<pro::Component> comp)
             text += "; ry=" + QString::number(keyframe->ay(),'f',4);
             text += "; rz=" + QString::number(keyframe->az(),'f',4);
 
-            QListWidgetItem* item = new QListWidgetItem(ui_->listKeyframes);
+            QListWidgetItem* item = new QListWidgetItem(_ui->listKeyframes);
             item->setText(text);
-            ui_->listKeyframes->insertItem(i, item);
+            _ui->listKeyframes->insertItem(i, item);
         }
     }
 }
@@ -168,14 +168,14 @@ void FormComp::updateParametersComp(std::shared_ptr<pro::Component> comp)
 {
     if ( comp )
     {
-        ui_->widgetWrapComp->show();
+        _ui->widgetWrapComp->show();
 
-        Utils::setNoEmitChecked(ui_->checkBoxDepthSortedBin, comp->GetDepthSortedBinState());
+        Utils::setNoEmitChecked(_ui->checkBoxDepthSortedBin, comp->GetDepthSortedBinState());
 
-        ui_->labelDepthSortedBin->setEnabled(comp->GetDepthSortedBinState());
-        ui_->spinBoxDepthSortedBin->setEnabled(comp->GetDepthSortedBinState());
+        _ui->labelDepthSortedBin->setEnabled(comp->GetDepthSortedBinState());
+        _ui->spinBoxDepthSortedBin->setEnabled(comp->GetDepthSortedBinState());
 
-        Utils::setNoEmitValue(ui_->spinBoxDepthSortedBin, comp->GetDepthSortedBinValue());
+        Utils::setNoEmitValue(_ui->spinBoxDepthSortedBin, comp->GetDepthSortedBinValue());
     }
 }
 
@@ -185,9 +185,9 @@ void FormComp::updateParametersFile(std::shared_ptr<pro::Component> comp)
 
     if ( file )
     {
-        ui_->widgetWrapFile->show();
+        _ui->widgetWrapFile->show();
 
-        Utils::setNoEmitText(ui_->lineEditFilePath, file->GetFile());
+        Utils::setNoEmitText(_ui->lineEditFilePath, file->GetFile());
     }
 }
 
@@ -197,14 +197,14 @@ void FormComp::updateParametersLOD(std::shared_ptr<pro::Component> comp)
 
     if ( lod )
     {
-        ui_->widgetWrapLOD->show();
+        _ui->widgetWrapLOD->show();
 
-        ui_->listIntervals->clear();
+        _ui->listIntervals->clear();
         for ( int i = 0; i < lod->GetIntervalsCount(); ++i )
         {
-            QListWidgetItem* item = new QListWidgetItem(ui_->listIntervals);
+            QListWidgetItem* item = new QListWidgetItem(_ui->listIntervals);
             item->setText(QString::number(lod->GetInterval(i), 'f', 2));
-            ui_->listIntervals->insertItem(i, item);
+            _ui->listIntervals->insertItem(i, item);
         }
     }
 }
@@ -215,18 +215,18 @@ void FormComp::updateParametersPAT(std::shared_ptr<pro::Component> comp)
 
     if ( pat )
     {
-        ui_->widgetWrapPAT->show();
+        _ui->widgetWrapPAT->show();
 
-        Utils::setNoEmitChecked(ui_->radioXYZ, pro::PAT::Convention::XYZ == pat->convention());
-        Utils::setNoEmitChecked(ui_->radioZYX, pro::PAT::Convention::ZYX == pat->convention());
+        Utils::setNoEmitChecked(_ui->radioXYZ, pro::PAT::Convention::XYZ == pat->convention());
+        Utils::setNoEmitChecked(_ui->radioZYX, pro::PAT::Convention::ZYX == pat->convention());
 
-        Utils::setNoEmitValue(ui_->spinBoxPx, pat->px());
-        Utils::setNoEmitValue(ui_->spinBoxPy, pat->py());
-        Utils::setNoEmitValue(ui_->spinBoxPz, pat->pz());
+        Utils::setNoEmitValue(_ui->spinBoxPx, pat->px());
+        Utils::setNoEmitValue(_ui->spinBoxPy, pat->py());
+        Utils::setNoEmitValue(_ui->spinBoxPz, pat->pz());
 
-        Utils::setNoEmitValue(ui_->spinBoxAx, pat->ax());
-        Utils::setNoEmitValue(ui_->spinBoxAy, pat->ay());
-        Utils::setNoEmitValue(ui_->spinBoxAz, pat->az());
+        Utils::setNoEmitValue(_ui->spinBoxAx, pat->ax());
+        Utils::setNoEmitValue(_ui->spinBoxAy, pat->ay());
+        Utils::setNoEmitValue(_ui->spinBoxAz, pat->az());
     }
 }
 
@@ -236,16 +236,16 @@ void FormComp::updateParametersRotor(std::shared_ptr<pro::Component> comp)
 
     if ( rotor )
     {
-        ui_->widgetWrapRotor->show();
+        _ui->widgetWrapRotor->show();
 
-        Utils::setNoEmitText(ui_->lineEditBladeFile, rotor->GetFileBlade());
-        Utils::setNoEmitText(ui_->lineEditShaftFile, rotor->GetFileShaft());
+        Utils::setNoEmitText(_ui->lineEditBladeFile, rotor->GetFileBlade());
+        Utils::setNoEmitText(_ui->lineEditShaftFile, rotor->GetFileShaft());
 
-        Utils::setNoEmitValue(ui_->spinBoxBladesNo, rotor->GetBladesNo());
-        Utils::setNoEmitValue(ui_->spinBoxHingeOffset, rotor->GetHingeOffset());
+        Utils::setNoEmitValue(_ui->spinBoxBladesNo, rotor->GetBladesNo());
+        Utils::setNoEmitValue(_ui->spinBoxHingeOffset, rotor->GetHingeOffset());
 
-        Utils::setNoEmitChecked(ui_->radioCW  , pro::Rotor::Direction::CW  == rotor->GetDirection());
-        Utils::setNoEmitChecked(ui_->radioCCW , pro::Rotor::Direction::CCW == rotor->GetDirection());
+        Utils::setNoEmitChecked(_ui->radioCW  , pro::Rotor::Direction::CW  == rotor->GetDirection());
+        Utils::setNoEmitChecked(_ui->radioCCW , pro::Rotor::Direction::CCW == rotor->GetDirection());
     }
 }
 
@@ -255,9 +255,9 @@ void FormComp::updateParametersSwitch(std::shared_ptr<pro::Component> comp)
 
     if ( sw )
     {
-        ui_->widgetWrapSwitch->show();
+        _ui->widgetWrapSwitch->show();
 
-        Utils::setNoEmitChecked(ui_->checkBoxSwitchVisible, sw->GetVisible());
+        Utils::setNoEmitChecked(_ui->checkBoxSwitchVisible, sw->GetVisible());
     }
 }
 
@@ -267,71 +267,71 @@ void FormComp::updateParametersTrans(std::shared_ptr<pro::Component> comp)
 
     if ( trans )
     {
-        ui_->widgetWrapTrans->show();
+        _ui->widgetWrapTrans->show();
 
-        Utils::setNoEmitValue(ui_->spinBoxTransPx, trans->px());
-        Utils::setNoEmitValue(ui_->spinBoxTransPy, trans->py());
-        Utils::setNoEmitValue(ui_->spinBoxTransPz, trans->pz());
+        Utils::setNoEmitValue(_ui->spinBoxTransPx, trans->px());
+        Utils::setNoEmitValue(_ui->spinBoxTransPy, trans->py());
+        Utils::setNoEmitValue(_ui->spinBoxTransPz, trans->pz());
 
-        Utils::setNoEmitValue(ui_->spinBoxTransAx, trans->ax());
-        Utils::setNoEmitValue(ui_->spinBoxTransAy, trans->ay());
-        Utils::setNoEmitValue(ui_->spinBoxTransAz, trans->az());
+        Utils::setNoEmitValue(_ui->spinBoxTransAx, trans->ax());
+        Utils::setNoEmitValue(_ui->spinBoxTransAy, trans->ay());
+        Utils::setNoEmitValue(_ui->spinBoxTransAz, trans->az());
     }
 }
 
 void FormComp::on_buttonComp_toggled(bool checked)
 {
-    Utils::setVisibility(ui_->buttonComp, ui_->widgetComp, checked);
+    Utils::setVisibility(_ui->buttonComp, _ui->widgetComp, checked);
 }
 
 void FormComp::on_buttonFile_toggled(bool checked)
 {
-    Utils::setVisibility(ui_->buttonFile, ui_->widgetFile, checked);
+    Utils::setVisibility(_ui->buttonFile, _ui->widgetFile, checked);
 }
 
 void FormComp::on_buttonLOD_toggled(bool checked)
 {
-    Utils::setVisibility(ui_->buttonLOD, ui_->widgetLOD, checked);
+    Utils::setVisibility(_ui->buttonLOD, _ui->widgetLOD, checked);
 }
 
 void FormComp::on_buttonPAT_toggled(bool checked)
 {
-    Utils::setVisibility(ui_->buttonPAT, ui_->widgetPAT, checked);
+    Utils::setVisibility(_ui->buttonPAT, _ui->widgetPAT, checked);
 }
 
 void FormComp::on_buttonRotor_toggled(bool checked)
 {
-    Utils::setVisibility(ui_->buttonRotor, ui_->widgetRotor, checked);
+    Utils::setVisibility(_ui->buttonRotor, _ui->widgetRotor, checked);
 }
 
 void FormComp::on_buttonSwitch_toggled(bool checked)
 {
-    Utils::setVisibility(ui_->buttonSwitch, ui_->widgetSwitch, checked);
+    Utils::setVisibility(_ui->buttonSwitch, _ui->widgetSwitch, checked);
 }
 
 void FormComp::on_buttonTrans_toggled(bool checked)
 {
-    Utils::setVisibility(ui_->buttonTrans, ui_->widgetTrans, checked);
+    Utils::setVisibility(_ui->buttonTrans, _ui->widgetTrans, checked);
 }
 
 void FormComp::on_buttonAnim_toggled(bool checked)
 {
-    Utils::setVisibility(ui_->buttonAnim, ui_->widgetAnim, checked);
+    Utils::setVisibility(_ui->buttonAnim, _ui->widgetAnim, checked);
 }
 
 void FormComp::on_checkBoxDepthSortedBin_toggled(bool checked)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     comp->SetDepthSortedBinState(checked);
 
-    ui_->labelDepthSortedBin->setEnabled(checked);
-    ui_->spinBoxDepthSortedBin->setEnabled(checked);
+    _ui->labelDepthSortedBin->setEnabled(checked);
+    _ui->spinBoxDepthSortedBin->setEnabled(checked);
 
     if ( !checked )
     {
-        ui_->spinBoxDepthSortedBin->setValue(1);
+        _ui->spinBoxDepthSortedBin->setValue(1);
     }
 
     emit(projectChanged());
@@ -339,18 +339,18 @@ void FormComp::on_checkBoxDepthSortedBin_toggled(bool checked)
 
 void FormComp::on_spinBoxDepthSortedBin_valueChanged(int arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     comp->SetDepthSortedBinValue(arg1);
     emit(projectChanged());
 }
 
 void FormComp::on_radioXYZ_toggled(bool checked)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::PAT> pat = std::dynamic_pointer_cast<pro::PAT>(comp);
     if ( pat )
     {
@@ -361,9 +361,9 @@ void FormComp::on_radioXYZ_toggled(bool checked)
 
 void FormComp::on_spinBoxPx_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::PAT> pat = std::dynamic_pointer_cast<pro::PAT>(comp);
     if ( pat )
     {
@@ -374,9 +374,9 @@ void FormComp::on_spinBoxPx_valueChanged(double arg1)
 
 void FormComp::on_spinBoxPy_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::PAT> pat = std::dynamic_pointer_cast<pro::PAT>(comp);
     if ( pat )
     {
@@ -387,9 +387,9 @@ void FormComp::on_spinBoxPy_valueChanged(double arg1)
 
 void FormComp::on_spinBoxPz_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::PAT> pat = std::dynamic_pointer_cast<pro::PAT>(comp);
     if ( pat )
     {
@@ -400,9 +400,9 @@ void FormComp::on_spinBoxPz_valueChanged(double arg1)
 
 void FormComp::on_spinBoxAx_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::PAT> pat = std::dynamic_pointer_cast<pro::PAT>(comp);
     if ( pat )
     {
@@ -413,9 +413,9 @@ void FormComp::on_spinBoxAx_valueChanged(double arg1)
 
 void FormComp::on_spinBoxAy_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::PAT> pat = std::dynamic_pointer_cast<pro::PAT>(comp);
     if ( pat )
     {
@@ -426,9 +426,9 @@ void FormComp::on_spinBoxAy_valueChanged(double arg1)
 
 void FormComp::on_spinBoxAz_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::PAT> pat = std::dynamic_pointer_cast<pro::PAT>(comp);
     if ( pat )
     {
@@ -439,38 +439,38 @@ void FormComp::on_spinBoxAz_valueChanged(double arg1)
 
 void FormComp::on_listIntervals_currentRowChanged(int currentRow)
 {
-    ui_->pushButtonIntervalSave->setEnabled(false);
-    ui_->pushButtonIntervalRemove->setEnabled(false);
+    _ui->pushButtonIntervalSave->setEnabled(false);
+    _ui->pushButtonIntervalRemove->setEnabled(false);
 
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::LOD> lod = std::dynamic_pointer_cast<pro::LOD>(comp);
     if ( lod )
     {
-        if ( currentRow >= 0 && currentRow < ui_->listIntervals->count() )
+        if ( currentRow >= 0 && currentRow < _ui->listIntervals->count() )
         {
-            ui_->pushButtonIntervalSave->setEnabled(true);
-            ui_->pushButtonIntervalRemove->setEnabled(ui_->listIntervals->count() > 1);
+            _ui->pushButtonIntervalSave->setEnabled(true);
+            _ui->pushButtonIntervalRemove->setEnabled(_ui->listIntervals->count() > 1);
 
-            ui_->spinBoxInterval->setValue(lod->GetInterval(currentRow));
+            _ui->spinBoxInterval->setValue(lod->GetInterval(currentRow));
         }
         else
         {
-            ui_->spinBoxInterval->setValue(0.0);
+            _ui->spinBoxInterval->setValue(0.0);
         }
     }
 }
 
 void FormComp::on_pushButtonIntervalAdd_clicked()
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::LOD> lod = std::dynamic_pointer_cast<pro::LOD>(comp);
     if ( lod )
     {
-        lod->AddInterval(ui_->spinBoxInterval->value());
+        lod->AddInterval(_ui->spinBoxInterval->value());
         updateParametersLOD(comp);
         emit(projectChanged());
     }
@@ -478,13 +478,13 @@ void FormComp::on_pushButtonIntervalAdd_clicked()
 
 void FormComp::on_pushButtonIntervalSave_clicked()
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::LOD> lod = std::dynamic_pointer_cast<pro::LOD>(comp);
     if ( lod )
     {
-        lod->EditInterval(ui_->listIntervals->currentRow(), ui_->spinBoxInterval->value());
+        lod->EditInterval(_ui->listIntervals->currentRow(), _ui->spinBoxInterval->value());
         updateParametersLOD(comp);
         emit(projectChanged());
     }
@@ -492,13 +492,13 @@ void FormComp::on_pushButtonIntervalSave_clicked()
 
 void FormComp::on_pushButtonIntervalRemove_clicked()
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::LOD> lod = std::dynamic_pointer_cast<pro::LOD>(comp);
     if ( lod )
     {
-        lod->RemoveInterval(ui_->listIntervals->currentRow());
+        lod->RemoveInterval(_ui->listIntervals->currentRow());
         updateParametersLOD(comp);
         emit(projectChanged());
     }
@@ -506,18 +506,18 @@ void FormComp::on_pushButtonIntervalRemove_clicked()
 
 void FormComp::on_toolButtonBrowseFiles_clicked()
 {
-    QString new_file = getFile(ui_->lineEditFilePath->text());
+    QString new_file = getFile(_ui->lineEditFilePath->text());
     if ( new_file.length() > 0 )
     {
-        ui_->lineEditFilePath->setText(new_file);
+        _ui->lineEditFilePath->setText(new_file);
     }
 }
 
 void FormComp::on_lineEditFilePath_textChanged(const QString &arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::File> file = std::dynamic_pointer_cast<pro::File>(comp);
     if ( file )
     {
@@ -528,9 +528,9 @@ void FormComp::on_lineEditFilePath_textChanged(const QString &arg1)
 
 void FormComp::on_checkBoxSwitchVisible_toggled(bool checked)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Switch> sw = std::dynamic_pointer_cast<pro::Switch>(comp);
     if ( sw )
     {
@@ -541,27 +541,27 @@ void FormComp::on_checkBoxSwitchVisible_toggled(bool checked)
 
 void FormComp::on_toolButtonBrowseBladeFiles_clicked()
 {
-    QString new_file = getFile(ui_->lineEditBladeFile->text());
+    QString new_file = getFile(_ui->lineEditBladeFile->text());
     if ( new_file.length() > 0 )
     {
-        ui_->lineEditBladeFile->setText(new_file);
+        _ui->lineEditBladeFile->setText(new_file);
     }
 }
 
 void FormComp::on_toolButtonBrowseShaftFiles_clicked()
 {
-    QString new_file = getFile(ui_->lineEditShaftFile->text());
+    QString new_file = getFile(_ui->lineEditShaftFile->text());
     if ( new_file.length() > 0 )
     {
-        ui_->lineEditShaftFile->setText(new_file);
+        _ui->lineEditShaftFile->setText(new_file);
     }
 }
 
 void FormComp::on_lineEditBladeFile_textChanged(const QString &arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Rotor> rotor = std::dynamic_pointer_cast<pro::Rotor>(comp);
     if ( rotor )
     {
@@ -572,9 +572,9 @@ void FormComp::on_lineEditBladeFile_textChanged(const QString &arg1)
 
 void FormComp::on_lineEditShaftFile_textChanged(const QString &arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Rotor> rotor = std::dynamic_pointer_cast<pro::Rotor>(comp);
     if ( rotor )
     {
@@ -585,9 +585,9 @@ void FormComp::on_lineEditShaftFile_textChanged(const QString &arg1)
 
 void FormComp::on_spinBoxBladesNo_valueChanged(int arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Rotor> rotor = std::dynamic_pointer_cast<pro::Rotor>(comp);
     if ( rotor )
     {
@@ -598,9 +598,9 @@ void FormComp::on_spinBoxBladesNo_valueChanged(int arg1)
 
 void FormComp::on_spinBoxHingeOffset_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Rotor> rotor = std::dynamic_pointer_cast<pro::Rotor>(comp);
     if ( rotor )
     {
@@ -611,9 +611,9 @@ void FormComp::on_spinBoxHingeOffset_valueChanged(double arg1)
 
 void FormComp::on_radioButtonCW_toggled(bool checked)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Rotor> rotor = std::dynamic_pointer_cast<pro::Rotor>(comp);
     if ( rotor )
     {
@@ -624,9 +624,9 @@ void FormComp::on_radioButtonCW_toggled(bool checked)
 
 void FormComp::on_spinBoxTransPx_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Trans> trans = std::dynamic_pointer_cast<pro::Trans>(comp);
     if ( trans )
     {
@@ -637,9 +637,9 @@ void FormComp::on_spinBoxTransPx_valueChanged(double arg1)
 
 void FormComp::on_spinBoxTransPy_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Trans> trans = std::dynamic_pointer_cast<pro::Trans>(comp);
     if ( trans )
     {
@@ -650,9 +650,9 @@ void FormComp::on_spinBoxTransPy_valueChanged(double arg1)
 
 void FormComp::on_spinBoxTransPz_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Trans> trans = std::dynamic_pointer_cast<pro::Trans>(comp);
     if ( trans )
     {
@@ -663,9 +663,9 @@ void FormComp::on_spinBoxTransPz_valueChanged(double arg1)
 
 void FormComp::on_spinBoxTransAx_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Trans> trans = std::dynamic_pointer_cast<pro::Trans>(comp);
     if ( trans )
     {
@@ -676,9 +676,9 @@ void FormComp::on_spinBoxTransAx_valueChanged(double arg1)
 
 void FormComp::on_spinBoxTransAy_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Trans> trans = std::dynamic_pointer_cast<pro::Trans>(comp);
     if ( trans )
     {
@@ -689,9 +689,9 @@ void FormComp::on_spinBoxTransAy_valueChanged(double arg1)
 
 void FormComp::on_spinBoxTransAz_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Trans> trans = std::dynamic_pointer_cast<pro::Trans>(comp);
     if ( trans )
     {
@@ -702,9 +702,9 @@ void FormComp::on_spinBoxTransAz_valueChanged(double arg1)
 
 void FormComp::on_checkBoxAnimEnabled_toggled(bool checked)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Animated> anim = std::dynamic_pointer_cast<pro::Animated>(comp);
     if ( anim )
     {
@@ -715,100 +715,100 @@ void FormComp::on_checkBoxAnimEnabled_toggled(bool checked)
 
 void FormComp::on_spinBoxAnimTimeMin_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Animated> anim = std::dynamic_pointer_cast<pro::Animated>(comp);
     if ( anim )
     {
         anim->GetAnimation()->SetTimeMin(arg1);
-        ui_->spinBoxAnimTimeMax->setMinimum(arg1);
-        ui_->spinBoxAnimT->setMinimum(arg1);
+        _ui->spinBoxAnimTimeMax->setMinimum(arg1);
+        _ui->spinBoxAnimT->setMinimum(arg1);
         emit(projectChanged());
     }
 }
 
 void FormComp::on_spinBoxAnimTimeMax_valueChanged(double arg1)
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Animated> anim = std::dynamic_pointer_cast<pro::Animated>(comp);
     if ( anim )
     {
         anim->GetAnimation()->SetTimeMax(arg1);
-        ui_->spinBoxAnimTimeMin->setMaximum(arg1);
-        ui_->spinBoxAnimT->setMaximum(arg1);
+        _ui->spinBoxAnimTimeMin->setMaximum(arg1);
+        _ui->spinBoxAnimT->setMaximum(arg1);
         emit(projectChanged());
     }
 }
 
 void FormComp::on_listKeyframes_currentRowChanged(int currentRow)
 {
-    ui_->pushButtonAnimSave->setEnabled(false);
-    ui_->pushButtonAnimRemove->setEnabled(false);
+    _ui->pushButtonAnimSave->setEnabled(false);
+    _ui->pushButtonAnimRemove->setEnabled(false);
 
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Animated> anim = std::dynamic_pointer_cast<pro::Animated>(comp);
     if ( anim )
     {
         if ( currentRow >= 0 && currentRow < anim->GetAnimation()->GetKeyframes().size() )
         {
-            ui_->pushButtonAnimSave->setEnabled(true);
-            ui_->pushButtonAnimRemove->setEnabled(true);
+            _ui->pushButtonAnimSave->setEnabled(true);
+            _ui->pushButtonAnimRemove->setEnabled(true);
 
             std::shared_ptr<pro::Keyframe> keyframe = anim->GetAnimation()->GetKeyframes().at(currentRow);
 
-            ui_->spinBoxAnimT->setValue(keyframe->t());
-            ui_->spinBoxAnimT->setMinimum(anim->GetAnimation()->GetTimeMin());
-            ui_->spinBoxAnimT->setMaximum(anim->GetAnimation()->GetTimeMax());
+            _ui->spinBoxAnimT->setValue(keyframe->t());
+            _ui->spinBoxAnimT->setMinimum(anim->GetAnimation()->GetTimeMin());
+            _ui->spinBoxAnimT->setMaximum(anim->GetAnimation()->GetTimeMax());
 
-            ui_->spinBoxAnimPx->setValue(keyframe->px());
-            ui_->spinBoxAnimPy->setValue(keyframe->py());
-            ui_->spinBoxAnimPz->setValue(keyframe->pz());
+            _ui->spinBoxAnimPx->setValue(keyframe->px());
+            _ui->spinBoxAnimPy->setValue(keyframe->py());
+            _ui->spinBoxAnimPz->setValue(keyframe->pz());
 
-            ui_->spinBoxAnimAx->setValue(keyframe->ax());
-            ui_->spinBoxAnimAy->setValue(keyframe->ay());
-            ui_->spinBoxAnimAz->setValue(keyframe->az());
+            _ui->spinBoxAnimAx->setValue(keyframe->ax());
+            _ui->spinBoxAnimAy->setValue(keyframe->ay());
+            _ui->spinBoxAnimAz->setValue(keyframe->az());
         }
         else
         {
-            ui_->spinBoxAnimT->setValue(0.0);
-            ui_->spinBoxAnimT->setMinimum(anim->GetAnimation()->GetTimeMin());
-            ui_->spinBoxAnimT->setMaximum(anim->GetAnimation()->GetTimeMax());
+            _ui->spinBoxAnimT->setValue(0.0);
+            _ui->spinBoxAnimT->setMinimum(anim->GetAnimation()->GetTimeMin());
+            _ui->spinBoxAnimT->setMaximum(anim->GetAnimation()->GetTimeMax());
 
-            ui_->spinBoxAnimPx->setValue(0.0);
-            ui_->spinBoxAnimPy->setValue(0.0);
-            ui_->spinBoxAnimPz->setValue(0.0);
+            _ui->spinBoxAnimPx->setValue(0.0);
+            _ui->spinBoxAnimPy->setValue(0.0);
+            _ui->spinBoxAnimPz->setValue(0.0);
 
-            ui_->spinBoxAnimAx->setValue(0.0);
-            ui_->spinBoxAnimAy->setValue(0.0);
-            ui_->spinBoxAnimAz->setValue(0.0);
+            _ui->spinBoxAnimAx->setValue(0.0);
+            _ui->spinBoxAnimAy->setValue(0.0);
+            _ui->spinBoxAnimAz->setValue(0.0);
         }
     }
 }
 
 void FormComp::on_pushButtonAnimAdd_clicked()
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Animated> anim = std::dynamic_pointer_cast<pro::Animated>(comp);
     if ( anim )
     {
         std::shared_ptr<pro::Keyframe> keyframe = std::make_shared<pro::Keyframe>();
 
-        keyframe->SetT(ui_->spinBoxAnimT->value());
+        keyframe->SetT(_ui->spinBoxAnimT->value());
 
-        keyframe->SetPx(ui_->spinBoxAnimPx->value());
-        keyframe->SetPy(ui_->spinBoxAnimPy->value());
-        keyframe->SetPz(ui_->spinBoxAnimPz->value());
+        keyframe->SetPx(_ui->spinBoxAnimPx->value());
+        keyframe->SetPy(_ui->spinBoxAnimPy->value());
+        keyframe->SetPz(_ui->spinBoxAnimPz->value());
 
-        keyframe->SetAx(ui_->spinBoxAnimAx->value());
-        keyframe->SetAy(ui_->spinBoxAnimAy->value());
-        keyframe->SetAz(ui_->spinBoxAnimAz->value());
+        keyframe->SetAx(_ui->spinBoxAnimAx->value());
+        keyframe->SetAy(_ui->spinBoxAnimAy->value());
+        keyframe->SetAz(_ui->spinBoxAnimAz->value());
 
         anim->GetAnimation()->AddKeyframe(keyframe);
 
@@ -820,26 +820,26 @@ void FormComp::on_pushButtonAnimAdd_clicked()
 
 void FormComp::on_pushButtonAnimSave_clicked()
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Animated> anim = std::dynamic_pointer_cast<pro::Animated>(comp);
     if ( anim )
     {
-        int index = ui_->listKeyframes->currentRow();
+        int index = _ui->listKeyframes->currentRow();
         if ( index >= 0 && index < anim->GetAnimation()->GetKeyframes().size() )
         {
             std::shared_ptr<pro::Keyframe> keyframe = anim->GetAnimation()->GetKeyframes().at(index);
 
-            keyframe->SetT(ui_->spinBoxAnimT->value());
+            keyframe->SetT(_ui->spinBoxAnimT->value());
 
-            keyframe->SetPx(ui_->spinBoxAnimPx->value());
-            keyframe->SetPy(ui_->spinBoxAnimPy->value());
-            keyframe->SetPz(ui_->spinBoxAnimPz->value());
+            keyframe->SetPx(_ui->spinBoxAnimPx->value());
+            keyframe->SetPy(_ui->spinBoxAnimPy->value());
+            keyframe->SetPz(_ui->spinBoxAnimPz->value());
 
-            keyframe->SetAx(ui_->spinBoxAnimAx->value());
-            keyframe->SetAy(ui_->spinBoxAnimAy->value());
-            keyframe->SetAz(ui_->spinBoxAnimAz->value());
+            keyframe->SetAx(_ui->spinBoxAnimAx->value());
+            keyframe->SetAy(_ui->spinBoxAnimAy->value());
+            keyframe->SetAz(_ui->spinBoxAnimAz->value());
 
             anim->GetAnimation()->SetKeyframe(index, keyframe);
             updateParametersAnim(comp);
@@ -850,13 +850,13 @@ void FormComp::on_pushButtonAnimSave_clicked()
 
 void FormComp::on_pushButtonAnimRemove_clicked()
 {
-    if ( comp_.expired() ) return;
+    if ( _comp.expired() ) return;
 
-    std::shared_ptr<pro::Component> comp = comp_.lock();
+    std::shared_ptr<pro::Component> comp = _comp.lock();
     std::shared_ptr<pro::Animated> anim = std::dynamic_pointer_cast<pro::Animated>(comp);
     if ( anim )
     {
-        anim->GetAnimation()->RemoveKeyframe(ui_->listKeyframes->currentRow());
+        anim->GetAnimation()->RemoveKeyframe(_ui->listKeyframes->currentRow());
         updateParametersAnim(comp);
         emit(projectChanged());
     }

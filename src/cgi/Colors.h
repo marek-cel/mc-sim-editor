@@ -23,36 +23,30 @@
 
 namespace mc {
 namespace cgi {
+namespace Colors {
 
-/**
- * @brief Colors class.
- */
-struct Colors
-{
-    static const osg::Vec3 black;       ///< black
-    static const osg::Vec3 white;       ///< white
+const osg::Vec3 black   = osg::Vec3(0.00f, 0.00f, 0.00f);
+const osg::Vec3 white   = osg::Vec3(1.00f, 1.00f, 1.00f);
+const osg::Vec3 blue    = osg::Vec3(0.00f, 0.00f, 1.00f);
+const osg::Vec3 cyan    = osg::Vec3(0.00f, 1.00f, 1.00f);
+const osg::Vec3 green   = osg::Vec3(0.00f, 0.50f, 0.00f);
+const osg::Vec3 grey    = osg::Vec3(0.50f, 0.50f, 0.50f);
+const osg::Vec3 lime    = osg::Vec3(0.00f, 1.00f, 0.00f);
+const osg::Vec3 magenta = osg::Vec3(1.00f, 0.00f, 1.00f);
+const osg::Vec3 maroon  = osg::Vec3(0.50f, 0.00f, 0.00f);
+const osg::Vec3 navy    = osg::Vec3(0.00f, 0.00f, 0.50f);
+const osg::Vec3 olive   = osg::Vec3(0.50f, 0.50f, 0.00f);
+const osg::Vec3 orange  = osg::Vec3(1.00f, 0.65f, 0.00f);
+const osg::Vec3 purple  = osg::Vec3(0.50f, 0.00f, 0.50f);
+const osg::Vec3 red     = osg::Vec3(1.00f, 0.00f, 0.00f);
+const osg::Vec3 teal    = osg::Vec3(0.00f, 0.50f, 0.50f);
+const osg::Vec3 yellow  = osg::Vec3(1.00f, 1.00f, 0.00f);
+const osg::Vec3 amber   = osg::Vec3(1.00f, 0.14f, 0.00f);
+const osg::Vec3 scarlet = osg::Vec3(1.00f, 0.75f, 0.00f);
 
-    static const osg::Vec3 blue;        ///< cyan    (according to W3C)
-    static const osg::Vec3 cyan;        ///< cyan    (according to W3C)
-    static const osg::Vec3 green;       ///< green   (according to W3C)
-    static const osg::Vec3 grey;        ///< grey    (according to W3C)
-    static const osg::Vec3 lime;        ///< lime    (according to W3C)
-    static const osg::Vec3 magenta;     ///< magenta (according to W3C)
-    static const osg::Vec3 maroon;      ///< maroon  (according to W3C)
-    static const osg::Vec3 navy;        ///< navy    (according to W3C)
-    static const osg::Vec3 olive;       ///< olive   (according to W3C)
-    static const osg::Vec3 orange;      ///< orange  (according to W3C)
-    static const osg::Vec3 purple;      ///< purple  (according to W3C)
-    static const osg::Vec3 red;         ///< red     (according to W3C)
-    static const osg::Vec3 teal;        ///< teal    (according to W3C)
-    static const osg::Vec3 yellow;      ///< yellow  (according to W3C)
+const osg::Vec3 orangeRed = osg::Vec3(1.00f, 0.27f, 0.00f);
 
-    static const osg::Vec3 amber;       ///< amber
-    static const osg::Vec3 scarlet;     ///< scarlet
-
-    static const osg::Vec3 orangeRed;   ///< OrangeRed (according to W3C)
-};
-
+} // namespace Colors
 } // namespace cgi
 } // namespace mc
 

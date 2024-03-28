@@ -31,23 +31,23 @@ namespace cgi {
 ViewGizmo::ViewGizmo(std::shared_ptr<Data> data)
     : Component(data)
 {
-    osg::ref_ptr<osg::StateSet> rootStateSet = root_->getOrCreateStateSet();
+    osg::ref_ptr<osg::StateSet> rootStateSet = _root->getOrCreateStateSet();
     rootStateSet->setMode(GL_LIGHT0   , osg::StateAttribute::OFF);
     rootStateSet->setMode(GL_LIGHT1   , osg::StateAttribute::OFF);
     rootStateSet->setMode(GL_LIGHTING , osg::StateAttribute::OFF);
 
-    CreateGizmo();
+    createGizmo();
 }
 
-void ViewGizmo::Update()
+void ViewGizmo::update()
 {
     ////////////////////
-    Component::Update();
+    Component::update();
     ////////////////////
 
-    if ( !data_.expired() )
+    if ( !_data.expired() )
     {
-        std::shared_ptr<Data> data = data_.lock();
+        std::shared_ptr<Data> data = _data.lock();
 
         osg::Quat q(data->camera_x,
                     data->camera_y,
@@ -57,25 +57,25 @@ void ViewGizmo::Update()
         double w2h = static_cast<double>(data->win_width)
                    / static_cast<double>(data->win_height);
 
-        double x = -w2h * CGI_HUD_Y_2 + offset_x_;
-        double y = -CGI_HUD_Y_2 + offset_y_;
+        double x = -w2h * CGI_HUD_Y_2 + kOffset_x;
+        double y = -CGI_HUD_Y_2 + kOffset_y;
 
         q = q.inverse();
 
-        pat_->setAttitude(q);
-        pat_->setPosition(osg::Vec3d(x, y, 0.0));
+        _pat->setAttitude(q);
+        _pat->setPosition(osg::Vec3d(x, y, 0.0));
     }
 }
 
-void ViewGizmo::CreateGizmo()
+void ViewGizmo::createGizmo()
 {
     constexpr double len = 10.0;
 
-    pat_ = new osg::PositionAttitudeTransform();
-    root_->addChild(pat_.get());
+    _pat = new osg::PositionAttitudeTransform();
+    _root->addChild(_pat.get());
 
     osg::ref_ptr<osg::Geode> geode = new osg::Geode();
-    pat_->addChild(geode.get());
+    _pat->addChild(geode.get());
 
     osg::ref_ptr<osg::Geometry> geometry = new osg::Geometry();
 
@@ -110,7 +110,7 @@ void ViewGizmo::CreateGizmo()
     geode->addDrawable(geometry.get());
 
     osg::ref_ptr<osg::LineWidth> lineWidth = new osg::LineWidth();
-    lineWidth->setWidth(2.0f);
+    lineWidth->setWidth(2.0);
 
     geode->getOrCreateStateSet()->setAttributeAndModes(lineWidth, osg::StateAttribute::ON);
 }

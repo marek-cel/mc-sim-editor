@@ -34,7 +34,7 @@ namespace Geometry {
  * @param e end coordinates
  * @param color
  */
-void CreateLine(osg::Geometry* geom, const osg::Vec3& b, const osg::Vec3& e,
+void createLine(osg::Geometry* geom, const osg::Vec3& b, const osg::Vec3& e,
                 const osg::Vec4& color);
 
 } // namespace Geometry

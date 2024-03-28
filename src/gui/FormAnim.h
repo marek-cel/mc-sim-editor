@@ -40,7 +40,7 @@ public:
     explicit FormAnim(QWidget* parent = nullptr);
     ~FormAnim();
 
-    inline double getCurrentTime() const { return currentTime_; }
+    inline double getCurrentTime() const { return _currentTime; }
 
 public slots:
 
@@ -56,15 +56,11 @@ protected:
 
 private:
 
-    Ui::FormAnim* ui_ = nullptr;
-
+    Ui::FormAnim* _ui = nullptr;
     QElapsedTimer _timer;
-
-    std::weak_ptr<pro::Project> proj_;
-
-    int timer_id_ = 0;
-
-    double currentTime_ = 0.0;
+    std::weak_ptr<pro::Project> _proj;
+    int _timer_id = 0;
+    double _currentTime = 0.0;
 
     void updateAnimation();
 

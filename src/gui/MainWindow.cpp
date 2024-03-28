@@ -33,23 +33,23 @@ namespace gui {
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
-    , ui_(new Ui::MainWindow)
+    , _ui(new Ui::MainWindow)
 {
-    ui_->setupUi(this);
+    _ui->setupUi(this);
 
-    shortcut_save_   = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this, SLOT(on_actionSave_triggered()));
-    shortcut_reload_ = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_R), this, SLOT(on_actionReload_triggered()));
+    _shortcut_save   = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this, SLOT(on_actionSave_triggered()));
+    _shortcut_reload = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_R), this, SLOT(on_actionReload_triggered()));
 
-    connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), ui_->widgetComp  , SLOT(setProject(std::shared_ptr<pro::Project>)));
-    connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), ui_->widgetScene , SLOT(setProject(std::shared_ptr<pro::Project>)));
-    connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), ui_->widgetCGI   , SLOT(setProject(std::shared_ptr<pro::Project>)));
-    connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), ui_->widgetAnim  , SLOT(setProject(std::shared_ptr<pro::Project>)));
+    connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), _ui->widgetComp  , SLOT(setProject(std::shared_ptr<pro::Project>)));
+    connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), _ui->widgetScene , SLOT(setProject(std::shared_ptr<pro::Project>)));
+    connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), _ui->widgetCGI   , SLOT(setProject(std::shared_ptr<pro::Project>)));
+    connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), _ui->widgetAnim  , SLOT(setProject(std::shared_ptr<pro::Project>)));
 
-    connect(ui_->widgetComp  , SIGNAL(projectChanged()), this, SLOT(projectChanged()));
-    connect(ui_->widgetScene , SIGNAL(projectChanged()), this, SLOT(projectChanged()));
-    connect(ui_->widgetAnim  , SIGNAL(projectChanged()), this, SLOT(projectChanged()));
+    connect(_ui->widgetComp  , SIGNAL(projectChanged()), this, SLOT(projectChanged()));
+    connect(_ui->widgetScene , SIGNAL(projectChanged()), this, SLOT(projectChanged()));
+    connect(_ui->widgetAnim  , SIGNAL(projectChanged()), this, SLOT(projectChanged()));
 
-    connect(ui_->widgetScene, SIGNAL(componentChanged(std::shared_ptr<pro::Component>)), ui_->widgetComp, SLOT(setComponent(std::shared_ptr<pro::Component>)));
+    connect(_ui->widgetScene, SIGNAL(componentChanged(std::shared_ptr<pro::Component>)), _ui->widgetComp, SLOT(setComponent(std::shared_ptr<pro::Component>)));
 
     settingsRead();
     newProject();
@@ -59,7 +59,7 @@ MainWindow::~MainWindow()
 {
     settingsSave();
 
-    if ( ui_ ) { delete ui_; } ui_ = nullptr;
+    if ( _ui ) { delete _ui; } _ui = nullptr;
 }
 
 void MainWindow::openFileFromCommandLine(QString filename)
@@ -69,8 +69,8 @@ void MainWindow::openFileFromCommandLine(QString filename)
 
 void MainWindow::projectChanged()
 {
-    saved_ = false;
-    ui_->widgetCGI->setAnimationTime(ui_->widgetAnim->getCurrentTime());
+    _saved = false;
+    _ui->widgetCGI->setAnimationTime(_ui->widgetAnim->getCurrentTime());
     updateWindowTitle();
 }
 
@@ -86,14 +86,14 @@ void MainWindow::closeEvent(QCloseEvent* event)
 void MainWindow::addRecentFile(QString file)
 {
     QStringList recent_files;
-    for ( auto action : recent_actions_ )
+    for ( auto action : _recent_actions )
     {
         action->disconnect();
         recent_files.push_back(action->file());
     }
 
-    recent_actions_.clear();
-    ui_->menuRecentFiles->clear();
+    _recent_actions.clear();
+    _ui->menuRecentFiles->clear();
 
     if ( file.length() > 0 )
     {
@@ -111,19 +111,19 @@ void MainWindow::addRecentFile(QString file)
         }
     }
 
-    for ( int i = 0; i < recent_files.size() && i < recent_files_max_; ++i )
+    for ( int i = 0; i < recent_files.size() && i < _recent_files_max; ++i )
     {
-        RecentAction* action = new RecentAction(recent_files.at(i), ui_->menuRecentFiles);
-        recent_actions_.push_back(action);
+        RecentAction* action = new RecentAction(recent_files.at(i), _ui->menuRecentFiles);
+        _recent_actions.push_back(action);
 
         connect(action, SIGNAL(triggered(RecentAction*)), SLOT(recentFile_triggered(RecentAction*)));
-        ui_->menuRecentFiles->addAction(action);
+        _ui->menuRecentFiles->addAction(action);
     }
 }
 
 void MainWindow::askIfSave()
 {
-    if ( !saved_ )
+    if ( !_saved )
     {
         QString title = windowTitle();
         QString text = tr("File have unsaved changes.");
@@ -142,9 +142,9 @@ void MainWindow::askIfSave()
 void MainWindow::newProject()
 {
     askIfSave();
-    proj_ = std::make_shared<pro::Project>();
-    saved_ = true;
-    emit projectCreated(proj_);
+    _proj = std::make_shared<pro::Project>();
+    _saved = true;
+    emit projectCreated(_proj);
     updateWindowTitle();
 }
 
@@ -153,7 +153,7 @@ void MainWindow::openProject()
     askIfSave();
 
     QString caption = tr("Open...");
-    QString dir = ( proj_->GetFile().length() > 0 ) ? QFileInfo(proj_->GetFile()).absolutePath() : "";
+    QString dir = ( _proj->GetFile().length() > 0 ) ? QFileInfo(_proj->GetFile()).absolutePath() : "";
     QString filter;
     QString selectedFilter;
 
@@ -171,9 +171,9 @@ void MainWindow::openProject()
 
 void MainWindow::saveProject()
 {
-    if ( proj_->GetFile().length() > 0 )
+    if ( _proj->GetFile().length() > 0 )
     {
-        saveProject(proj_->GetFile());
+        saveProject(_proj->GetFile());
     }
     else
     {
@@ -184,7 +184,7 @@ void MainWindow::saveProject()
 void MainWindow::saveProjectAs()
 {
     QString caption = tr("Save as...");
-    QString dir = ( proj_->GetFile().length() > 0 ) ? QFileInfo(proj_->GetFile()).absolutePath() : ".";
+    QString dir = ( _proj->GetFile().length() > 0 ) ? QFileInfo(_proj->GetFile()).absolutePath() : ".";
     QString filter;
     QString selectedFilter;
 
@@ -237,11 +237,11 @@ void MainWindow::readProject(QString file)
         std::shared_ptr<pro::Project> proj_temp = std::make_shared<pro::Project>();
         if ( Result::Success == proj_temp->Read(fileFullPath) )
         {
-            proj_ = proj_temp;
-            saved_ = true;
-            emit projectCreated(proj_);
+            _proj = proj_temp;
+            _saved = true;
+            emit projectCreated(_proj);
             updateWindowTitle();
-            addRecentFile(proj_->GetFile());
+            addRecentFile(_proj->GetFile());
         }
         else
         {
@@ -258,10 +258,10 @@ void MainWindow::readProject(QString file)
 
 void MainWindow::saveProject(QString file)
 {
-    if ( Result::Success == proj_->Save(file) )
+    if ( Result::Success == _proj->Save(file) )
     {
-        addRecentFile(proj_->GetFile());
-        saved_ = true;
+        addRecentFile(_proj->GetFile());
+        _saved = true;
     }
     else
     {
@@ -274,7 +274,7 @@ void MainWindow::saveProject(QString file)
 
 void MainWindow::exportModel(QString file)
 {
-    if ( Result::Failure == proj_->GetAssembly()->Export(file) )
+    if ( Result::Failure == _proj->GetAssembly()->Export(file) )
     {
         QMessageBox::warning(this, tr(APP_TITLE),
                              tr("Cannot export file %1.").arg(file));
@@ -290,11 +290,11 @@ void MainWindow::settingsRead()
     restoreState(settings.value("state").toByteArray());
     restoreGeometry(settings.value("geometry").toByteArray());
 
-    ui_->splitterHorModel->restoreState(settings.value("splitter_hor_state").toByteArray());
-    ui_->splitterVerModel->restoreState(settings.value("splitter_ver_state").toByteArray());
+    _ui->splitterHorModel->restoreState(settings.value("splitter_hor_state").toByteArray());
+    _ui->splitterVerModel->restoreState(settings.value("splitter_ver_state").toByteArray());
 
     bool grid_visible = settings.value("grid_visible" , 1).toBool();
-    ui_->actionShowGrid->setChecked(grid_visible);
+    _ui->actionShowGrid->setChecked(grid_visible);
 
     settingsRead_RecentFiles(settings);
 
@@ -306,10 +306,10 @@ void MainWindow::settingsRead_RecentFiles(QSettings& settings)
     QStringList recent_files = settings.value("recent_files").toStringList();
     for ( auto file : recent_files )
     {
-        RecentAction* action = new RecentAction(file, ui_->menuRecentFiles);
-        recent_actions_.push_back(action);
+        RecentAction* action = new RecentAction(file, _ui->menuRecentFiles);
+        _recent_actions.push_back(action);
         connect(action, SIGNAL(triggered(RecentAction*)), SLOT(recentFile_triggered(RecentAction*)));
-        ui_->menuRecentFiles->addAction(action);
+        _ui->menuRecentFiles->addAction(action);
     }
 }
 
@@ -322,10 +322,10 @@ void MainWindow::settingsSave()
     settings.setValue("state", saveState());
     settings.setValue("geometry", saveGeometry());
 
-    settings.setValue("splitter_hor_state", ui_->splitterHorModel->saveState());
-    settings.setValue("splitter_ver_state", ui_->splitterVerModel->saveState());
+    settings.setValue("splitter_hor_state", _ui->splitterHorModel->saveState());
+    settings.setValue("splitter_ver_state", _ui->splitterVerModel->saveState());
 
-    settings.setValue("grid_visible" , ui_->actionShowGrid ->isChecked() ? 1 : 0);
+    settings.setValue("grid_visible" , _ui->actionShowGrid ->isChecked() ? 1 : 0);
 
     settingsSave_RecentFiles(settings);
 
@@ -335,7 +335,7 @@ void MainWindow::settingsSave()
 void MainWindow::settingsSave_RecentFiles(QSettings& settings)
 {
     QStringList recent_files;
-    for ( auto action : recent_actions_ )
+    for ( auto action : _recent_actions )
     {
         recent_files.push_back(action->file());
     }
@@ -347,16 +347,16 @@ void MainWindow::updateWindowTitle()
 {
     QString title;
 
-    if ( proj_->GetFile().length() > 0 )
+    if ( _proj->GetFile().length() > 0 )
     {
-        title = QFileInfo(proj_->GetFile()).fileName();
+        title = QFileInfo(_proj->GetFile()).fileName();
     }
     else
     {
         title = tr("Untitled");
     }
 
-    if ( !saved_ ) title += " (*)";
+    if ( !_saved ) title += " (*)";
     title += " - ";
     title += APP_TITLE;
 
@@ -375,12 +375,12 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionClearRecent_triggered()
 {
-    for ( auto action : recent_actions_ )
+    for ( auto action : _recent_actions )
     {
         action->disconnect(this, SLOT(recentFile_triggered(RecentAction*)));
     }
-    recent_actions_.clear();
-    ui_->menuRecentFiles->clear();
+    _recent_actions.clear();
+    _ui->menuRecentFiles->clear();
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -405,61 +405,61 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionReload_triggered()
 {
-    cgi::Models::Reset();
-    cgi::Textures::Reset();
-    readProject(proj_->GetFile());
+    cgi::Models::reset();
+    cgi::Textures::reset();
+    readProject(_proj->GetFile());
 }
 
 void MainWindow::on_actionShowGrid_toggled(bool checked)
 {
-    ui_->widgetCGI->getManagerCGI()->SetGridVisibility(checked);
+    _ui->widgetCGI->getManagerCGI()->setGridVisibility(checked);
 }
 
 void MainWindow::on_actionViewDefault_triggered()
 {
-    ui_->widgetCGI->resetView();
+    _ui->widgetCGI->resetView();
 }
 
 void MainWindow::on_actionViewTop_triggered()
 {
-    ui_->widgetCGI->topView();
+    _ui->widgetCGI->topView();
 }
 
 void MainWindow::on_actionViewBottom_triggered()
 {
-    ui_->widgetCGI->bottomView();
+    _ui->widgetCGI->bottomView();
 }
 
 void MainWindow::on_actionViewBack_triggered()
 {
-    ui_->widgetCGI->backView();
+    _ui->widgetCGI->backView();
 }
 
 void MainWindow::on_actionViewFront_triggered()
 {
-    ui_->widgetCGI->frontView();
+    _ui->widgetCGI->frontView();
 }
 
 void MainWindow::on_actionViewLeft_triggered()
 {
-    ui_->widgetCGI->leftView();
+    _ui->widgetCGI->leftView();
 }
 
 void MainWindow::on_actionViewRight_triggered()
 {
-    ui_->widgetCGI->rightView();
+    _ui->widgetCGI->rightView();
 }
 
 void MainWindow::on_actionViewOrbit_triggered()
 {
-    ui_->widgetCGI->setCameraManipulatorOrbit();
-    ui_->widgetCGI->resetView();
+    _ui->widgetCGI->setCameraManipulatorOrbit();
+    _ui->widgetCGI->resetView();
 }
 
 void MainWindow::on_actionViewTrack_triggered()
 {
-    ui_->widgetCGI->setCameraManipulatorTrack();
-    ui_->widgetCGI->resetView();
+    _ui->widgetCGI->setCameraManipulatorTrack();
+    _ui->widgetCGI->resetView();
 }
 
 void MainWindow::on_actionAbout_triggered()

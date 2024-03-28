@@ -41,43 +41,38 @@ class Manager
 {
 public:
 
-    /** */
     Manager();
-
-    /** */
     virtual ~Manager();
 
-    /** */
-    void Update();
+    void update();
 
-    /** */
-    inline osgGA::CameraManipulator* GetCameraManipulator()
+    inline osgGA::CameraManipulator* getCameraManipulator()
     {
         return _manipulator.get();
     }
 
     /** Returns root node. */
-    inline osg::Group* GetNodeCGI() { return cgi_->root().get(); }
+    inline osg::Group* getNodeCGI() { return _cgi->root().get(); }
 
     /** Returns root node. */
-    inline osg::Group* GetNodeHUD() { return hud_->root().get(); }
+    inline osg::Group* getNodeHUD() { return _hud->root().get(); }
 
-    void SetCameraManipulatorOrbit();
-    void SetCameraManipulatorTrack();
+    void setCameraManipulatorOrbit();
+    void setCameraManipulatorTrack();
 
-    void SetGridVisibility(bool grid_visible);
+    void setGridVisibility(bool grid_visible);
 
-    void SetProject(std::shared_ptr<pro::Project> proj);
+    void setProject(std::shared_ptr<pro::Project> proj);
 
-    void SetWinHeight(int h);
-    void SetWinWidth(int w);
+    void setWinHeight(int h);
+    void setWinWidth(int w);
 
 private:
 
-    std::shared_ptr<Data> data_;
+    std::shared_ptr<Data> _data;
 
-    std::shared_ptr<CGI> cgi_;
-    std::shared_ptr<HUD> hud_;
+    std::shared_ptr<CGI> _cgi;
+    std::shared_ptr<HUD> _hud;
 
     osg::ref_ptr<osgGA::CameraManipulator> _manipulator;    ///< current manipulator
 

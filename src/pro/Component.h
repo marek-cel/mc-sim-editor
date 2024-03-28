@@ -38,39 +38,20 @@ public:
     Component(const Component& component) = delete;
     Component(Component&&) = delete;
 
-    /** */
     virtual bool CanBeAnimated() const = 0;
-
-    /** */
     virtual bool CanBeParent() const = 0;
-
-    /** */
     virtual std::unique_ptr<Component> Clone() const = 0;
-
-    /** */
     virtual const char* GetTagName() const = 0;
 
-    /** */
     virtual Result Read(const QDomElement* node);
-
-    /** */
     virtual Result Save(QDomDocument* doc, QDomElement* parent);
-
-    /** */
     virtual void Update();
-
     virtual bool IsRoot() const;
-
     virtual inline QString GetName() const { return name_; }
-
     virtual inline std::weak_ptr<Component> GetParent() const { return parent_; }
-
     virtual void SetName(QString name);
-
     virtual void SetParent(std::shared_ptr<Component> parent);
-
     virtual void SetProjFile(QString proj_file) { proj_file_ = proj_file; }
-
     virtual void SetAnimationTime(double time);
 
     inline osg::ref_ptr<osg::Node> GetNode() { return node_; }

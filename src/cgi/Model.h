@@ -35,11 +35,11 @@ public:
     /** */
     virtual ~Model();
 
-    void SetProject(std::shared_ptr<pro::Project> project);
+    void setProject(std::shared_ptr<pro::Project> project) override;
 
 private:
 
-    osg::ref_ptr<osg::Group> assembly_;
+    osg::ref_ptr<osg::Group> _assembly;
 };
 
 } // namespace cgi

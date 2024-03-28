@@ -48,7 +48,7 @@ void FLOLS::Create()
 
     CreateIFLOLS(lpn);
 
-    osg::ref_ptr<osg::Texture2D> texture = cgi::Textures::Get("../data/lightpoint.png");
+    osg::ref_ptr<osg::Texture2D> texture = cgi::Textures::get("../data/lightpoint.png");
     if ( texture.valid() )
     {
         osg::ref_ptr<osg::StateSet> ss = lpn->getOrCreateStateSet();

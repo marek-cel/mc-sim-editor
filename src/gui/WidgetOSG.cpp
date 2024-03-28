@@ -28,7 +28,7 @@ WidgetOSG::WidgetOSG(QWidget* parent)
     setThreadingModel(osgViewer::ViewerBase::SingleThreaded);
     //setThreadingModel(osgViewer::ViewerBase::ThreadPerContext);
 
-    gwin_ = createGraphicsWindow(x(), y(), width(), height());
+    _gwin = createGraphicsWindow(x(), y(), width(), height());
 }
 
 WidgetOSG::~WidgetOSG() {}

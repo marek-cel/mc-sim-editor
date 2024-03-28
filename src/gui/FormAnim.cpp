@@ -27,24 +27,24 @@ namespace gui {
 
 FormAnim::FormAnim(QWidget* parent)
     : QWidget(parent)
-    , ui_(new Ui::FormAnim)
+    , _ui(new Ui::FormAnim)
 {
-    ui_->setupUi(this);
+    _ui->setupUi(this);
 
-    timer_id_ = startTimer(1000.0 / 60.0);
+    _timer_id = startTimer(1000.0 / 60.0);
     _timer.start();
 }
 
 FormAnim::~FormAnim()
 {
-    if ( timer_id_ ) killTimer(timer_id_);
+    if ( _timer_id ) killTimer(_timer_id);
 
-    if ( ui_ ) { delete ui_; } ui_ = nullptr;
+    if ( _ui ) { delete _ui; } _ui = nullptr;
 }
 
 void FormAnim::setProject(std::shared_ptr<pro::Project> proj)
 {
-    proj_ = proj;
+    _proj = proj;
     updateAnimation();
 }
 
@@ -57,40 +57,40 @@ void FormAnim::timerEvent(QTimerEvent* event)
     // always restart timer to avoid buildup of time step
     double dt = static_cast<double>(_timer.restart()) / 1000.0;
 
-    if ( ui_->pushButtonPlay->isChecked() )
+    if ( _ui->pushButtonPlay->isChecked() )
     {
-        currentTime_ += ui_->spinBoxSpeed->value() * dt;
+        _currentTime += _ui->spinBoxSpeed->value() * dt;
 
-        if ( currentTime_ > ui_->spinBoxEndTime->value() )
+        if ( _currentTime > _ui->spinBoxEndTime->value() )
         {
-            currentTime_ -= (ui_->spinBoxEndTime->value() - ui_->spinBoxStartTime->value());
+            _currentTime -= (_ui->spinBoxEndTime->value() - _ui->spinBoxStartTime->value());
         }
 
         emit(projectChanged());
 
-        double frac = (currentTime_ - ui_->spinBoxStartTime->value())
-                    / (ui_->spinBoxEndTime->value() - ui_->spinBoxStartTime->value());
-        ui_->sliderTime->setValue(100*frac);
-        ui_->spinBoxCurrentTime->setValue(currentTime_);
+        double frac = (_currentTime - _ui->spinBoxStartTime->value())
+                    / (_ui->spinBoxEndTime->value() - _ui->spinBoxStartTime->value());
+        _ui->sliderTime->setValue(100*frac);
+        _ui->spinBoxCurrentTime->setValue(_currentTime);
     }
 }
 
 void FormAnim::updateAnimation()
 {
-    if ( !proj_.expired() )
+    if ( !_proj.expired() )
     {
-        std::shared_ptr<pro::Project> proj = proj_.lock();
+        std::shared_ptr<pro::Project> proj = _proj.lock();
 
-        currentTime_ = proj->GetPlayback()->current_time();
+        _currentTime = proj->GetPlayback()->current_time();
 
-        Utils::setNoEmitValue(ui_->spinBoxStartTime, proj->GetPlayback()->time_start());
-        Utils::setNoEmitValue(ui_->spinBoxEndTime, proj->GetPlayback()->time_end());
-        Utils::setNoEmitValue(ui_->spinBoxSpeed, proj->GetPlayback()->speed());
-        Utils::setNoEmitValue(ui_->spinBoxCurrentTime, currentTime_);
+        Utils::setNoEmitValue(_ui->spinBoxStartTime, proj->GetPlayback()->time_start());
+        Utils::setNoEmitValue(_ui->spinBoxEndTime, proj->GetPlayback()->time_end());
+        Utils::setNoEmitValue(_ui->spinBoxSpeed, proj->GetPlayback()->speed());
+        Utils::setNoEmitValue(_ui->spinBoxCurrentTime, _currentTime);
 
-        double frac = (currentTime_ - ui_->spinBoxStartTime->value())
-                    / (ui_->spinBoxEndTime->value() - ui_->spinBoxStartTime->value());
-        Utils::setNoEmitValue(ui_->sliderTime, 100*frac);
+        double frac = (_currentTime - _ui->spinBoxStartTime->value())
+                    / (_ui->spinBoxEndTime->value() - _ui->spinBoxStartTime->value());
+        Utils::setNoEmitValue(_ui->sliderTime, 100*frac);
     }
 }
 
@@ -98,26 +98,26 @@ void FormAnim::on_pushButtonPlay_toggled(bool checked)
 {
     if ( checked )
     {
-        ui_->pushButtonPlay->setText(tr("Pause"));
+        _ui->pushButtonPlay->setText(tr("Pause"));
     }
     else
     {
-        ui_->pushButtonPlay->setText(tr("Play"));
+        _ui->pushButtonPlay->setText(tr("Play"));
     }
 }
 
 void FormAnim::on_sliderTime_valueChanged(int value)
 {
-    if ( !ui_->pushButtonPlay->isChecked() )
+    if ( !_ui->pushButtonPlay->isChecked() )
     {
-        currentTime_ = ui_->spinBoxStartTime->value()
+        _currentTime = _ui->spinBoxStartTime->value()
                 + (static_cast<double>(value) / 100.0)
-                * (ui_->spinBoxEndTime->value() - ui_->spinBoxStartTime->value());
-        ui_->spinBoxCurrentTime->setValue(currentTime_);
-        if ( !proj_.expired() )
+                * (_ui->spinBoxEndTime->value() - _ui->spinBoxStartTime->value());
+        _ui->spinBoxCurrentTime->setValue(_currentTime);
+        if ( !_proj.expired() )
         {
-            std::shared_ptr<pro::Project> proj = proj_.lock();
-            proj->GetPlayback()->set_current_time(currentTime_);
+            std::shared_ptr<pro::Project> proj = _proj.lock();
+            proj->GetPlayback()->set_current_time(_currentTime);
         }
         emit(projectChanged());
     }
@@ -125,10 +125,10 @@ void FormAnim::on_sliderTime_valueChanged(int value)
 
 void FormAnim::on_spinBoxStartTime_valueChanged(double arg1)
 {
-    ui_->spinBoxEndTime->setMinimum(arg1);
-    if ( !proj_.expired() )
+    _ui->spinBoxEndTime->setMinimum(arg1);
+    if ( !_proj.expired() )
     {
-        std::shared_ptr<pro::Project> proj = proj_.lock();
+        std::shared_ptr<pro::Project> proj = _proj.lock();
         proj->GetPlayback()->set_time_start(arg1);
     }
     emit(projectChanged());
@@ -136,10 +136,10 @@ void FormAnim::on_spinBoxStartTime_valueChanged(double arg1)
 
 void FormAnim::on_spinBoxEndTime_valueChanged(double arg1)
 {
-    ui_->spinBoxStartTime->setMaximum(arg1);
-    if ( !proj_.expired() )
+    _ui->spinBoxStartTime->setMaximum(arg1);
+    if ( !_proj.expired() )
     {
-        std::shared_ptr<pro::Project> proj = proj_.lock();
+        std::shared_ptr<pro::Project> proj = _proj.lock();
         proj->GetPlayback()->set_time_end(arg1);
     }
     emit(projectChanged());
@@ -147,9 +147,9 @@ void FormAnim::on_spinBoxEndTime_valueChanged(double arg1)
 
 void FormAnim::on_spinBoxSpeed_valueChanged(double arg1)
 {
-    if ( !proj_.expired() )
+    if ( !_proj.expired() )
     {
-        std::shared_ptr<pro::Project> proj = proj_.lock();
+        std::shared_ptr<pro::Project> proj = _proj.lock();
         proj->GetPlayback()->set_speed(arg1);
     }
     emit(projectChanged());

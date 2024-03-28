@@ -27,26 +27,26 @@ namespace cgi {
 Model::Model(std::shared_ptr<Data> data)
     : Component(data)
 {
-    assembly_ = new osg::Group();
-    root_->addChild(assembly_.get());
+    _assembly = new osg::Group();
+    _root->addChild(_assembly.get());
 }
 
 Model::~Model() {}
 
-void Model::SetProject(std::shared_ptr<pro::Project> proj)
+void Model::setProject(std::shared_ptr<pro::Project> proj)
 {
     ////////////////////////////
-    Component::SetProject(proj);
+    Component::setProject(proj);
     ////////////////////////////
 
-    if ( assembly_->getNumChildren() > 0 )
+    if ( _assembly->getNumChildren() > 0 )
     {
-        assembly_->removeChildren(0, assembly_->getNumChildren());
+        _assembly->removeChildren(0, _assembly->getNumChildren());
     }
 
     if ( proj )
     {
-        assembly_->addChild(proj->GetAssembly()->GetRoot()->GetNode().get());
+        _assembly->addChild(proj->GetAssembly()->GetRoot()->GetNode().get());
     }
 }
 

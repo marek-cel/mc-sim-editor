@@ -23,51 +23,50 @@ namespace mc {
 namespace cgi {
 
 Component::Component(std::shared_ptr<Data> data)
-    : data_(data)
+    : _data(data)
 {
-    root_ = new osg::Group();
-
-    children_.clear();
+    _root = new osg::Group();
+    _children.clear();
 }
 
 Component::~Component()
 {
-    RemoveAllChildren();
+    removeAllChildren();
 }
 
-void Component::AddChild(std::shared_ptr<Component> child)
+void Component::addChild(std::shared_ptr<Component> child)
 {
-    children_.push_back(child);
-    root_->addChild(child->root().get());
+    _children.push_back(child);
+    _root->addChild(child->root().get());
 }
 
-void Component::Update()
+void Component::update()
 {
-    for ( auto child : children_ )
+    for ( auto child : _children )
     {
-        child->Update();
+        child->update();
     }
 }
 
-void Component::SetProject(std::shared_ptr<pro::Project> proj)
+void Component::setProject(std::shared_ptr<pro::Project> proj)
 {
-    for ( auto child : children_ )
+    for ( auto child : _children )
     {
-        child->SetProject(proj);
+        child->setProject(proj);
     }
 }
 
-void Component::RemoveAllChildren()
+void Component::removeAllChildren()
 {
-    if ( root_->getNumChildren() > 0 )
+    if ( _root->getNumChildren() > 0 )
     {
-        root_->removeChildren(0, root_->getNumChildren());
+        _root->removeChildren(0, _root->getNumChildren());
     }
 
-    List::iterator it = children_.begin();
-    while ( it != children_.end() )
+    List::iterator it = _children.begin();
+    while ( it != _children.end() )
     {
-        it = children_.erase(it);
+        it = _children.erase(it);
     }
 }
 

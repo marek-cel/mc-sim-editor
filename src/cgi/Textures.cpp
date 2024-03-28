@@ -26,22 +26,22 @@
 namespace mc {
 namespace cgi {
 
-std::shared_ptr<Textures> Textures::instance_;
+std::shared_ptr<Textures> Textures::_instance;
 
-std::shared_ptr<Textures> Textures::Instance()
+std::shared_ptr<Textures> Textures::instance()
 {
-    if ( !instance_ )
+    if ( !_instance )
     {
         Textures* instance = new Textures();
-        instance_ = std::shared_ptr<Textures>(instance);
+        _instance = std::shared_ptr<Textures>(instance);
     }
 
-    return instance_;
+    return _instance;
 }
 
-osg::Texture2D* Textures::Get(std::string file, double maxAnisotropy)
+osg::Texture2D* Textures::get(std::string file, double maxAnisotropy)
 {
-    osg::ref_ptr<osg::Texture2D> texture = GetMapItemByKey(&Instance()->list_, file);
+    osg::ref_ptr<osg::Texture2D> texture = GetMapItemByKey(&instance()->_list, file);
 
     if ( texture.valid() )
     {
@@ -67,7 +67,7 @@ osg::Texture2D* Textures::Get(std::string file, double maxAnisotropy)
 
         texture->setUnRefImageDataAfterApply(false);
 
-        AddMapItem(&Instance()->list_, file, texture);
+        AddMapItem(&instance()->_list, file, texture);
         return texture.get();
     }
     else
@@ -78,9 +78,9 @@ osg::Texture2D* Textures::Get(std::string file, double maxAnisotropy)
     return nullptr;
 }
 
-void Textures::Reset()
+void Textures::reset()
 {
-    Instance()->list_.clear();
+    instance()->_list.clear();
 }
 
 } // namespace cgi

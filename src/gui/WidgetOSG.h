@@ -33,19 +33,13 @@
 namespace mc {
 namespace gui {
 
-/**
- * @brief OSG common widget class.
- */
 class WidgetOSG : public QWidget, public osgViewer::Viewer
 {
     Q_OBJECT
 
 public:
 
-    /** @brief Constructor. */
     explicit WidgetOSG(QWidget* parent = nullptr);
-
-    /** @brief Destructor. */
     virtual ~WidgetOSG();
 
     virtual osgViewer::Viewer* getOsgViewer();
@@ -54,16 +48,12 @@ public:
 
 protected:
 
-    QGridLayout* layout_ = nullptr;         ///<
+    QGridLayout* _layout = nullptr;
+    osg::ref_ptr<GraphicsWindowQt> _gwin;
+    bool _initialized = true;
 
-    osg::ref_ptr<GraphicsWindowQt> gwin_;   ///<
-
-    bool initialized_ = true;               ///<
-
-    /** */
     virtual void paintEvent(QPaintEvent* event);
 
-    /** */
     osg::ref_ptr<GraphicsWindowQt> createGraphicsWindow(int x, int y, int w, int h);
 };
 

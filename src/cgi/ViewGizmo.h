@@ -30,8 +30,8 @@ class ViewGizmo : public Component
 {
 public:
 
-    static constexpr int offset_x_ = 15;
-    static constexpr int offset_y_ = 15;
+    static constexpr int kOffset_x = 15;
+    static constexpr int kOffset_y = 15;
 
     /**
      * @brief Constructor.
@@ -39,16 +39,16 @@ public:
      */
     ViewGizmo(std::shared_ptr<Data> data);
 
-    void Update() override;
+    void update() override;
 
 private:
 
-    osg::ref_ptr<osg::PositionAttitudeTransform> pat_;
+    osg::ref_ptr<osg::PositionAttitudeTransform> _pat;
 
-    int x0_ = 0;
-    int y0_ = 0;
+    int _x0 = 0;
+    int _y0 = 0;
 
-    void CreateGizmo();
+    void createGizmo();
 
 };
 

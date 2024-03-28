@@ -45,7 +45,6 @@ public:
     using RecentActions = QVector<RecentAction*>;
 
     explicit MainWindow(QWidget* parent = nullptr);
-
     ~MainWindow();
 
     void openFileFromCommandLine(QString filename);
@@ -60,23 +59,22 @@ signals:
 
 protected:
 
-    /** */
     virtual void closeEvent(QCloseEvent* event) override;
 
 private:
 
-    Ui::MainWindow* ui_ = nullptr;
+    Ui::MainWindow* _ui = nullptr;
 
-    QShortcut* shortcut_save_   = nullptr;  ///< save shortcut
-    QShortcut* shortcut_reload_ = nullptr;  ///< reload shortcut
+    QShortcut* _shortcut_save   = nullptr;  ///< save shortcut
+    QShortcut* _shortcut_reload = nullptr;  ///< reload shortcut
 
-    RecentActions recent_actions_;          ///< recent action items
+    RecentActions _recent_actions;          ///< recent action items
 
-    std::shared_ptr<pro::Project> proj_;    ///< current project
+    std::shared_ptr<pro::Project> _proj;    ///< current project
 
-    int recent_files_max_ = 10;
+    int _recent_files_max = 10;
 
-    bool saved_ = true;                     ///< specifies if current file is saved or if there are unsaved changes
+    bool _saved = true;                     ///< specifies if current file is saved or if there are unsaved changes
 
     void addRecentFile(QString file);
 

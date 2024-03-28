@@ -37,17 +37,17 @@ public:
     /** */
     Grid(std::shared_ptr<Data> data);
 
-    void Update() override;
+    void update() override;
 
 private:
 
-    osg::ref_ptr<osg::Switch> switch_;
+    osg::ref_ptr<osg::Switch> _switch;
 
-    bool grid_visible_ = true;
+    bool _grid_visible = true;
 
-    void CreateGrid();
-    void CreateGridAuxLines();
-    void CreateGridMainLines();
+    void createGrid();
+    void createGridAuxLines();
+    void createGridMainLines();
 };
 
 } // namespace cgi

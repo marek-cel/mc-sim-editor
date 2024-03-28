@@ -33,18 +33,18 @@ public:
 
     using List = std::map<std::string, osg::ref_ptr<osg::Texture2D>>;
 
-    static std::shared_ptr<Textures> Instance();
+    static std::shared_ptr<Textures> instance();
 
     /** */
-    static osg::Texture2D* Get(std::string file, double maxAnisotropy = 1.0);
+    static osg::Texture2D* get(std::string file, double maxAnisotropy = 1.0);
 
-    static void Reset();
+    static void reset();
 
 private:
 
-    static std::shared_ptr<Textures> instance_;
+    static std::shared_ptr<Textures> _instance;
 
-    List list_;
+    List _list;
 
     Textures() = default;
     Textures(const Textures&) = delete;

@@ -61,7 +61,7 @@ void File::ReloadFile()
     QDir proj_dir = QFileInfo(proj_file_).absoluteDir();
     QString file = proj_dir.absoluteFilePath(file_);
 
-    node_ = cgi::Models::Get(file.toStdString());
+    node_ = cgi::Models::get(file.toStdString());
     if ( node_.valid() )
     {
         SetTransparencyMode(node_.get());

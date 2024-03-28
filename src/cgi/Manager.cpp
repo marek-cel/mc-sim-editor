@@ -27,13 +27,13 @@ namespace cgi {
 
 Manager::Manager()
 {
-    data_ = std::make_shared<Data>();
+    _data = std::make_shared<Data>();
 
-    cgi_ = std::make_shared<CGI>(data_);
-    hud_ = std::make_shared<HUD>(data_);
+    _cgi = std::make_shared<CGI>(_data);
+    _hud = std::make_shared<HUD>(_data);
 
-    Builder::BuildCGI(data_, cgi_);
-    Builder::BuildHUD(data_, hud_);
+    Builder::buildCGI(_data, _cgi);
+    Builder::buildHUD(_data, _hud);
 
     _manipulatorOrbit = new ManipulatorOrbit();
     _manipulatorTrack = new ManipulatorTrack();
@@ -43,50 +43,50 @@ Manager::Manager()
 
 Manager::~Manager() {}
 
-void Manager::Update()
+void Manager::update()
 {
     osg::Quat q = _manipulator->getMatrix().getRotate();
 
-    data_->camera_w = q.w();
-    data_->camera_x = q.x();
-    data_->camera_y = q.y();
-    data_->camera_z = q.z();
+    _data->camera_w = q.w();
+    _data->camera_x = q.x();
+    _data->camera_y = q.y();
+    _data->camera_z = q.z();
 
-    cgi_->Update();
-    hud_->Update();
+    _cgi->update();
+    _hud->update();
 }
 
-void Manager::SetCameraManipulatorOrbit()
+void Manager::setCameraManipulatorOrbit()
 {
     _manipulator = _manipulatorOrbit;
-    _manipulatorOrbit->setTrackNode(cgi_->root().get());
+    _manipulatorOrbit->setTrackNode(_cgi->root().get());
 }
 
-void Manager::SetCameraManipulatorTrack()
+void Manager::setCameraManipulatorTrack()
 {
     _manipulator = _manipulatorTrack;
-    _manipulatorTrack->setNode(cgi_->root().get());
+    _manipulatorTrack->setNode(_cgi->root().get());
 }
 
-void Manager::SetGridVisibility(bool grid_visible)
+void Manager::setGridVisibility(bool grid_visible)
 {
-    data_->grid_visible = grid_visible;
+    _data->grid_visible = grid_visible;
 }
 
-void Manager::SetProject(std::shared_ptr<pro::Project> proj)
+void Manager::setProject(std::shared_ptr<pro::Project> proj)
 {
-    cgi_->SetProject(proj);
-    hud_->SetProject(proj);
+    _cgi->setProject(proj);
+    _hud->setProject(proj);
 }
 
-void Manager::SetWinHeight(int h)
+void Manager::setWinHeight(int h)
 {
-    data_->win_height = h;
+    _data->win_height = h;
 }
 
-void Manager::SetWinWidth(int w)
+void Manager::setWinWidth(int w)
 {
-    data_->win_width = w;
+    _data->win_width = w;
 }
 
 } // namespace cgi

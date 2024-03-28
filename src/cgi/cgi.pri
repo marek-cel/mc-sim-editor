@@ -18,7 +18,6 @@ HEADERS += \
 SOURCES += \
     $$PWD/Builder.cpp \
     $$PWD/CGI.cpp \
-    $$PWD/Colors.cpp \
     $$PWD/Component.cpp \
     $$PWD/Geometry.cpp \
     $$PWD/Grid.cpp \

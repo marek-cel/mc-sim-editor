@@ -31,7 +31,6 @@ class TreeScene : public QTreeWidget
 public:
 
     explicit TreeScene(QWidget *parent = nullptr);
-
     ~TreeScene();
 
     QModelIndex getIndexOfItem(QTreeWidgetItem* item, int column = 0) const;

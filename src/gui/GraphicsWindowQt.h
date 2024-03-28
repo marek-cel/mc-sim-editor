@@ -35,7 +35,6 @@
 namespace mc {
 namespace gui {
 
-/** */
 class GraphicsWindowQt : public osgViewer::GraphicsWindow
 {
     class GLWidget;
@@ -47,21 +46,15 @@ public:
     struct WinData : public osg::Referenced
     {
         WinData(GLWidget* widget = nullptr, QWidget* parent = nullptr)
-            : widget_(widget)
-            , parent_(parent)
+            : _widget(widget)
+            , _parent(parent)
         {}
 
-        GLWidget* widget_ = nullptr;    ///<
-        QWidget*  parent_ = nullptr;    ///<
+        GLWidget* _widget = nullptr;
+        QWidget*  _parent = nullptr;
     };
 
-    /**
-     * @brief Constructor.
-     * @param traits
-     */
     explicit GraphicsWindowQt(osg::GraphicsContext::Traits* traits);
-
-    /** @brief Destructor. */
     virtual ~GraphicsWindowQt();
 
     virtual bool setWindowRectangleImplementation(int x, int y, int w, int h);
@@ -83,8 +76,8 @@ public:
 
     virtual void requestWarpPointer(float x, float y);
 
-    inline       GLWidget* getGLWidget()       { return widget_; }
-    inline const GLWidget* getGLWidget() const { return widget_; }
+    inline       GLWidget* getGLWidget()       { return _widget; }
+    inline const GLWidget* getGLWidget() const { return _widget; }
 
 private:
 
@@ -100,10 +93,10 @@ private:
 
         virtual ~GLWidget();
 
-        inline       GraphicsWindowQt* getGraphicsWindow()       { return gwin_; }
-        inline const GraphicsWindowQt* getGraphicsWindow() const { return gwin_; }
+        inline       GraphicsWindowQt* getGraphicsWindow()       { return _gwin; }
+        inline const GraphicsWindowQt* getGraphicsWindow() const { return _gwin; }
 
-        inline void setGraphicsWindow(GraphicsWindowQt* gwin) { gwin_ = gwin; }
+        inline void setGraphicsWindow(GraphicsWindowQt* gwin) { _gwin = gwin; }
 
         void setKeyboardModifiers(QInputEvent* event);
 
@@ -129,12 +122,12 @@ private:
 
     private:
 
-        GraphicsWindowQt* gwin_;                        ///<
+        GraphicsWindowQt* _gwin;
 
-        QMutex deferredEventQueueMutex_;                ///<
+        QMutex _deferredEventQueueMutex;
 
-        QQueue <QEvent::Type> deferredEventQueue_;      ///<
-        QSet   <QEvent::Type> eventCompressor_;         ///<
+        QQueue <QEvent::Type> _deferredEventQueue;
+        QSet   <QEvent::Type> _eventCompressor;
 
         int getNumDeferredEvents();
 
@@ -144,11 +137,11 @@ private:
         void processDeferredEvents();
     };
 
-    GLWidget* widget_ = nullptr;    ///<
-    QCursor currentCursor_;         ///<
+    GLWidget* _widget = nullptr;
+    QCursor _currentCursor;
 
-    bool ownsWidget_ = false;       ///<
-    bool realized_   = false;       ///<
+    bool _ownsWidget = false;
+    bool _realized   = false;
 };
 
 } // namespace gui

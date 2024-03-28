@@ -39,7 +39,6 @@ class FormComp : public QWidget
 public:
 
     explicit FormComp(QWidget* parent = nullptr);
-
     ~FormComp();
 
 public slots:
@@ -53,10 +52,10 @@ signals:
 
 private:
 
-    Ui::FormComp* ui_ = nullptr;
+    Ui::FormComp* _ui = nullptr;
 
-    std::weak_ptr<pro::Component> comp_;
-    std::weak_ptr<pro::Project> proj_;
+    std::weak_ptr<pro::Component> _comp;
+    std::weak_ptr<pro::Project> _proj;
 
     QString getFile(QString file = "");
 

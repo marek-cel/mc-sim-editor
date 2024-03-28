@@ -33,18 +33,18 @@ public:
 
     using List = std::map<std::string, osg::ref_ptr<osg::Node>>;
 
-    static std::shared_ptr<Models> Instance();
+    static std::shared_ptr<Models> instance();
 
     /** */
-    static osg::Node* Get(std::string file);
+    static osg::Node* get(std::string file);
 
-    static void Reset();
+    static void reset();
 
 private:
 
-    static std::shared_ptr<Models> instance_;
+    static std::shared_ptr<Models> _instance;
 
-    List list_;
+    List _list;
 
     Models() = default;
     Models(const Models&) = delete;

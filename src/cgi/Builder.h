@@ -30,8 +30,8 @@ class Builder
 {
 public:
 
-    static void BuildCGI(std::shared_ptr<Data> data, std::shared_ptr<Component> root);
-    static void BuildHUD(std::shared_ptr<Data> data, std::shared_ptr<Component> root);
+    static void buildCGI(std::shared_ptr<Data> data, std::shared_ptr<Component> root);
+    static void buildHUD(std::shared_ptr<Data> data, std::shared_ptr<Component> root);
 
 };
 

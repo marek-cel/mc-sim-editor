@@ -157,7 +157,7 @@ void Rotor::CreateShaft()
     QDir proj_dir = QFileInfo(proj_file_).absoluteDir();
     QString file = proj_dir.absoluteFilePath(file_shaft_);
 
-    osg::ref_ptr<osg::Node> node = cgi::Models::Get(file.toStdString());
+    osg::ref_ptr<osg::Node> node = cgi::Models::get(file.toStdString());
     if ( node.valid() )
     {
         shaft_->addChild(node.get());
@@ -172,7 +172,7 @@ void Rotor::CreateBlades()
     QDir proj_dir = QFileInfo(proj_file_).absoluteDir();
     QString file = proj_dir.absoluteFilePath(file_blade_);
 
-    osg::ref_ptr<osg::Node> node = cgi::Models::Get(file.toStdString());
+    osg::ref_ptr<osg::Node> node = cgi::Models::get(file.toStdString());
     if ( !node.valid() ) return;
 
     osg::ref_ptr<osg::Group> blades = new osg::Group();

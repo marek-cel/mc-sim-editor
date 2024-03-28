@@ -31,53 +31,53 @@ namespace cgi {
 Grid::Grid(std::shared_ptr<Data> data)
     : Component(data)
 {
-    osg::ref_ptr<osg::StateSet> rootStateSet = root_->getOrCreateStateSet();
+    osg::ref_ptr<osg::StateSet> rootStateSet = _root->getOrCreateStateSet();
     rootStateSet->setMode(GL_LIGHT0   , osg::StateAttribute::OFF);
     rootStateSet->setMode(GL_LIGHT1   , osg::StateAttribute::OFF);
     rootStateSet->setMode(GL_LIGHTING , osg::StateAttribute::OFF);
 
-    switch_ = new osg::Switch();
-    root_->addChild(switch_.get());
+    _switch = new osg::Switch();
+    _root->addChild(_switch.get());
 
-    CreateGrid();
+    createGrid();
 }
 
-void Grid::Update()
+void Grid::update()
 {
     ////////////////////
-    Component::Update();
+    Component::update();
     ////////////////////
 
-    if ( !data_.expired() )
+    if ( !_data.expired() )
     {
-        std::shared_ptr<Data> data = data_.lock();
+        std::shared_ptr<Data> data = _data.lock();
 
-        if ( data->grid_visible != grid_visible_ )
+        if ( data->grid_visible != _grid_visible )
         {
             if ( data->grid_visible )
             {
-                switch_->setAllChildrenOn();
+                _switch->setAllChildrenOn();
             }
             else
             {
-                switch_->setAllChildrenOff();
+                _switch->setAllChildrenOff();
             }
         }
 
-        grid_visible_ = data->grid_visible;
+        _grid_visible = data->grid_visible;
     }
 }
 
-void Grid::CreateGrid()
+void Grid::createGrid()
 {
-    CreateGridAuxLines();
-    CreateGridMainLines();
+    createGridAuxLines();
+    createGridMainLines();
 }
 
-void Grid::CreateGridAuxLines()
+void Grid::createGridAuxLines()
 {
     osg::ref_ptr<osg::Geode> geode = new osg::Geode();
-    switch_->addChild(geode.get());
+    _switch->addChild(geode.get());
 
     osg::ref_ptr<osg::Geometry> geometry = new osg::Geometry();
 
@@ -124,10 +124,10 @@ void Grid::CreateGridAuxLines()
     geode->getOrCreateStateSet()->setAttributeAndModes(lineWidth, osg::StateAttribute::ON);
 }
 
-void Grid::CreateGridMainLines()
+void Grid::createGridMainLines()
 {
     osg::ref_ptr<osg::Geode> geode = new osg::Geode();
-    switch_->addChild( geode.get() );
+    _switch->addChild(geode.get());
 
     osg::ref_ptr<osg::Geometry> geometry = new osg::Geometry();
 
@@ -138,42 +138,42 @@ void Grid::CreateGridMainLines()
     osg::Vec3d lon_b( 0.0, -size_, 0.0 );
     osg::Vec3d lon_e( 0.0,  size_, 0.0 );
 
-    v->push_back( lon_b );
-    v->push_back( lon_e );
-    c->push_back( osg::Vec4( Colors::lime, 1.0 ) );
-    c->push_back( osg::Vec4( Colors::lime, 1.0 ) );
+    v->push_back(lon_b);
+    v->push_back(lon_e);
+    c->push_back(osg::Vec4(Colors::lime, 1.0));
+    c->push_back(osg::Vec4(Colors::lime, 1.0));
 
     osg::Vec3d lat_b( -size_, 0.0, 0.0 );
     osg::Vec3d lat_e(  size_, 0.0, 0.0 );
-    c->push_back( osg::Vec4( Colors::red, 1.0 ) );
-    c->push_back( osg::Vec4( Colors::red, 1.0 ) );
+    c->push_back(osg::Vec4(Colors::red, 1.0));
+    c->push_back(osg::Vec4(Colors::red, 1.0));
 
-    v->push_back( lat_b );
-    v->push_back( lat_e );
+    v->push_back(lat_b);
+    v->push_back(lat_e);
 
     osg::Vec3d ver_b( 0.0, 0.0, -size_ );
     osg::Vec3d ver_e( 0.0, 0.0,  size_ );
-    c->push_back( osg::Vec4( Colors::blue, 1.0 ) );
-    c->push_back( osg::Vec4( Colors::blue, 1.0 ) );
+    c->push_back(osg::Vec4(Colors::blue, 1.0));
+    c->push_back(osg::Vec4(Colors::blue, 1.0));
 
-    v->push_back( ver_b );
-    v->push_back( ver_e );
+    v->push_back(ver_b);
+    v->push_back(ver_e);
 
-    n->push_back( osg::Vec3( 0.0f, 0.0f, 1.0f ) );
+    n->push_back(osg::Vec3(0.0, 0.0, 1.0));
 
-    geometry->setVertexArray( v.get() );
-    geometry->addPrimitiveSet( new osg::DrawArrays( osg::PrimitiveSet::LINES, 0, v->size() ) );
-    geometry->setNormalArray( n.get() );
-    geometry->setNormalBinding( osg::Geometry::BIND_OVERALL );
-    geometry->setColorArray( c.get() );
-    geometry->setColorBinding( osg::Geometry::BIND_PER_VERTEX );
+    geometry->setVertexArray(v.get());
+    geometry->addPrimitiveSet(new osg::DrawArrays(osg::PrimitiveSet::LINES, 0, v->size()));
+    geometry->setNormalArray(n.get());
+    geometry->setNormalBinding(osg::Geometry::BIND_OVERALL);
+    geometry->setColorArray(c.get());
+    geometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
 
-    geode->addDrawable( geometry.get() );
+    geode->addDrawable(geometry.get());
 
     osg::ref_ptr<osg::LineWidth> lineWidth = new osg::LineWidth();
-    lineWidth->setWidth( 1.0 );
+    lineWidth->setWidth(1.0);
 
-    geode->getOrCreateStateSet()->setAttributeAndModes( lineWidth, osg::StateAttribute::ON );
+    geode->getOrCreateStateSet()->setAttributeAndModes(lineWidth, osg::StateAttribute::ON);
 }
 
 } // namespace cgi
