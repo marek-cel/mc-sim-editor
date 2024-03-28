@@ -24,26 +24,26 @@ namespace pro {
 
 Keyframe::Keyframe() {}
 
-Result Keyframe::Read(const QDomElement* node)
+Result Keyframe::read(const QDomElement* node)
 {
     Result result = Result::Success;
 
     if ( node->tagName() != kTagName ) return Result::Failure;
 
-    t_ = node->attribute("t").toDouble();
+    _t = node->attribute("t").toDouble();
 
-    px_ = node->attribute("px").toDouble();
-    py_ = node->attribute("py").toDouble();
-    pz_ = node->attribute("pz").toDouble();
+    _px = node->attribute("px").toDouble();
+    _py = node->attribute("py").toDouble();
+    _pz = node->attribute("pz").toDouble();
 
-    ax_ = node->attribute("ax").toDouble();
-    ay_ = node->attribute("ay").toDouble();
-    az_ = node->attribute("az").toDouble();
+    _ax = node->attribute("ax").toDouble();
+    _ay = node->attribute("ay").toDouble();
+    _az = node->attribute("az").toDouble();
 
     return result;
 }
 
-Result Keyframe::Save(QDomDocument* doc, QDomElement* parent)
+Result Keyframe::save(QDomDocument* doc, QDomElement* parent)
 {
     Result result = Result::Success;
 

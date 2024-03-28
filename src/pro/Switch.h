@@ -34,22 +34,21 @@ public:
 
     Switch(osg::Switch* sw = nullptr);
 
-    std::unique_ptr<Component> Clone() const override;
+    std::unique_ptr<Component> clone() const override;
 
-    inline const char* GetTagName() const override { return kTagName; }
+    inline const char* getTagName() const override { return kTagName; }
 
-    inline bool GetVisible() const { return visible_; }
+    inline bool getVisible() const { return _visible; }
 
-    void SetVisible(bool visible);
+    void setVisible(bool visible);
 
 protected:
 
-    osg::ref_ptr<osg::Switch> switch_;
+    osg::ref_ptr<osg::Switch> _switch;
+    bool _visible = true;
 
-    bool visible_ = true;
-
-    virtual Result ReadParameters(const QDomElement* node) override;
-    virtual Result SaveParameters(QDomDocument* doc, QDomElement* node) override;
+    virtual Result readParameters(const QDomElement* node) override;
+    virtual Result saveParameters(QDomDocument* doc, QDomElement* node) override;
 };
 
 } // namespace pro

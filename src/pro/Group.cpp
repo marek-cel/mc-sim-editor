@@ -28,104 +28,104 @@ namespace pro {
 Group::Group(osg::Group* group)
     : Component(group ? group : new osg::Group())
 {
-    group_ = dynamic_cast<osg::Group*>(node_.get());
-    SetName("Group");
+    _group = dynamic_cast<osg::Group*>(_node.get());
+    setName("Group");
 }
 
-std::unique_ptr<Component> Group::Clone() const
+std::unique_ptr<Component> Group::clone() const
 {
     std::unique_ptr<Group> group = std::make_unique<Group>();
-    group->SetName(GetName());
-    group->CloneChildren(&children_);
+    group->setName(getName());
+    group->cloneChildren(&_children);
     return group;
 }
 
-void Group::SetProjFile(QString proj_file)
+void Group::setProjFile(QString proj_file)
 {
-    Component::SetProjFile(proj_file);
+    Component::setProjFile(proj_file);
 
-    for ( auto child : children_ )
+    for ( auto child : _children )
     {
-        child->SetProjFile(proj_file);
+        child->setProjFile(proj_file);
     }
 }
 
-void Group::SetAnimationTime(double time)
+void Group::setAnimationTime(double time)
 {
-    for ( auto child : children_ )
+    for ( auto child : _children )
     {
-        child->SetAnimationTime(time);
+        child->setAnimationTime(time);
     }
 }
 
-void Group::SetChildrenAnimationState(bool enabled)
+void Group::setChildrenAnimationState(bool enabled)
 {
-    for ( auto child : children_ )
+    for ( auto child : _children )
     {
-        child->SetChildrenAnimationState(enabled);
+        child->setChildrenAnimationState(enabled);
 
         std::shared_ptr<pro::Animated> anim
                 = std::dynamic_pointer_cast<pro::Animated>(child);
         if ( anim )
         {
-            anim->SetAnimationEnabled(enabled);
+            anim->setAnimationEnabled(enabled);
         }
     }
 }
 
-Result Group::Read(const QDomElement* node)
+Result Group::read(const QDomElement* node)
 {
-    Result result = Component::Read(node);
+    Result result = Component::read(node);
 
     QDomElement child_node = node->firstChildElement();
     while ( !child_node.isNull() && result == Result::Success )
     {
-        result = ReadChild(&child_node);
+        result = readChild(&child_node);
         child_node = child_node.nextSiblingElement();
     }
 
     return result;
 }
 
-Result Group::Save(QDomDocument* doc, QDomElement* parent)
+Result Group::save(QDomDocument* doc, QDomElement* parent)
 {
-    QDomElement node = doc->createElement(GetTagName());
+    QDomElement node = doc->createElement(getTagName());
     parent->appendChild(node);
 
-    Result result = SaveParameters(doc, &node);
+    Result result = saveParameters(doc, &node);
 
-    if ( result == Result::Success ) result = SaveChildren(doc, &node);
+    if ( result == Result::Success ) result = saveChildren(doc, &node);
 
     return result;
 }
 
-void Group::Update()
+void Group::update()
 {
-    for ( auto child : children_ )
+    for ( auto child : _children )
     {
-        child->Update();
+        child->update();
     }
 }
 
-Result Group::AddChild(std::shared_ptr<Component> child)
+Result Group::addChild(std::shared_ptr<Component> child)
 {
-    child->SetParent(shared_from_this());
-    children_.push_back(child);
-    group_->addChild(child->GetNode());
+    child->setParent(shared_from_this());
+    _children.push_back(child);
+    _group->addChild(child->getNode());
     return Result::Success;
 }
 
-Result Group::RemoveChild(std::shared_ptr<Component> child)
+Result Group::removeChild(std::shared_ptr<Component> child)
 {
     Component* child_raw_ptr = child.get();
-    Children::iterator iter = children_.begin();
+    Children::iterator iter = _children.begin();
 
-    for ( unsigned int i = 0; i < children_.size(); ++i )
+    for ( unsigned int i = 0; i < _children.size(); ++i )
     {
         if ( child_raw_ptr == (*iter).get() )
         {
-            children_.erase(iter);
-            group_->removeChild(i);
+            _children.erase(iter);
+            _group->removeChild(i);
 
             return Result::Success;
         }
@@ -136,46 +136,46 @@ Result Group::RemoveChild(std::shared_ptr<Component> child)
     return Result::Failure;
 }
 
-void Group::CloneChildren(const Children* children)
+void Group::cloneChildren(const Children* children)
 {
     for ( auto child : *children )
     {
-        AddChild(std::shared_ptr<Component>(child->Clone()));
+        addChild(std::shared_ptr<Component>(child->clone()));
     }
 }
 
-Result Group::ReadChild(QDomElement* node)
+Result Group::readChild(QDomElement* node)
 {
     Result result = Result::Success;
 
-    Components::Type type = Components::Instance()->GetComponentByTagName(node->tagName());
+    Components::Type type = Components::instance()->getComponentByTagName(node->tagName());
     if ( !type.component )
     {
         return Result::Failure;
     }
 
-    std::shared_ptr<Component> comp = std::move(type.component->Clone());
-    comp->SetProjFile(proj_file_);
-    if ( result == Result::Success ) result = AddChild(comp);
-    if ( result == Result::Success ) result = comp->Read(node);
+    std::shared_ptr<Component> comp = std::move(type.component->clone());
+    comp->setProjFile(_proj_file);
+    if ( result == Result::Success ) result = addChild(comp);
+    if ( result == Result::Success ) result = comp->read(node);
 
     return result;
 }
 
-Result Group::SaveChildren(QDomDocument* doc, QDomElement* parent)
+Result Group::saveChildren(QDomDocument* doc, QDomElement* parent)
 {
     Result result = Result::Success;
-    for ( auto child : children_ )
+    for ( auto child : _children )
     {
-        if ( result == Result::Success ) result = child->Save(doc, parent);
+        if ( result == Result::Success ) result = child->save(doc, parent);
     }
     return result;
 }
 
-Result Group::SaveParameters(QDomDocument* doc, QDomElement* node)
+Result Group::saveParameters(QDomDocument* doc, QDomElement* node)
 {
     ////////////////////////////////////////////
-    return Component::SaveParameters(doc, node);
+    return Component::saveParameters(doc, node);
     ////////////////////////////////////////////
 }
 

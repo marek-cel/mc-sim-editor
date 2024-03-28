@@ -81,11 +81,11 @@ void FormAnim::updateAnimation()
     {
         std::shared_ptr<pro::Project> proj = _proj.lock();
 
-        _currentTime = proj->GetPlayback()->current_time();
+        _currentTime = proj->getPlayback()->current_time();
 
-        Utils::setNoEmitValue(_ui->spinBoxStartTime, proj->GetPlayback()->time_start());
-        Utils::setNoEmitValue(_ui->spinBoxEndTime, proj->GetPlayback()->time_end());
-        Utils::setNoEmitValue(_ui->spinBoxSpeed, proj->GetPlayback()->speed());
+        Utils::setNoEmitValue(_ui->spinBoxStartTime, proj->getPlayback()->time_start());
+        Utils::setNoEmitValue(_ui->spinBoxEndTime, proj->getPlayback()->time_end());
+        Utils::setNoEmitValue(_ui->spinBoxSpeed, proj->getPlayback()->speed());
         Utils::setNoEmitValue(_ui->spinBoxCurrentTime, _currentTime);
 
         double frac = (_currentTime - _ui->spinBoxStartTime->value())
@@ -117,7 +117,7 @@ void FormAnim::on_sliderTime_valueChanged(int value)
         if ( !_proj.expired() )
         {
             std::shared_ptr<pro::Project> proj = _proj.lock();
-            proj->GetPlayback()->set_current_time(_currentTime);
+            proj->getPlayback()->setCurrentTime(_currentTime);
         }
         emit(projectChanged());
     }
@@ -129,7 +129,7 @@ void FormAnim::on_spinBoxStartTime_valueChanged(double arg1)
     if ( !_proj.expired() )
     {
         std::shared_ptr<pro::Project> proj = _proj.lock();
-        proj->GetPlayback()->set_time_start(arg1);
+        proj->getPlayback()->setTimeStart(arg1);
     }
     emit(projectChanged());
 }
@@ -140,7 +140,7 @@ void FormAnim::on_spinBoxEndTime_valueChanged(double arg1)
     if ( !_proj.expired() )
     {
         std::shared_ptr<pro::Project> proj = _proj.lock();
-        proj->GetPlayback()->set_time_end(arg1);
+        proj->getPlayback()->setTimeEnd(arg1);
     }
     emit(projectChanged());
 }
@@ -150,7 +150,7 @@ void FormAnim::on_spinBoxSpeed_valueChanged(double arg1)
     if ( !_proj.expired() )
     {
         std::shared_ptr<pro::Project> proj = _proj.lock();
-        proj->GetPlayback()->set_speed(arg1);
+        proj->getPlayback()->setSpeed(arg1);
     }
     emit(projectChanged());
 }

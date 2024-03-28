@@ -153,7 +153,7 @@ void MainWindow::openProject()
     askIfSave();
 
     QString caption = tr("Open...");
-    QString dir = ( _proj->GetFile().length() > 0 ) ? QFileInfo(_proj->GetFile()).absolutePath() : "";
+    QString dir = ( _proj->getFile().length() > 0 ) ? QFileInfo(_proj->getFile()).absolutePath() : "";
     QString filter;
     QString selectedFilter;
 
@@ -171,9 +171,9 @@ void MainWindow::openProject()
 
 void MainWindow::saveProject()
 {
-    if ( _proj->GetFile().length() > 0 )
+    if ( _proj->getFile().length() > 0 )
     {
-        saveProject(_proj->GetFile());
+        saveProject(_proj->getFile());
     }
     else
     {
@@ -184,7 +184,7 @@ void MainWindow::saveProject()
 void MainWindow::saveProjectAs()
 {
     QString caption = tr("Save as...");
-    QString dir = ( _proj->GetFile().length() > 0 ) ? QFileInfo(_proj->GetFile()).absolutePath() : ".";
+    QString dir = ( _proj->getFile().length() > 0 ) ? QFileInfo(_proj->getFile()).absolutePath() : ".";
     QString filter;
     QString selectedFilter;
 
@@ -235,13 +235,13 @@ void MainWindow::readProject(QString file)
         QString fileFullPath = proj_dir.absoluteFilePath(fileInfo.fileName());
 
         std::shared_ptr<pro::Project> proj_temp = std::make_shared<pro::Project>();
-        if ( Result::Success == proj_temp->Read(fileFullPath) )
+        if ( Result::Success == proj_temp->read(fileFullPath) )
         {
             _proj = proj_temp;
             _saved = true;
             emit projectCreated(_proj);
             updateWindowTitle();
-            addRecentFile(_proj->GetFile());
+            addRecentFile(_proj->getFile());
         }
         else
         {
@@ -258,9 +258,9 @@ void MainWindow::readProject(QString file)
 
 void MainWindow::saveProject(QString file)
 {
-    if ( Result::Success == _proj->Save(file) )
+    if ( Result::Success == _proj->save(file) )
     {
-        addRecentFile(_proj->GetFile());
+        addRecentFile(_proj->getFile());
         _saved = true;
     }
     else
@@ -274,7 +274,7 @@ void MainWindow::saveProject(QString file)
 
 void MainWindow::exportModel(QString file)
 {
-    if ( Result::Failure == _proj->GetAssembly()->Export(file) )
+    if ( Result::Failure == _proj->getAssembly()->exportModel(file) )
     {
         QMessageBox::warning(this, tr(APP_TITLE),
                              tr("Cannot export file %1.").arg(file));
@@ -347,9 +347,9 @@ void MainWindow::updateWindowTitle()
 {
     QString title;
 
-    if ( _proj->GetFile().length() > 0 )
+    if ( _proj->getFile().length() > 0 )
     {
-        title = QFileInfo(_proj->GetFile()).fileName();
+        title = QFileInfo(_proj->getFile()).fileName();
     }
     else
     {
@@ -407,7 +407,7 @@ void MainWindow::on_actionReload_triggered()
 {
     cgi::Models::reset();
     cgi::Textures::reset();
-    readProject(_proj->GetFile());
+    readProject(_proj->getFile());
 }
 
 void MainWindow::on_actionShowGrid_toggled(bool checked)

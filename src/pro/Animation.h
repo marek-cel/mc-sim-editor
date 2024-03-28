@@ -42,44 +42,41 @@ public:
 
     Animation(osg::ref_ptr<osg::Node> node);
 
-    /** */
-    virtual Result Read(const QDomElement* node);
+    virtual Result read(const QDomElement* node);
+    virtual Result save(QDomDocument* doc, QDomElement* parent);
 
-    /** */
-    virtual Result Save(QDomDocument* doc, QDomElement* parent);
+    void addKeyframe(std::shared_ptr<Keyframe> keyframe);
 
-    void AddKeyframe(std::shared_ptr<Keyframe> keyframe);
+    void removeKeyframe(int index);
 
-    void RemoveKeyframe(int index);
+    void setKeyframe(int index, std::shared_ptr<Keyframe> keyframe);
 
-    void SetKeyframe(int index, std::shared_ptr<Keyframe> keyframe);
+    Keyframes getKeyframes() { return _keyframes; }
 
-    Keyframes GetKeyframes() { return keyframes_; }
+    double getTimeMin() const { return _t_min; }
+    double getTimeMax() const { return _t_max; }
 
-    double GetTimeMin() const { return t_min_; }
-    double GetTimeMax() const { return t_max_; }
+    void setTimeMin(double t_min);
+    void setTimeMax(double t_max);
 
-    void SetTimeMin(double t_min);
-    void SetTimeMax(double t_max);
-
-    void SetTime(double time);
+    void setTime(double time);
 
 protected:
 
-    osg::ref_ptr<osg::AnimationPathCallback> apcb_;
+    osg::ref_ptr<osg::AnimationPathCallback> _apcb;
 
-    Keyframes keyframes_;
+    Keyframes _keyframes;
 
-    double t_min_ = 0.0;
-    double t_max_ = 1.0;
+    double _t_min = 0.0;
+    double _t_max = 1.0;
 
-    osg::ref_ptr<osg::Node> node_;
+    osg::ref_ptr<osg::Node> _node;
 
-    Result ReadKeyframe(const QDomElement* node);
+    Result readKeyframe(const QDomElement* node);
 
-    void SortKeyframes();
+    void sortKeyframes();
 
-    void UpdateAnimationPath();
+    void updateAnimationPath();
 };
 
 } // namespace pro

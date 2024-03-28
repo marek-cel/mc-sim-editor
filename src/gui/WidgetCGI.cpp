@@ -185,7 +185,7 @@ void WidgetCGI::timerEvent(QTimerEvent* event)
     if ( !_proj.expired() )
     {
         std::shared_ptr<pro::Project> proj = _proj.lock();
-        proj->SetAnimationTime(_anim_time);
+        proj->setAnimationTime(_anim_time);
     }
 
     update();

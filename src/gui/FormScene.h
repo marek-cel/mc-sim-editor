@@ -60,17 +60,17 @@ private:
 
     Ui::FormScene* _ui = nullptr;
 
-    QMenu* scene_menu_ = nullptr;
+    QMenu* _scene_menu = nullptr;
 
-    QAction* action_rename_ = nullptr;
-    QAction* action_remove_ = nullptr;
+    QAction* _action_rename = nullptr;
+    QAction* _action_remove = nullptr;
 
-    QAction* action_move_ = nullptr;
+    QAction* _action_move = nullptr;
 
-    QAction* action_anims_turn_on_  = nullptr;
-    QAction* action_anims_turn_off_ = nullptr;
+    QAction* _action_anims_turn_on  = nullptr;
+    QAction* _action_anims_turn_off = nullptr;
 
-    QShortcut* shortcut_remove_ = nullptr;
+    QShortcut* _shortcut_remove = nullptr;
 
     std::weak_ptr<pro::Project> _proj;
 

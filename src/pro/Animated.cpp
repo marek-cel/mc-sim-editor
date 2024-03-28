@@ -25,23 +25,23 @@ namespace pro {
 Animated::Animated(osg::Group* group)
     : Group(group)
 {
-    animation_ = std::make_shared<Animation>(node_);
+    _animation = std::make_shared<Animation>(_node);
 }
 
-Result Animated::Read(const QDomElement* node)
+Result Animated::read(const QDomElement* node)
 {
-    Result result = Component::Read(node);
+    Result result = Component::read(node);
 
     QDomElement child_node = node->firstChildElement();
     while ( !child_node.isNull() && result == Result::Success )
     {
         if ( child_node.tagName() == Animation::kTagName )
         {
-            result = ReadAnimation(&child_node);
+            result = readAnimation(&child_node);
         }
         else
         {
-            result = ReadChild(&child_node);
+            result = readChild(&child_node);
         }
 
         child_node = child_node.nextSiblingElement();
@@ -50,46 +50,46 @@ Result Animated::Read(const QDomElement* node)
     return result;
 }
 
-Result Animated::Save(QDomDocument* doc, QDomElement* parent)
+Result Animated::save(QDomDocument* doc, QDomElement* parent)
 {
-    Result result = Component::Save(doc, parent);
+    Result result = Component::save(doc, parent);
 
     QDomElement node = parent->lastChildElement();
-    if ( result == Result::Success ) result = SaveAnimation(doc, &node);
-    if ( result == Result::Success ) result = SaveChildren(doc, &node);
+    if ( result == Result::Success ) result = saveAnimation(doc, &node);
+    if ( result == Result::Success ) result = saveChildren(doc, &node);
 
     return result;
 }
 
-void Animated::Update()
+void Animated::update()
 {
     ////////////////
-    Group::Update();
+    Group::update();
     ////////////////
 
-    animation_->SetTime(time_);
+    _animation->setTime(_time);
 }
 
-void Animated::SetAnimationTime(double time)
+void Animated::setAnimationTime(double time)
 {
     //////////////////////////////
-    Group::SetAnimationTime(time);
+    Group::setAnimationTime(time);
     //////////////////////////////
 
-    if ( enabled_ )
+    if ( _enabled )
     {
-        time_ = time;
+        _time = time;
     }
 
-    animation_->SetTime(time_);
+    _animation->setTime(_time);
 }
 
-Result Animated::ReadAnimation(const QDomElement* node)
+Result Animated::readAnimation(const QDomElement* node)
 {
     Result result = Result::Success;
 
-    animation_ = std::make_shared<Animation>(node_);
-    result = animation_->Read(node);
+    _animation = std::make_shared<Animation>(_node);
+    result = _animation->read(node);
 
     if ( result == Result::Success )
     {
@@ -99,32 +99,32 @@ Result Animated::ReadAnimation(const QDomElement* node)
     return result;
 }
 
-Result Animated::SaveAnimation(QDomDocument* doc, QDomElement* parent)
+Result Animated::saveAnimation(QDomDocument* doc, QDomElement* parent)
 {
-    return animation_->Save(doc, parent);
+    return _animation->save(doc, parent);
 }
 
-Result Animated::ReadParameters(const QDomElement* node)
+Result Animated::readParameters(const QDomElement* node)
 {
     ////////////////////////////////////////////
-    Result result = Group::ReadParameters(node);
+    Result result = Group::readParameters(node);
     ////////////////////////////////////////////
 
-    enabled_ = node->attribute("anim_enabled").toInt();
+    _enabled = node->attribute("anim_enabled").toInt();
 
     return result;
 }
 
-Result Animated::SaveParameters(QDomDocument* doc, QDomElement* node)
+Result Animated::saveParameters(QDomDocument* doc, QDomElement* node)
 {
     /////////////////////////////////////////////////
-    Result result = Group::SaveParameters(doc, node);
+    Result result = Group::saveParameters(doc, node);
     /////////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
 
     QDomAttr node_enabled = doc->createAttribute("anim_enabled");
-    node_enabled.setValue(QString::number(enabled_ ? 1 : 0));
+    node_enabled.setValue(QString::number(_enabled ? 1 : 0));
     node->setAttributeNode(node_enabled);
 
     return result;

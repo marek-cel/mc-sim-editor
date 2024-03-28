@@ -25,79 +25,79 @@ namespace pro {
 Trans::Trans(osg::MatrixTransform* mt)
     : Animated(mt ? mt : new osg::MatrixTransform())
 {
-    mt_ = dynamic_cast<osg::MatrixTransform*>(node_.get());
-    SetName("Matrix Transform");
+    _mt = dynamic_cast<osg::MatrixTransform*>(_node.get());
+    setName("Matrix Transform");
 }
 
-std::unique_ptr<Component> Trans::Clone() const
+std::unique_ptr<Component> Trans::clone() const
 {
     std::unique_ptr<Trans> mt = std::make_unique<Trans>();
-    mt->SetName(GetName());
-    mt->CloneChildren(&children_);
+    mt->setName(getName());
+    mt->cloneChildren(&_children);
     return mt;
 }
 
-void Trans::SetPx(double px)
+void Trans::setPx(double px)
 {
-    px_ = px;
-    UpdateTransformMatrix();
+    _px = px;
+    updateTransformMatrix();
 }
 
-void Trans::SetPy(double py)
+void Trans::setPy(double py)
 {
-    py_ = py;
-    UpdateTransformMatrix();
+    _py = py;
+    updateTransformMatrix();
 }
 
-void Trans::SetPz(double pz)
+void Trans::setPz(double pz)
 {
-    pz_ = pz;
-    UpdateTransformMatrix();
+    _pz = pz;
+    updateTransformMatrix();
 }
 
-void Trans::SetAx(double ax)
+void Trans::setAx(double ax)
 {
-    ax_ = ax;
-    UpdateTransformMatrix();
+    _ax = ax;
+    updateTransformMatrix();
 }
 
-void Trans::SetAy(double ay)
+void Trans::setAy(double ay)
 {
-    ay_ = ay;
-    UpdateTransformMatrix();
+    _ay = ay;
+    updateTransformMatrix();
 }
 
-void Trans::SetAz(double az)
+void Trans::setAz(double az)
 {
-    az_ = az;
-    UpdateTransformMatrix();
+    _az = az;
+    updateTransformMatrix();
 }
 
-Result Trans::ReadParameters(const QDomElement* node)
+Result Trans::readParameters(const QDomElement* node)
 {
     ///////////////////////////////////////////////
-    Result result = Animated::ReadParameters(node);
+    Result result = Animated::readParameters(node);
     ///////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
 
-    px_ = node->attribute("px").toDouble();
-    py_ = node->attribute("py").toDouble();
-    pz_ = node->attribute("pz").toDouble();
+    _px = node->attribute("px").toDouble();
+    _py = node->attribute("py").toDouble();
+    _pz = node->attribute("pz").toDouble();
 
-    ax_ = node->attribute("ax").toDouble();
-    ay_ = node->attribute("ay").toDouble();
-    az_ = node->attribute("az").toDouble();
+    _ax = node->attribute("ax").toDouble();
+    _ay = node->attribute("ay").toDouble();
+    _az = node->attribute("az").toDouble();
 
-    UpdateTransformMatrix();
+    updateTransformMatrix();
 
     return result;
 }
 
-Result Trans::SaveParameters(QDomDocument* doc, QDomElement* node)
+Result Trans::saveParameters(QDomDocument* doc, QDomElement* node)
 {
     ////////////////////////////////////////////////////
-    Result result = Animated::SaveParameters(doc, node);
+    Result result = Animated::saveParameters(doc, node);
     ////////////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
@@ -129,17 +129,17 @@ Result Trans::SaveParameters(QDomDocument* doc, QDomElement* node)
     return result;
 }
 
-void Trans::UpdateTransformMatrix()
+void Trans::updateTransformMatrix()
 {
     osg::Matrix mr;
-    mr.makeRotate(osg::DegreesToRadians(az_), osg::Z_AXIS,
-                  osg::DegreesToRadians(ay_), osg::Y_AXIS,
-                  osg::DegreesToRadians(ax_), osg::X_AXIS);
+    mr.makeRotate(osg::DegreesToRadians(_az), osg::Z_AXIS,
+                  osg::DegreesToRadians(_ay), osg::Y_AXIS,
+                  osg::DegreesToRadians(_ax), osg::X_AXIS);
 
     osg::Matrix mt;
-    mt.makeTranslate(px_, py_, pz_);
+    mt.makeTranslate(_px, _py, _pz);
 
-    mt_->setMatrix(mr*mt);
+    _mt->setMatrix(mr*mt);
 }
 
 } // namespace pro

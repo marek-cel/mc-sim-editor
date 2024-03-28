@@ -36,31 +36,31 @@ public:
 
     File();
 
-    inline bool CanBeAnimated() const override { return false; }
+    inline bool canBeAnimated() const override { return false; }
 
-    inline bool CanBeParent() const override { return false; }
+    inline bool canBeParent() const override { return false; }
 
-    std::unique_ptr<Component> Clone() const override;
+    std::unique_ptr<Component> clone() const override;
 
-    inline const char* GetTagName() const override { return kTagName; }
+    inline const char* getTagName() const override { return kTagName; }
 
-    inline QString GetFile() const { return file_; }
+    inline QString getFile() const { return _file; }
 
-    void SetFile(QString file);
+    void setFile(QString file);
 
-    virtual void SetProjFile(QString proj_file) override;
+    virtual void setProjFile(QString proj_file) override;
 
 protected:
 
-    osg::ref_ptr<osg::Group> group_;
-    osg::ref_ptr<osg::Node> node_;
+    osg::ref_ptr<osg::Group> _group;
+    osg::ref_ptr<osg::Node> _node;
 
-    QString file_;
+    QString _file;
 
-    void ReloadFile();
+    void reloadFile();
 
-    virtual Result ReadParameters(const QDomElement* node) override;
-    virtual Result SaveParameters(QDomDocument* doc, QDomElement* node) override;
+    virtual Result readParameters(const QDomElement* node) override;
+    virtual Result saveParameters(QDomDocument* doc, QDomElement* node) override;
 };
 
 } // namespace pro

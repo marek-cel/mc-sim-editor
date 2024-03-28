@@ -33,7 +33,7 @@ FormScene::FormScene(QWidget* parent)
 {
     _ui->setupUi(this);
 
-    shortcut_remove_ = new QShortcut(QKeySequence(Qt::Key_Delete) , this, SLOT(actionRemove_triggered()));
+    _shortcut_remove = new QShortcut(QKeySequence(Qt::Key_Delete) , this, SLOT(actionRemove_triggered()));
 
     createSceneMenu();
     populateComboBoxTypes();
@@ -58,7 +58,7 @@ std::shared_ptr<pro::Component> FormScene::getComponentByIndex(QModelIndex index
     if ( !_proj.expired() )
     {
         std::shared_ptr<pro::Project> proj = _proj.lock();
-        comp = proj->GetAssembly()->GetRoot();
+        comp = proj->getAssembly()->getRoot();
         if ( comp )
         {
             std::vector<int> indecies;
@@ -76,7 +76,7 @@ std::shared_ptr<pro::Component> FormScene::getComponentByIndex(QModelIndex index
 
                 if ( group )
                 {
-                    comp = group->GetChild(indecies.at(i));
+                    comp = group->getChild(indecies.at(i));
                 }
                 else
                 {
@@ -92,15 +92,15 @@ std::shared_ptr<pro::Component> FormScene::getComponentByIndex(QModelIndex index
 void FormScene::addComponent()
 {
     int index = _ui->comboTypes->currentIndex();
-    pro::Components::Type type = pro::Components::Instance()->types().at(index);
-    std::shared_ptr<pro::Component> component = type.component->Clone();
+    pro::Components::Type type = pro::Components::instance()->types().at(index);
+    std::shared_ptr<pro::Component> component = type.component->clone();
     std::shared_ptr<pro::Component> selected = getComponentByIndex(_ui->treeScene->currentIndex());
 
     std::shared_ptr<pro::Group> parent = std::dynamic_pointer_cast<pro::Group>(selected);
 
     if ( parent )
     {
-        parent->AddChild(component);
+        parent->addChild(component);
         updateTreeWidgetScene();
         emit(projectChanged());
     }
@@ -113,12 +113,12 @@ void FormScene::removeComponent()
 
     if ( comp )
     {
-        if ( comp->GetParent().expired() )
+        if ( comp->getParent().expired() )
         {
             return;
         }
 
-        std::shared_ptr<pro::Component> parent = comp->GetParent().lock();
+        std::shared_ptr<pro::Component> parent = comp->getParent().lock();
 
         if ( parent )
         {
@@ -126,7 +126,7 @@ void FormScene::removeComponent()
 
             if ( group )
             {
-                group->RemoveChild(comp);
+                group->removeChild(comp);
                 updateTreeWidgetScene();
                 emit(projectChanged());
             }
@@ -141,23 +141,23 @@ void FormScene::moveComponent(std::shared_ptr<pro::Group> new_parent)
 
     if ( comp )
     {
-        if ( comp->GetParent().expired() )
+        if ( comp->getParent().expired() )
         {
             return;
         }
 
-        std::shared_ptr<pro::Component> parent = comp->GetParent().lock();
+        std::shared_ptr<pro::Component> parent = comp->getParent().lock();
         if ( parent )
         {
             std::shared_ptr<pro::Group> group = std::dynamic_pointer_cast<pro::Group>(parent);
 
             if ( group )
             {
-                group->RemoveChild(comp);
+                group->removeChild(comp);
             }
         }
 
-        new_parent->AddChild(comp);
+        new_parent->addChild(comp);
         updateTreeWidgetScene();
         emit(projectChanged());
     }
@@ -179,15 +179,15 @@ void FormScene::addTreeWidgetSceneItem(pro::Component* comp, int index,
         }
 
         item->setFlags(item->flags()|Qt::ItemIsEditable);
-        item->setText(0, comp->GetNode()->getName().c_str());
+        item->setText(0, comp->getNode()->getName().c_str());
 
         pro::Group* group = dynamic_cast<pro::Group*>(comp);
 
         if ( group )
         {
-            for ( size_t i = 0; i < group->GetChildrenCount(); ++i )
+            for ( size_t i = 0; i < group->getChildrenCount(); ++i )
             {
-                std::shared_ptr<pro::Component> comp = group->GetChild(i);
+                std::shared_ptr<pro::Component> comp = group->getChild(i);
                 addTreeWidgetSceneItem(comp.get(), index, item);
             }
         }
@@ -206,33 +206,33 @@ void FormScene::addTreeWidgetSceneItem(pro::Component* comp, int index,
 
 void FormScene::createSceneMenu()
 {
-    scene_menu_ = new QMenu(this);
+    _scene_menu = new QMenu(this);
 
-    action_rename_ = new QAction(tr("Rename (F2)"), this);
-    action_remove_ = new QAction(tr("Remove (Del)"), this);
-    connect(action_rename_, SIGNAL(triggered()), this, SLOT(actionRename_triggered()));
-    connect(action_remove_, SIGNAL(triggered()), this, SLOT(actionRemove_triggered()));
-    scene_menu_->addAction(action_rename_);
-    scene_menu_->addAction(action_remove_);
+    _action_rename = new QAction(tr("Rename (F2)"), this);
+    _action_remove = new QAction(tr("Remove (Del)"), this);
+    connect(_action_rename, SIGNAL(triggered()), this, SLOT(actionRename_triggered()));
+    connect(_action_remove, SIGNAL(triggered()), this, SLOT(actionRemove_triggered()));
+    _scene_menu->addAction(_action_rename);
+    _scene_menu->addAction(_action_remove);
 
-    scene_menu_->addSeparator();
-    action_move_ = new QAction(tr("Move"), this);
-    action_move_->setEnabled(false);
-    connect(action_move_, SIGNAL(triggered()), this, SLOT(actionMove_triggered()));
-    scene_menu_->addAction(action_move_);
+    _scene_menu->addSeparator();
+    _action_move = new QAction(tr("Move"), this);
+    _action_move->setEnabled(false);
+    connect(_action_move, SIGNAL(triggered()), this, SLOT(actionMove_triggered()));
+    _scene_menu->addAction(_action_move);
 
-    scene_menu_->addSeparator();
-    action_anims_turn_on_  = new QAction(tr("Enable all children animations"  ), this);
-    action_anims_turn_off_ = new QAction(tr("Disable all children animations" ), this);
-    connect(action_anims_turn_on_  , SIGNAL(triggered()), this, SLOT(actionAnimsOn_triggered()));
-    connect(action_anims_turn_off_ , SIGNAL(triggered()), this, SLOT(actionAnimsOff_triggered()));
-    scene_menu_->addAction(action_anims_turn_on_);
-    scene_menu_->addAction(action_anims_turn_off_);
+    _scene_menu->addSeparator();
+    _action_anims_turn_on  = new QAction(tr("Enable all children animations"  ), this);
+    _action_anims_turn_off = new QAction(tr("Disable all children animations" ), this);
+    connect(_action_anims_turn_on  , SIGNAL(triggered()), this, SLOT(actionAnimsOn_triggered()));
+    connect(_action_anims_turn_off , SIGNAL(triggered()), this, SLOT(actionAnimsOff_triggered()));
+    _scene_menu->addAction(_action_anims_turn_on);
+    _scene_menu->addAction(_action_anims_turn_off);
 }
 
 void FormScene::populateComboBoxTypes()
 {
-    for ( auto type : pro::Components::Instance()->types() )
+    for ( auto type : pro::Components::instance()->types() )
     {
         if ( type.extra )
         {
@@ -249,7 +249,7 @@ void FormScene::populateMoveMenu(QMenu* menu, std::shared_ptr<pro::Group> group)
 {
     if ( group )
     {
-        QMenu* group_menu = new QMenu(group->GetName(), menu);
+        QMenu* group_menu = new QMenu(group->getName(), menu);
         menu->addMenu(group_menu);
 
         QAction* action = new MoveAction(group, tr("Move here."), group_menu);
@@ -257,9 +257,9 @@ void FormScene::populateMoveMenu(QMenu* menu, std::shared_ptr<pro::Group> group)
         connect(action, SIGNAL(triggered(MoveAction*)), SLOT(moveHere_triggered(MoveAction*)));
 
         int count = 0;
-        for ( int i = 0; i < group->GetChildrenCount(); ++i )
+        for ( int i = 0; i < group->getChildrenCount(); ++i )
         {
-            std::shared_ptr<pro::Component> child = group->GetChild(i);
+            std::shared_ptr<pro::Component> child = group->getChild(i);
             std::shared_ptr<pro::Group> cg = std::dynamic_pointer_cast<pro::Group>(child);
 
             if ( cg )
@@ -285,7 +285,7 @@ void FormScene::updateTreeWidgetScene()
     if ( !_proj.expired() )
     {
         std::shared_ptr<pro::Project> proj = _proj.lock();
-        std::shared_ptr<pro::Component> comp = proj->GetAssembly()->GetRoot();
+        std::shared_ptr<pro::Component> comp = proj->getAssembly()->getRoot();
         addTreeWidgetSceneItem(comp.get());
     }
 
@@ -321,7 +321,7 @@ void FormScene::actionMove_triggered()
     if ( !_proj.expired() )
     {
         std::shared_ptr<pro::Project> proj = _proj.lock();
-        std::shared_ptr<pro::Component> root = proj->GetAssembly()->GetRoot();
+        std::shared_ptr<pro::Component> root = proj->getAssembly()->getRoot();
         std::shared_ptr<pro::Group> rg = std::dynamic_pointer_cast<pro::Group>(root);
         populateMoveMenu(&menu, rg);
     }
@@ -335,7 +335,7 @@ void FormScene::actionAnimsOn_triggered()
     std::shared_ptr<pro::Component> comp = getComponentByIndex(index);
     if ( comp )
     {
-        comp->SetChildrenAnimationState(true);
+        comp->setChildrenAnimationState(true);
     }
 }
 
@@ -345,7 +345,7 @@ void FormScene::actionAnimsOff_triggered()
     std::shared_ptr<pro::Component> comp = getComponentByIndex(index);
     if ( comp )
     {
-        comp->SetChildrenAnimationState(false);
+        comp->setChildrenAnimationState(false);
     }
 }
 
@@ -360,12 +360,12 @@ void FormScene::on_treeScene_currentItemChanged(QTreeWidgetItem*,
     _ui->buttonAdd->setEnabled(false);
 
     std::shared_ptr<pro::Component> comp = getComponentByIndex(_ui->treeScene->currentIndex());
-    _ui->buttonAdd->setEnabled(comp->CanBeParent());
+    _ui->buttonAdd->setEnabled(comp->canBeParent());
 
-    action_move_->setEnabled(false);
-    if ( !comp->IsRoot() )
+    _action_move->setEnabled(false);
+    if ( !comp->isRoot() )
     {
-        action_move_->setEnabled(true);
+        _action_move->setEnabled(true);
     }
 
     emit(componentChanged(comp));
@@ -373,7 +373,7 @@ void FormScene::on_treeScene_currentItemChanged(QTreeWidgetItem*,
 
 void FormScene::on_treeScene_customContextMenuRequested(const QPoint& pos)
 {
-    scene_menu_->exec(_ui->treeScene->mapToGlobal(pos));
+    _scene_menu->exec(_ui->treeScene->mapToGlobal(pos));
 }
 
 void FormScene::on_treeScene_itemChanged(QTreeWidgetItem* item, int column)
@@ -382,7 +382,7 @@ void FormScene::on_treeScene_itemChanged(QTreeWidgetItem* item, int column)
     std::shared_ptr<pro::Component> comp = getComponentByIndex(index);
     if ( comp )
     {
-        comp->SetName(item->text(0));
+        comp->setName(item->text(0));
         updateTreeWidgetScene();
         emit(projectChanged());
     }

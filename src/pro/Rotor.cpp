@@ -30,78 +30,78 @@ namespace pro {
 Rotor::Rotor()
     : PAT()
 {
-    SetName("Rotor");
+    setName("Rotor");
 }
 
-std::unique_ptr<Component> Rotor::Clone() const
+std::unique_ptr<Component> Rotor::clone() const
 {
     std::unique_ptr<Rotor> rotor = std::make_unique<Rotor>();
-    rotor->SetName(GetName());
+    rotor->setName(getName());
     return rotor;
 }
 
-void Rotor::SetBladesNo(int blades_no)
+void Rotor::setBladesNo(int blades_no)
 {
-    Clear();
-    blades_no_ = std::max(2, blades_no);
-    Create();
+    clear();
+    _blades_no = std::max(2, blades_no);
+    create();
 }
 
-void Rotor::SetHingeOffset(double offset)
+void Rotor::setHingeOffset(double offset)
 {
-    Clear();
-    hinge_offset_ = fabs(offset);
-    Create();
+    clear();
+    _hinge_offset = fabs(offset);
+    create();
 }
 
-void Rotor::SetDirection(Direction direction)
+void Rotor::setDirection(Direction direction)
 {
-    Clear();
-    direction_ = direction;
-    Create();
+    clear();
+    _direction = direction;
+    create();
 }
 
-void Rotor::SetFileBlade(const QString& file)
+void Rotor::setFileBlade(const QString& file)
 {
-    Clear();
-    file_blade_ = file;
-    Create();
+    clear();
+    _file_blade = file;
+    create();
 }
 
-void Rotor::SetFileShaft(const QString& file)
+void Rotor::setFileShaft(const QString& file)
 {
-    Clear();
-    file_shaft_ = file;
-    Create();
+    clear();
+    _file_shaft = file;
+    create();
 }
 
-Result Rotor::ReadParameters(const QDomElement* node)
+Result Rotor::readParameters(const QDomElement* node)
 {
     //////////////////////////////////////////
-    Result result = PAT::ReadParameters(node);
+    Result result = PAT::readParameters(node);
     //////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
 
-    Clear();
+    clear();
 
-    file_blade_ = node->attribute("file_blade");
-    file_shaft_ = node->attribute("file_shaft");
+    _file_blade = node->attribute("file_blade");
+    _file_shaft = node->attribute("file_shaft");
 
-    blades_no_ = std::max(2, node->attribute("blades_no").toInt());
-    hinge_offset_ = fabs(node->attribute("hinge_offset").toDouble());
+    _blades_no = std::max(2, node->attribute("blades_no").toInt());
+    _hinge_offset = fabs(node->attribute("hinge_offset").toDouble());
 
-    direction_ = static_cast<int>(Direction::CW) == node->attribute("direction").toInt() ? Direction::CW : Direction::CCW;
+    _direction = static_cast<int>(Direction::CW) == node->attribute("direction").toInt() ? Direction::CW : Direction::CCW;
 
-    Create();
+    create();
 
     return result;
 }
 
-Result Rotor::SaveParameters(QDomDocument* doc, QDomElement* node)
+Result Rotor::saveParameters(QDomDocument* doc, QDomElement* node)
 {
     ///////////////////////////////////////////////
-    Result result = PAT::SaveParameters(doc, node);
+    Result result = PAT::saveParameters(doc, node);
     ///////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
@@ -109,87 +109,87 @@ Result Rotor::SaveParameters(QDomDocument* doc, QDomElement* node)
     QDomAttr node_file_blade = doc->createAttribute("file_blade");
     QDomAttr node_file_shaft = doc->createAttribute("file_shaft");
 
-    node_file_blade.setValue(GetFileBlade());
-    node_file_shaft.setValue(GetFileShaft());
+    node_file_blade.setValue(getFileBlade());
+    node_file_shaft.setValue(getFileShaft());
 
     node->setAttributeNode(node_file_blade);
     node->setAttributeNode(node_file_shaft);
 
     QDomAttr node_blades_no = doc->createAttribute("blades_no");
-    node_blades_no.setValue(QString::number(GetBladesNo()));
+    node_blades_no.setValue(QString::number(getBladesNo()));
     node->setAttributeNode(node_blades_no);
 
     QDomAttr node_hinge_offset = doc->createAttribute("hinge_offset");
-    node_hinge_offset.setValue(QString::number(GetHingeOffset()));
+    node_hinge_offset.setValue(QString::number(getHingeOffset()));
     node->setAttributeNode(node_hinge_offset);
 
     QDomAttr node_direction = doc->createAttribute("direction");
-    node_direction.setValue(QString::number(static_cast<int>(GetDirection())));
+    node_direction.setValue(QString::number(static_cast<int>(getDirection())));
     node->setAttributeNode(node_direction);
 
     return result;
 }
 
-void Rotor::Clear()
+void Rotor::clear()
 {
-    if ( shaft_.valid() )
+    if ( _shaft.valid() )
     {
-        shaft_->removeChild(0, shaft_->getNumChildren());
+        _shaft->removeChild(0, _shaft->getNumChildren());
     }
-    blades_.clear();
-    shaft_ = nullptr;
+    _blades.clear();
+    _shaft = nullptr;
 }
 
-void Rotor::Create()
+void Rotor::create()
 {
-    CreateShaft();
-    CreateBlades();
+    createShaft();
+    createBlades();
 }
 
-void Rotor::CreateShaft()
+void Rotor::createShaft()
 {
-    shaft_ = new osg::PositionAttitudeTransform();
-    shaft_->setName("Shaft");
-    pat_->addChild(shaft_.get());
+    _shaft = new osg::PositionAttitudeTransform();
+    _shaft->setName("Shaft");
+    _pat->addChild(_shaft.get());
 
-    if ( file_shaft_.length() == 0 ) return;
+    if ( _file_shaft.length() == 0 ) return;
 
-    QDir proj_dir = QFileInfo(proj_file_).absoluteDir();
-    QString file = proj_dir.absoluteFilePath(file_shaft_);
+    QDir proj_dir = QFileInfo(_proj_file).absoluteDir();
+    QString file = proj_dir.absoluteFilePath(_file_shaft);
 
     osg::ref_ptr<osg::Node> node = cgi::Models::get(file.toStdString());
     if ( node.valid() )
     {
-        shaft_->addChild(node.get());
+        _shaft->addChild(node.get());
     }
 }
 
-void Rotor::CreateBlades()
+void Rotor::createBlades()
 {
-    if ( !shaft_.valid() ) return;
-    if ( file_blade_.length() == 0 ) return;
+    if ( !_shaft.valid() ) return;
+    if ( _file_blade.length() == 0 ) return;
 
-    QDir proj_dir = QFileInfo(proj_file_).absoluteDir();
-    QString file = proj_dir.absoluteFilePath(file_blade_);
+    QDir proj_dir = QFileInfo(_proj_file).absoluteDir();
+    QString file = proj_dir.absoluteFilePath(_file_blade);
 
     osg::ref_ptr<osg::Node> node = cgi::Models::get(file.toStdString());
     if ( !node.valid() ) return;
 
     osg::ref_ptr<osg::Group> blades = new osg::Group();
     blades->setName("Blades");
-    shaft_->addChild(blades.get());
+    _shaft->addChild(blades.get());
 
-    const double step = (direction_ == Direction::CCW ? -1.0 : 1.0)*2.0*M_PI/((double)blades_no_);
+    const double step = (_direction == Direction::CCW ? -1.0 : 1.0)*2.0*M_PI/((double)_blades_no);
 
-    for ( unsigned int i = 0; i < blades_no_; i++ )
+    for ( unsigned int i = 0; i < _blades_no; i++ )
     {
         double azimuth = i*step + M_PI;
 
         while ( azimuth < 0.0        ) azimuth += 2.0 * M_PI;
         while ( azimuth > 2.0 * M_PI ) azimuth -= 2.0 * M_PI;
 
-        double offset_x = cos(azimuth) * hinge_offset_;
-        double offset_y = sin(azimuth) * hinge_offset_;
+        double offset_x = cos(azimuth) * _hinge_offset;
+        double offset_y = sin(azimuth) * _hinge_offset;
 
         osg::ref_ptr<osg::PositionAttitudeTransform> pat_flap = new osg::PositionAttitudeTransform();
         pat_flap->setName("Flap");
@@ -202,7 +202,7 @@ void Rotor::CreateBlades()
         pat_feather->addChild(pat_flap.get());
 
         blades->addChild(pat_feather.get());
-        blades_.push_back(pat_flap.get());
+        _blades.push_back(pat_flap.get());
     }
 }
 

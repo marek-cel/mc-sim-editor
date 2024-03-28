@@ -27,17 +27,17 @@ namespace pro {
 Box::Box()
     : Group(new osg::Geode())
 {
-    geode_ = dynamic_cast<osg::Geode*>(group_.get());
-    SetName("Box");
+    _geode = dynamic_cast<osg::Geode*>(_group.get());
+    setName("Box");
     osg::ref_ptr<osg::Box> box = new osg::Box(osg::Vec3f(), 1.0f, 1.0f, 1.0f);
     osg::ref_ptr<osg::ShapeDrawable> shape = new osg::ShapeDrawable(box.get());
-    geode_->addDrawable(shape.get());
+    _geode->addDrawable(shape.get());
 }
 
-std::unique_ptr<Component> Box::Clone() const
+std::unique_ptr<Component> Box::clone() const
 {
     std::unique_ptr<Box> box = std::make_unique<Box>();
-    box->SetName(GetName());
+    box->setName(getName());
     return box;
 }
 

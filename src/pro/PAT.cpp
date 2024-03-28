@@ -25,75 +25,75 @@ namespace pro {
 PAT::PAT(osg::PositionAttitudeTransform* pat)
     : Animated(pat ? pat : new osg::PositionAttitudeTransform())
 {
-    pat_ = dynamic_cast<osg::PositionAttitudeTransform*>(node_.get());
-    SetName("PAT");
+    _pat = dynamic_cast<osg::PositionAttitudeTransform*>(_node.get());
+    setName("PAT");
 }
 
-std::unique_ptr<Component> PAT::Clone() const
+std::unique_ptr<Component> PAT::clone() const
 {
     std::unique_ptr<PAT> pat = std::make_unique<PAT>();
-    pat->SetName(GetName());
-    pat->CloneChildren(&children_);
+    pat->setName(getName());
+    pat->cloneChildren(&_children);
     return pat;
 }
 
-void PAT::SetPx(double px)
+void PAT::setPx(double px)
 {
-    px_ = px;
-    UpdatePositionAndAttitude();
+    _px = px;
+    updatePositionAndAttitude();
 }
 
-void PAT::SetPy(double py)
+void PAT::setPy(double py)
 {
-    py_ = py;
-    UpdatePositionAndAttitude();
+    _py = py;
+    updatePositionAndAttitude();
 }
 
-void PAT::SetPz(double pz)
+void PAT::setPz(double pz)
 {
-    pz_ = pz;
-    UpdatePositionAndAttitude();
+    _pz = pz;
+    updatePositionAndAttitude();
 }
 
-void PAT::SetAx(double ax)
+void PAT::setAx(double ax)
 {
-    ax_ = ax;
-    UpdatePositionAndAttitude();
+    _ax = ax;
+    updatePositionAndAttitude();
 }
 
-void PAT::SetAy(double ay)
+void PAT::setAy(double ay)
 {
-    ay_ = ay;
-    UpdatePositionAndAttitude();
+    _ay = ay;
+    updatePositionAndAttitude();
 }
 
-void PAT::SetAz(double az)
+void PAT::setAz(double az)
 {
-    az_ = az;
-    UpdatePositionAndAttitude();
+    _az = az;
+    updatePositionAndAttitude();
 }
 
-void PAT::SetConvention(Convention convention)
+void PAT::setConvention(Convention convention)
 {
     convention_ = convention;
-    UpdatePositionAndAttitude();
+    updatePositionAndAttitude();
 }
 
-Result PAT::ReadParameters(const QDomElement* node)
+Result PAT::readParameters(const QDomElement* node)
 {
     ///////////////////////////////////////////////
-    Result result = Animated::ReadParameters(node);
+    Result result = Animated::readParameters(node);
     ///////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
 
-    px_ = node->attribute("px").toDouble();
-    py_ = node->attribute("py").toDouble();
-    pz_ = node->attribute("pz").toDouble();
+    _px = node->attribute("px").toDouble();
+    _py = node->attribute("py").toDouble();
+    _pz = node->attribute("pz").toDouble();
 
-    ax_ = node->attribute("ax").toDouble();
-    ay_ = node->attribute("ay").toDouble();
-    az_ = node->attribute("az").toDouble();
+    _ax = node->attribute("ax").toDouble();
+    _ay = node->attribute("ay").toDouble();
+    _az = node->attribute("az").toDouble();
 
     if ( node->attribute("convention").toInt() == 0 )
     {
@@ -104,15 +104,15 @@ Result PAT::ReadParameters(const QDomElement* node)
         convention_ = Convention::ZYX;
     }
 
-    UpdatePositionAndAttitude();
+    updatePositionAndAttitude();
 
     return result;
 }
 
-Result PAT::SaveParameters(QDomDocument* doc, QDomElement* node)
+Result PAT::saveParameters(QDomDocument* doc, QDomElement* node)
 {
     ////////////////////////////////////////////////////
-    Result result = Animated::SaveParameters(doc, node);
+    Result result = Animated::saveParameters(doc, node);
     ////////////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
@@ -150,26 +150,26 @@ Result PAT::SaveParameters(QDomDocument* doc, QDomElement* node)
     return result;
 }
 
-void PAT::UpdatePositionAndAttitude()
+void PAT::updatePositionAndAttitude()
 {
-    osg::Vec3d pos(px_, py_, pz_);
+    osg::Vec3d pos(_px, _py, _pz);
     osg::Quat att;
 
     if ( convention_ == Convention::ZYX )
     {
-        att = osg::Quat(osg::DegreesToRadians(az_), osg::Z_AXIS,
-                        osg::DegreesToRadians(ay_), osg::Y_AXIS,
-                        osg::DegreesToRadians(ax_), osg::X_AXIS);
+        att = osg::Quat(osg::DegreesToRadians(_az), osg::Z_AXIS,
+                        osg::DegreesToRadians(_ay), osg::Y_AXIS,
+                        osg::DegreesToRadians(_ax), osg::X_AXIS);
     }
     else
     {
-        att = osg::Quat(osg::DegreesToRadians(ax_), osg::X_AXIS,
-                        osg::DegreesToRadians(ay_), osg::Y_AXIS,
-                        osg::DegreesToRadians(az_), osg::Z_AXIS);
+        att = osg::Quat(osg::DegreesToRadians(_ax), osg::X_AXIS,
+                        osg::DegreesToRadians(_ay), osg::Y_AXIS,
+                        osg::DegreesToRadians(_az), osg::Z_AXIS);
     }
 
-    pat_->setPosition(pos);
-    pat_->setAttitude(att);
+    _pat->setPosition(pos);
+    _pat->setAttitude(att);
 }
 
 } // namespace pro

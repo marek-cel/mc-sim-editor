@@ -27,7 +27,7 @@
 namespace mc {
 namespace pro {
 
-Result Project::Read(const QString& file)
+Result Project::read(const QString& file)
 {
     QFile dev_file(file);
 
@@ -54,8 +54,8 @@ Result Project::Read(const QString& file)
         return Result::Failure;
     }
 
-    assembly_->SetProjFile(file);
-    if ( result == Result::Success ) result = assembly_->Read(&node_assembly);
+    _assembly->setProjFile(file);
+    if ( result == Result::Success ) result = _assembly->read(&node_assembly);
 
     QDomElement node_playback = node_root.firstChildElement("playback");
     if ( node_playback.isNull() )
@@ -63,18 +63,18 @@ Result Project::Read(const QString& file)
         return Result::Failure;
     }
 
-    if ( result == Result::Success ) result = playback_->Read(&node_playback);
+    if ( result == Result::Success ) result = _playback->read(&node_playback);
 #   endif // MCSIM_EDITOR_MODEL_ASSEMBLER
 
     if ( result == Result::Success )
     {
-        file_ = file;
+        _file = file;
     }
 
     return result;
 }
 
-Result Project::Save(const QString& file)
+Result Project::save(const QString& file)
 {
     QString file_temp = file;
 
@@ -100,14 +100,14 @@ Result Project::Save(const QString& file)
         doc.appendChild(root_node);
 
 #       ifdef MCSIM_EDITOR_MODEL_ASSEMBLER
-        assembly_->SetProjFile(file);
-        if ( result == Result::Success ) result = assembly_->Save(&doc, &root_node);
-        if ( result == Result::Success ) result = playback_->Save(&doc, &root_node);
+        _assembly->setProjFile(file);
+        if ( result == Result::Success ) result = _assembly->save(&doc, &root_node);
+        if ( result == Result::Success ) result = _playback->save(&doc, &root_node);
 #       endif // MCSIM_EDITOR_MODEL_ASSEMBLER
 
         if ( result == Result::Success )
         {
-            file_ = file_temp;
+            _file = file_temp;
             out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
             out << doc.toString();
             dev_file.close();
@@ -119,9 +119,9 @@ Result Project::Save(const QString& file)
     return Result::Failure;
 }
 
-void Project::SetAnimationTime(double time)
+void Project::setAnimationTime(double time)
 {
-    assembly_->SetAnimationTime(time);
+    _assembly->setAnimationTime(time);
 }
 
 } // namespace pro

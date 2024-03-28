@@ -38,42 +38,41 @@ public:
 
     Group(osg::Group* group = nullptr);
 
-    inline bool CanBeAnimated() const override { return false; }
+    inline bool canBeAnimated() const override { return false; }
 
-    inline bool CanBeParent() const override { return true; }
+    inline bool canBeParent() const override { return true; }
 
-    std::unique_ptr<Component> Clone() const override;
+    std::unique_ptr<Component> clone() const override;
 
-    inline const char* GetTagName() const override { return kTagName; }
+    inline const char* getTagName() const override { return kTagName; }
 
-    virtual void SetProjFile(QString proj_file) override;
+    virtual void setProjFile(QString proj_file) override;
 
-    virtual void SetAnimationTime(double time) override;
+    virtual void setAnimationTime(double time) override;
 
-    virtual void SetChildrenAnimationState(bool enabled) override;
+    virtual void setChildrenAnimationState(bool enabled) override;
 
-    Result Read(const QDomElement* node) override;
-    Result Save(QDomDocument* doc, QDomElement* parent) override;
+    Result read(const QDomElement* node) override;
+    Result save(QDomDocument* doc, QDomElement* parent) override;
 
-    void Update() override;
+    void update() override;
 
-    virtual Result AddChild(std::shared_ptr<Component> child);
-    std::shared_ptr<Component> GetChild(unsigned int i) { return children_.at(i); }
-    inline unsigned int GetChildrenCount() { return children_.size(); }
-    Result RemoveChild(std::shared_ptr<Component> child);
+    virtual Result addChild(std::shared_ptr<Component> child);
+    std::shared_ptr<Component> getChild(unsigned int i) { return _children.at(i); }
+    inline unsigned int getChildrenCount() { return _children.size(); }
+    Result removeChild(std::shared_ptr<Component> child);
 
 protected:
 
-    osg::ref_ptr<osg::Group> group_;
+    osg::ref_ptr<osg::Group> _group;
+    Children _children;
 
-    Children children_;
+    virtual void cloneChildren(const Children* children);
 
-    virtual void CloneChildren(const Children* children);
+    virtual Result readChild(QDomElement* node);
 
-    virtual Result ReadChild(QDomElement* node);
-
-    virtual Result SaveChildren(QDomDocument* doc, QDomElement* parent);
-    virtual Result SaveParameters(QDomDocument* doc, QDomElement* node) override;
+    virtual Result saveChildren(QDomDocument* doc, QDomElement* parent);
+    virtual Result saveParameters(QDomDocument* doc, QDomElement* node) override;
 };
 
 } // namespace pro

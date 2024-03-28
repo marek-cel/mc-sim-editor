@@ -34,7 +34,7 @@ public:
 
     MoveAction(std::weak_ptr<pro::Group> group, QString text, QObject* parent);
 
-    inline std::weak_ptr<pro::Group> group() { return group_; }
+    inline std::weak_ptr<pro::Group> group() { return _group; }
 
 signals:
 
@@ -42,7 +42,7 @@ signals:
 
 private:
 
-    std::weak_ptr<pro::Group> group_;
+    std::weak_ptr<pro::Group> _group;
 
 private slots:
 

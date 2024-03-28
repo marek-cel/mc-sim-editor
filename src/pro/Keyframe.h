@@ -35,42 +35,42 @@ public:
     Keyframe();
 
     /** */
-    virtual Result Read(const QDomElement* node);
+    virtual Result read(const QDomElement* node);
 
     /** */
-    virtual Result Save(QDomDocument* doc, QDomElement* parent);
+    virtual Result save(QDomDocument* doc, QDomElement* parent);
 
-    void SetT(double t) { t_ = t; }
+    void setT(double t) { _t = t; }
 
-    void SetPx(double px) { px_ = px; }
-    void SetPy(double py) { py_ = py; }
-    void SetPz(double pz) { pz_ = pz; }
+    void setPx(double px) { _px = px; }
+    void setPy(double py) { _py = py; }
+    void setPz(double pz) { _pz = pz; }
 
-    void SetAx(double ax) { ax_ = ax; }
-    void SetAy(double ay) { ay_ = ay; }
-    void SetAz(double az) { az_ = az; }
+    void setAx(double ax) { _ax = ax; }
+    void setAy(double ay) { _ay = ay; }
+    void setAz(double az) { _az = az; }
 
-    inline double t() const { return t_; }
+    inline double t() const { return _t; }
 
-    inline double px() const { return px_; }
-    inline double py() const { return py_; }
-    inline double pz() const { return pz_; }
+    inline double px() const { return _px; }
+    inline double py() const { return _py; }
+    inline double pz() const { return _pz; }
 
-    inline double ax() const { return ax_; }
-    inline double ay() const { return ay_; }
-    inline double az() const { return az_; }
+    inline double ax() const { return _ax; }
+    inline double ay() const { return _ay; }
+    inline double az() const { return _az; }
 
 protected:
 
-    double t_ = 0.0;
+    double _t = 0.0;
 
-    double px_ = 0.0;
-    double py_ = 0.0;
-    double pz_ = 0.0;
+    double _px = 0.0;
+    double _py = 0.0;
+    double _pz = 0.0;
 
-    double ax_ = 0.0;
-    double ay_ = 0.0;
-    double az_ = 0.0;
+    double _ax = 0.0;
+    double _ay = 0.0;
+    double _az = 0.0;
 };
 
 } // namespace pro

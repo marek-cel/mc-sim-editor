@@ -36,25 +36,25 @@ class Project
 public:
 
     /** */
-    Result Read(const QString &file);
+    Result read(const QString& file);
 
     /** */
-    Result Save(const QString &file);
+    Result save(const QString& file);
 
-    inline QString GetFile() const { return file_; }
+    inline QString getFile() const { return _file; }
 
-    inline std::shared_ptr<Assembly> GetAssembly() { return assembly_; }
-    inline std::shared_ptr<Playback> GetPlayback() { return playback_; }
+    inline std::shared_ptr<Assembly> getAssembly() { return _assembly; }
+    inline std::shared_ptr<Playback> getPlayback() { return _playback; }
 
-    void SetAnimationTime(double time);
+    void setAnimationTime(double time);
 
 private:
 
     /** CGI model assembly */
-    std::shared_ptr<Assembly> assembly_ = std::make_shared<Assembly>();
-    std::shared_ptr<Playback> playback_ = std::make_shared<Playback>();
+    std::shared_ptr<Assembly> _assembly = std::make_shared<Assembly>();
+    std::shared_ptr<Playback> _playback = std::make_shared<Playback>();
 
-    QString file_ = "";     ///< project file path
+    QString _file = "";     ///< project file path
 };
 
 } // namespace pro

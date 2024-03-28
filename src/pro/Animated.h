@@ -31,36 +31,35 @@ public:
 
     Animated(osg::Group* group);
 
-    inline bool CanBeAnimated() const override { return true; }
+    inline bool canBeAnimated() const override { return true; }
 
-    Result Read(const QDomElement* node) override;
+    Result read(const QDomElement* node) override;
 
-    Result Save(QDomDocument* doc, QDomElement* parent) override;
+    Result save(QDomDocument* doc, QDomElement* parent) override;
 
-    void Update() override;
+    void update() override;
 
-    std::shared_ptr<Animation> GetAnimation() { return animation_; }
+    std::shared_ptr<Animation> getAnimation() { return _animation; }
 
-    bool GetAnimationEnabled() const { return enabled_; }
+    bool getAnimationEnabled() const { return _enabled; }
 
-    virtual void SetAnimationTime(double time) override;
+    virtual void setAnimationTime(double time) override;
 
-    inline void SetAnimationEnabled(bool enabled) { enabled_ = enabled; }
+    inline void setAnimationEnabled(bool enabled) { _enabled = enabled; }
 
 protected:
 
-    double time_ = 0.0;
+    double _time = 0.0;
+    bool _enabled = true;
 
-    bool enabled_ = true;
+    std::shared_ptr<Animation> _animation;
 
-    std::shared_ptr<Animation> animation_;
+    Result readAnimation(const QDomElement* node);
 
-    Result ReadAnimation(const QDomElement* node);
+    Result saveAnimation(QDomDocument* doc, QDomElement* parent);
 
-    Result SaveAnimation(QDomDocument* doc, QDomElement* parent);
-
-    virtual Result ReadParameters(const QDomElement* node) override;
-    virtual Result SaveParameters(QDomDocument* doc, QDomElement* node) override;
+    virtual Result readParameters(const QDomElement* node) override;
+    virtual Result saveParameters(QDomDocument* doc, QDomElement* node) override;
 };
 
 } // namespace pro

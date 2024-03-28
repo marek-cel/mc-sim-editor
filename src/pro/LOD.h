@@ -36,28 +36,27 @@ public:
 
     LOD(osg::LOD* lod = nullptr);
 
-    std::unique_ptr<Component> Clone() const override;
+    std::unique_ptr<Component> clone() const override;
 
-    inline const char* GetTagName() const override { return kTagName; }
+    inline const char* getTagName() const override { return kTagName; }
 
-    virtual Result AddChild(std::shared_ptr<Component> child) override;
+    virtual Result addChild(std::shared_ptr<Component> child) override;
 
-    void AddInterval(double value);
-    void EditInterval(int index, double value);
-    double GetInterval(int index) const;
-    int GetIntervalsCount() const;
-    void RemoveInterval(int index);
+    void addInterval(double value);
+    void editInterval(int index, double value);
+    double getInterval(int index) const;
+    int getIntervalsCount() const;
+    void removeInterval(int index);
 
 protected:
 
-    osg::ref_ptr<osg::LOD> lod_;
+    osg::ref_ptr<osg::LOD> _lod;
+    Intervals _intervals;
 
-    Intervals intervals_;
+    void inflateLOD();
 
-    void InflateLOD();
-
-    virtual Result ReadParameters(const QDomElement* node) override;
-    virtual Result SaveParameters(QDomDocument* doc, QDomElement* node) override;
+    virtual Result readParameters(const QDomElement* node) override;
+    virtual Result saveParameters(QDomDocument* doc, QDomElement* node) override;
 };
 
 } // namespace pro

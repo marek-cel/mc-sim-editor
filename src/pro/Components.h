@@ -44,24 +44,22 @@ public:
 
     using Types = std::vector<Type>;
 
+    static std::shared_ptr<Components> instance();
 
-    static std::shared_ptr<Components> Instance();
-
-    void AddType(QString name, std::shared_ptr<pro::Component> comp,
+    void addType(QString name, std::shared_ptr<pro::Component> comp,
                  bool extra = false);
-    void AddTypes();
+    void addTypes();
 
-    Type GetComponentByTagName(QString tag_name);
+    Type getComponentByTagName(QString tag_name);
 
-    int GetIndexByTagName(QString tag_name);
+    int getIndexByTagName(QString tag_name);
 
-    inline std::vector<Type> types() const { return types_; }
+    inline std::vector<Type> types() const { return _types; }
 
 private:
 
-    static std::shared_ptr<Components> instance_;
-
-    std::vector<Type> types_;
+    static std::shared_ptr<Components> _instance;
+    std::vector<Type> _types;
 
     Components() = default;
     Components(const Components&) = delete;

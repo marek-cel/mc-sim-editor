@@ -24,7 +24,7 @@ namespace gui {
 
 MoveAction::MoveAction(std::weak_ptr<pro::Group> group, QString text, QObject* parent)
     : QAction(text, parent)
-    , group_(group)
+    , _group(group)
 {
     connect(this, SIGNAL(triggered()), this, SLOT(trigger()));
 }

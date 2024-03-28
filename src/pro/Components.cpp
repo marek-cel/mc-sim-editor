@@ -35,54 +35,54 @@
 namespace mc {
 namespace pro {
 
-std::shared_ptr<Components> Components::instance_;
+std::shared_ptr<Components> Components::_instance;
 
-std::shared_ptr<Components> Components::Instance()
+std::shared_ptr<Components> Components::instance()
 {
-    if ( !instance_ )
+    if ( !_instance )
     {
         Components* instance = new Components();
-        instance_ = std::shared_ptr<Components>(instance);
-        instance_->AddTypes();
+        _instance = std::shared_ptr<Components>(instance);
+        _instance->addTypes();
     }
 
-    return instance_;
+    return _instance;
 }
 
-void Components::AddType(QString name, std::shared_ptr<Component> comp,
+void Components::addType(QString name, std::shared_ptr<Component> comp,
                          bool extra)
 {
     Type type;
 
     type.name = name;
     type.component = comp;
-    type.can_be_animated = comp->CanBeAnimated();
-    type.can_be_parent = comp->CanBeParent();
+    type.can_be_animated = comp->canBeAnimated();
+    type.can_be_parent = comp->canBeParent();
     type.extra = extra;
 
-    types_.push_back(type);
+    _types.push_back(type);
 }
 
-void Components::AddTypes()
+void Components::addTypes()
 {
-    AddType("Box"              , std::make_shared< pro::Box    >());
-    AddType("File"             , std::make_shared< pro::File   >());
-    AddType("FLOLS"            , std::make_shared< pro::FLOLS  >());
-    AddType("Group"            , std::make_shared< pro::Group  >());
-    AddType("LOD"              , std::make_shared< pro::LOD    >());
-    AddType("PAT"              , std::make_shared< pro::PAT    >());
-    AddType("Rotor"            , std::make_shared< pro::Rotor  >());
-    AddType("Switch"           , std::make_shared< pro::Switch >());
-    AddType("Matrix Transform" , std::make_shared< pro::Trans  >());
+    addType("Box"              , std::make_shared< pro::Box    >());
+    addType("File"             , std::make_shared< pro::File   >());
+    addType("FLOLS"            , std::make_shared< pro::FLOLS  >());
+    addType("Group"            , std::make_shared< pro::Group  >());
+    addType("LOD"              , std::make_shared< pro::LOD    >());
+    addType("PAT"              , std::make_shared< pro::PAT    >());
+    addType("Rotor"            , std::make_shared< pro::Rotor  >());
+    addType("Switch"           , std::make_shared< pro::Switch >());
+    addType("Matrix Transform" , std::make_shared< pro::Trans  >());
 #   ifdef MCSIM_EDITOR_EXTRA_COMPONENTS
 #   endif // MCSIM_EDITOR_EXTRA_COMPONENTS
 }
 
-Components::Type Components::GetComponentByTagName(QString tag_name)
+Components::Type Components::getComponentByTagName(QString tag_name)
 {
-    for ( auto type : types_ )
+    for ( auto type : _types )
     {
-        if ( QString(type.component->GetTagName()) == tag_name )
+        if ( QString(type.component->getTagName()) == tag_name )
         {
             return type;
         }
@@ -91,11 +91,11 @@ Components::Type Components::GetComponentByTagName(QString tag_name)
     return Type();
 }
 
-int Components::GetIndexByTagName(QString tag_name)
+int Components::getIndexByTagName(QString tag_name)
 {
-    for ( size_t i = 0; i < types_.size(); ++i )
+    for ( size_t i = 0; i < _types.size(); ++i )
     {
-        if ( QString(types_.at(i).component->GetTagName()) == tag_name )
+        if ( QString(_types.at(i).component->getTagName()) == tag_name )
         {
             return i;
         }

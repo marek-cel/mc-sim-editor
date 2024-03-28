@@ -38,52 +38,52 @@ public:
     Component(const Component& component) = delete;
     Component(Component&&) = delete;
 
-    virtual bool CanBeAnimated() const = 0;
-    virtual bool CanBeParent() const = 0;
-    virtual std::unique_ptr<Component> Clone() const = 0;
-    virtual const char* GetTagName() const = 0;
+    virtual bool canBeAnimated() const = 0;
+    virtual bool canBeParent() const = 0;
+    virtual std::unique_ptr<Component> clone() const = 0;
+    virtual const char* getTagName() const = 0;
 
-    virtual Result Read(const QDomElement* node);
-    virtual Result Save(QDomDocument* doc, QDomElement* parent);
-    virtual void Update();
-    virtual bool IsRoot() const;
-    virtual inline QString GetName() const { return name_; }
-    virtual inline std::weak_ptr<Component> GetParent() const { return parent_; }
-    virtual void SetName(QString name);
-    virtual void SetParent(std::shared_ptr<Component> parent);
-    virtual void SetProjFile(QString proj_file) { proj_file_ = proj_file; }
-    virtual void SetAnimationTime(double time);
+    virtual Result read(const QDomElement* node);
+    virtual Result save(QDomDocument* doc, QDomElement* parent);
+    virtual void update();
+    virtual bool isRoot() const;
+    virtual inline QString getName() const { return _name; }
+    virtual inline std::weak_ptr<Component> getParent() const { return _parent; }
+    virtual void setName(QString name);
+    virtual void setParent(std::shared_ptr<Component> parent);
+    virtual void setProjFile(QString proj_file) { _proj_file = proj_file; }
+    virtual void setAnimationTime(double time);
 
-    inline osg::ref_ptr<osg::Node> GetNode() { return node_; }
+    inline osg::ref_ptr<osg::Node> getNode() { return _node; }
 
-    inline int  GetDepthSortedBinValue() const { return depth_sorted_bin_value_; }
-    inline bool GetDepthSortedBinState() const { return depth_sorted_bin_state_; }
+    inline int  getDepthSortedBinValue() const { return _depth_sorted_bin_value; }
+    inline bool getDepthSortedBinState() const { return _depth_sorted_bin_state; }
 
-    void SetDepthSortedBinValue(int value);
-    void SetDepthSortedBinState(bool state);
+    void setDepthSortedBinValue(int value);
+    void setDepthSortedBinState(bool state);
 
-    virtual void SetChildrenAnimationState(bool enabled) {}
+    virtual void setChildrenAnimationState(bool enabled) {}
 
     Component& operator=(const Component& component) = delete;
     Component& operator=(Component&&) = delete;
 
 protected:
 
-    osg::ref_ptr<osg::Node> node_;  ///< OSG node
+    osg::ref_ptr<osg::Node> _node;
 
-    QString name_;
+    QString _name;
 
-    std::weak_ptr<Component> parent_;
+    std::weak_ptr<Component> _parent;
 
-    QString proj_file_;
+    QString _proj_file;
 
-    int  depth_sorted_bin_value_ = 1;       ///<
-    bool depth_sorted_bin_state_ = false;   ///< specifies if transparency is enabled
+    int  _depth_sorted_bin_value = 1;       ///<
+    bool _depth_sorted_bin_state = false;   ///< specifies if transparency is enabled
 
-    virtual Result ReadParameters(const QDomElement* node);
-    virtual Result SaveParameters(QDomDocument* doc, QDomElement* node);
+    virtual Result readParameters(const QDomElement* node);
+    virtual Result saveParameters(QDomDocument* doc, QDomElement* node);
 
-    void SetTransparencyMode(osg::Node* node);
+    void setTransparencyMode(osg::Node* node);
 };
 
 } // namespace pro

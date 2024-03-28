@@ -26,34 +26,34 @@ namespace pro {
 
 Animation::Animation(osg::ref_ptr<osg::Node> node)
 {
-    node_ = node;
+    _node = node;
 }
 
-Result Animation::Read(const QDomElement* node)
+Result Animation::read(const QDomElement* node)
 {
     Result result = Result::Success;
 
-    t_min_ = node->attribute("t_min").toDouble();
-    t_max_ = node->attribute("t_max").toDouble();
+    _t_min = node->attribute("t_min").toDouble();
+    _t_max = node->attribute("t_max").toDouble();
 
     QDomElement child_node = node->firstChildElement();
     while ( !child_node.isNull() && result == Result::Success )
     {
-        result = ReadKeyframe(&child_node);
+        result = readKeyframe(&child_node);
         child_node = child_node.nextSiblingElement();
     }
 
-    SortKeyframes();
-    UpdateAnimationPath();
+    sortKeyframes();
+    updateAnimationPath();
 
     return result;
 }
 
-Result Animation::Save(QDomDocument* doc, QDomElement* parent)
+Result Animation::save(QDomDocument* doc, QDomElement* parent)
 {
     Result result = Result::Success;
 
-    if ( keyframes_.size() > 0 )
+    if ( _keyframes.size() > 0 )
     {
         QDomElement node = doc->createElement(kTagName);
         parent->appendChild(node);
@@ -61,95 +61,95 @@ Result Animation::Save(QDomDocument* doc, QDomElement* parent)
         QDomAttr node_t_min = doc->createAttribute("t_min");
         QDomAttr node_t_max = doc->createAttribute("t_max");
 
-        node_t_min.setValue(QString::number(GetTimeMin(), 'f', 4));
-        node_t_max.setValue(QString::number(GetTimeMax(), 'f', 4));
+        node_t_min.setValue(QString::number(getTimeMin(), 'f', 4));
+        node_t_max.setValue(QString::number(getTimeMax(), 'f', 4));
 
         node.setAttributeNode(node_t_min);
         node.setAttributeNode(node_t_max);
 
-        for ( auto keyframe : keyframes_ )
+        for ( auto keyframe : _keyframes )
         {
-            if ( result == Result::Success ) result = keyframe->Save(doc, &node);
+            if ( result == Result::Success ) result = keyframe->save(doc, &node);
         }
     }
 
     return result;
 }
 
-void Animation::AddKeyframe(std::shared_ptr<Keyframe> keyframe)
+void Animation::addKeyframe(std::shared_ptr<Keyframe> keyframe)
 {
-    keyframes_.push_back(keyframe);
-    SortKeyframes();
-    UpdateAnimationPath();
+    _keyframes.push_back(keyframe);
+    sortKeyframes();
+    updateAnimationPath();
 }
 
-void Animation::RemoveKeyframe(int index)
+void Animation::removeKeyframe(int index)
 {
-    keyframes_.erase(keyframes_.begin() + index);
-    UpdateAnimationPath();
+    _keyframes.erase(_keyframes.begin() + index);
+    updateAnimationPath();
 }
 
-void Animation::SetKeyframe(int index, std::shared_ptr<Keyframe> keyframe)
+void Animation::setKeyframe(int index, std::shared_ptr<Keyframe> keyframe)
 {
-    keyframes_.at(index) = keyframe;
-    SortKeyframes();
-    UpdateAnimationPath();
+    _keyframes.at(index) = keyframe;
+    sortKeyframes();
+    updateAnimationPath();
 }
 
-void Animation::SetTimeMin(double t_min)
+void Animation::setTimeMin(double t_min)
 {
-    t_min_ = std::min(t_min, t_max_);
+    _t_min = std::min(t_min, _t_max);
 }
 
-void Animation::SetTimeMax(double t_max)
+void Animation::setTimeMax(double t_max)
 {
-    t_max_ = std::max(t_max, t_min_);
+    _t_max = std::max(t_max, _t_min);
 }
 
-void Animation::SetTime(double time)
+void Animation::setTime(double time)
 {
-    if ( apcb_.valid() )
+    if ( _apcb.valid() )
     {
-        apcb_->reset();
-        apcb_->setTimeOffset(-time);
+        _apcb->reset();
+        _apcb->setTimeOffset(-time);
     }
 }
 
-Result Animation::ReadKeyframe(const QDomElement* node)
+Result Animation::readKeyframe(const QDomElement* node)
 {
     Result result = Result::Success;
 
     std::shared_ptr<Keyframe> keyframe = std::make_shared<Keyframe>();
 
-    if ( result == Result::Success ) result = keyframe->Read(node);
+    if ( result == Result::Success ) result = keyframe->read(node);
 
     if ( result == Result::Success )
     {
-        keyframes_.push_back(keyframe);
+        _keyframes.push_back(keyframe);
     }
 
     return result;
 }
 
-void Animation::SortKeyframes()
+void Animation::sortKeyframes()
 {
-    std::sort(keyframes_.begin(), keyframes_.end(),
+    std::sort(_keyframes.begin(), _keyframes.end(),
         [](std::shared_ptr<Keyframe> a, std::shared_ptr<Keyframe> b)
         {
             return a->t() < b->t();
     });
 }
 
-void Animation::UpdateAnimationPath()
+void Animation::updateAnimationPath()
 {
-    node_->setUpdateCallback(nullptr);
+    _node->setUpdateCallback(nullptr);
 
-    if ( keyframes_.size() > 0 )
+    if ( _keyframes.size() > 0 )
     {
         osg::ref_ptr<osg::AnimationPath> path = new osg::AnimationPath();
         path->setLoopMode(osg::AnimationPath::SWING);
 
-        for ( auto keyframe : keyframes_ )
+        for ( auto keyframe : _keyframes )
         {
             osg::Vec3d v(keyframe->px(), keyframe->py(), keyframe->pz());
             osg::Quat q(osg::DegreesToRadians(keyframe->ax()), osg::X_AXIS,
@@ -170,12 +170,12 @@ void Animation::UpdateAnimationPath()
             }
         }
 
-        apcb_ = new osg::AnimationPathCallback();
-        //apcb_->setPause(true);
-        //apcb_->setTimeMultiplier(0.0);
+        _apcb = new osg::AnimationPathCallback();
+        //_apcb->setPause(true);
+        //_apcb->setTimeMultiplier(0.0);
 
-        apcb_->setAnimationPath(path.get());
-        node_->setUpdateCallback(apcb_.get());
+        _apcb->setAnimationPath(path.get());
+        _node->setUpdateCallback(_apcb.get());
     }
 }
 

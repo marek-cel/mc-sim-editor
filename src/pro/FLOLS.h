@@ -38,22 +38,22 @@ public:
 
     FLOLS();
 
-    inline bool CanBeAnimated() const override { return false; }
+    inline bool canBeAnimated() const override { return false; }
 
-    inline bool CanBeParent() const override { return false; }
+    inline bool canBeParent() const override { return false; }
 
-    std::unique_ptr<Component> Clone() const override;
+    std::unique_ptr<Component> clone() const override;
 
-    inline const char* GetTagName() const override { return kTagName; }
+    inline const char* getTagName() const override { return kTagName; }
 
 protected:
 
-    void Create();
-    void CreateIFLOLS(osgSim::LightPointNode* lpn);
-    void CreateIFLOLS_Datum(osgSim::LightPointNode* lpn);
-    void CreateIFLOLS_Ball(osgSim::LightPointNode* lpn);
-    void CreateIFLOLS_WaveOff(osgSim::LightPointNode* lpn);
-    void CreateIFLOLS_CutOff(osgSim::LightPointNode* lpn);
+    void create();
+    void createIFLOLS(osgSim::LightPointNode* lpn);
+    void createIFLOLS_Datum(osgSim::LightPointNode* lpn);
+    void createIFLOLS_Ball(osgSim::LightPointNode* lpn);
+    void createIFLOLS_WaveOff(osgSim::LightPointNode* lpn);
+    void createIFLOLS_CutOff(osgSim::LightPointNode* lpn);
 };
 
 } // namespace pro

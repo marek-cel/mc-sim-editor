@@ -40,46 +40,46 @@ public:
 
     Rotor();
 
-    inline bool CanBeAnimated() const override { return false; }
+    inline bool canBeAnimated() const override { return false; }
 
-    inline bool CanBeParent() const override { return false; }
+    inline bool canBeParent() const override { return false; }
 
-    std::unique_ptr<Component> Clone() const override;
+    std::unique_ptr<Component> clone() const override;
 
-    inline const char* GetTagName() const override { return kTagName; }
+    inline const char* getTagName() const override { return kTagName; }
 
-    void SetBladesNo(int blades_no);
-    void SetHingeOffset(double offset);
-    void SetDirection(Direction direction);
-    void SetFileBlade(const QString& file);
-    void SetFileShaft(const QString& file);
+    void setBladesNo(int blades_no);
+    void setHingeOffset(double offset);
+    void setDirection(Direction direction);
+    void setFileBlade(const QString& file);
+    void setFileShaft(const QString& file);
 
-    inline unsigned int GetBladesNo()    const { return blades_no_; }
-    inline double       GetHingeOffset() const { return hinge_offset_; }
-    inline Direction    GetDirection()   const { return direction_; }
-    inline QString      GetFileBlade()   const { return file_blade_; }
-    inline QString      GetFileShaft()   const { return file_shaft_; }
+    inline unsigned int getBladesNo()    const { return _blades_no; }
+    inline double       getHingeOffset() const { return _hinge_offset; }
+    inline Direction    getDirection()   const { return _direction; }
+    inline QString      getFileBlade()   const { return _file_blade; }
+    inline QString      getFileShaft()   const { return _file_shaft; }
 
 protected:
 
-    osg::ref_ptr<osg::PositionAttitudeTransform> shaft_;
+    osg::ref_ptr<osg::PositionAttitudeTransform> _shaft;
 
-    Blades blades_;
+    Blades _blades;
 
-    int blades_no_ = 2;
-    double hinge_offset_ = 0.0;
-    Direction direction_ = Direction::CW;
+    int _blades_no = 2;
+    double _hinge_offset = 0.0;
+    Direction _direction = Direction::CW;
 
-    QString file_blade_;
-    QString file_shaft_;
+    QString _file_blade;
+    QString _file_shaft;
 
-    virtual Result ReadParameters(const QDomElement* node) override;
-    virtual Result SaveParameters(QDomDocument* doc, QDomElement* node) override;
+    virtual Result readParameters(const QDomElement* node) override;
+    virtual Result saveParameters(QDomDocument* doc, QDomElement* node) override;
 
-    void Clear();
-    void Create();
-    void CreateShaft();
-    void CreateBlades();
+    void clear();
+    void create();
+    void createShaft();
+    void createBlades();
 };
 
 } // namespace pro

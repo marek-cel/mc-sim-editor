@@ -25,92 +25,92 @@ namespace pro {
 LOD::LOD(osg::LOD* lod)
     : Group(lod ? lod : new osg::LOD())
 {
-    lod_ = dynamic_cast<osg::LOD*>(node_.get());
-    SetName("LOD");
-    AddInterval(1000.0);
+    _lod = dynamic_cast<osg::LOD*>(_node.get());
+    setName("LOD");
+    addInterval(1000.0);
 }
 
-Result LOD::AddChild(std::shared_ptr<Component> child)
+Result LOD::addChild(std::shared_ptr<Component> child)
 {
-    child->SetParent(shared_from_this());
-    children_.push_back(child);
+    child->setParent(shared_from_this());
+    _children.push_back(child);
 
-    InflateLOD();
+    inflateLOD();
 
     return Result::Success;
 }
 
-std::unique_ptr<Component> LOD::Clone() const
+std::unique_ptr<Component> LOD::clone() const
 {
     std::unique_ptr<LOD> lod = std::make_unique<LOD>();
-    lod->SetName(GetName());
-    lod->CloneChildren(&children_);
+    lod->setName(getName());
+    lod->cloneChildren(&_children);
     return lod;
 }
 
-void LOD::AddInterval(double value)
+void LOD::addInterval(double value)
 {
-    intervals_.push_back(value);
-    InflateLOD();
+    _intervals.push_back(value);
+    inflateLOD();
 }
 
-void LOD::EditInterval(int index, double value)
+void LOD::editInterval(int index, double value)
 {
-    intervals_.at(index) = value;
-    InflateLOD();
+    _intervals.at(index) = value;
+    inflateLOD();
 }
 
-double LOD::GetInterval(int index) const
+double LOD::getInterval(int index) const
 {
-    return intervals_.at(index);
+    return _intervals.at(index);
 }
 
-int LOD::GetIntervalsCount() const
+int LOD::getIntervalsCount() const
 {
-    return intervals_.size();
+    return _intervals.size();
 }
 
-void LOD::RemoveInterval(int index)
+void LOD::removeInterval(int index)
 {
-    intervals_.erase(intervals_.begin() + index);
-    InflateLOD();
+    _intervals.erase(_intervals.begin() + index);
+    inflateLOD();
 }
 
-void LOD::InflateLOD()
+void LOD::inflateLOD()
 {
-    if ( lod_->getNumChildren() > 0 )
+    if ( _lod->getNumChildren() > 0 )
     {
-        lod_->removeChildren(0, lod_->getNumChildren());
+        _lod->removeChildren(0, _lod->getNumChildren());
     }
 
     double r0 = 0.0;
     double r1 = 0.0;
 
-    for ( size_t i = 0; i < intervals_.size() && i < children_.size(); ++i )
+    for ( size_t i = 0; i < _intervals.size() && i < _children.size(); ++i )
     {
         r0 = r1;
-        r1 = r0 + intervals_.at(i);
+        r1 = r0 + _intervals.at(i);
 
-        lod_->addChild(children_.at(i)->GetNode(), r0, r1);
+        _lod->addChild(_children.at(i)->getNode(), r0, r1);
     }
 }
 
-Result LOD::ReadParameters(const QDomElement* node)
+Result LOD::readParameters(const QDomElement* node)
 {
     ////////////////////////////////////////////
-    Result result = Group::ReadParameters(node);
+    Result result = Group::readParameters(node);
     ////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
 
-    intervals_.clear();
+    _intervals.clear();
 
     int index = 0;
     QString tag = "interval_" + QString::number(index);
     while ( node->hasAttribute(tag) )
     {
         double value = node->attribute(tag).toDouble();
-        AddInterval(value);
+        addInterval(value);
         ++index;
         tag = "interval_" + QString::number(index);
     }
@@ -118,17 +118,17 @@ Result LOD::ReadParameters(const QDomElement* node)
     return index > 0 ? Result::Success : Result::Failure;
 }
 
-Result LOD::SaveParameters(QDomDocument* doc, QDomElement* node)
+Result LOD::saveParameters(QDomDocument* doc, QDomElement* node)
 {
     /////////////////////////////////////////////////
-    Result result = Group::SaveParameters(doc, node);
+    Result result = Group::saveParameters(doc, node);
     /////////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
 
     int index = 0;
     QString tag = "interval_" + QString::number(index);
-    for ( auto interval : intervals_ )
+    for ( auto interval : _intervals )
     {
         QDomAttr node_interval = doc->createAttribute(tag);
         node_interval.setValue(QString::number(interval));

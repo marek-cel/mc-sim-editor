@@ -30,26 +30,26 @@ class Playback
 {
 public:
 
-    Result Read(const QDomElement* node);
+    Result read(const QDomElement* node);
 
-    Result Save(QDomDocument* doc, QDomElement* parent);
+    Result save(QDomDocument* doc, QDomElement* parent);
 
-    inline double time_start() const { return time_start_; }
-    inline double time_end() const { return time_end_; }
-    inline double current_time() const { return current_time_; }
-    inline double speed() const { return speed_; }
+    inline double time_start() const { return _time_start; }
+    inline double time_end() const { return _time_end; }
+    inline double current_time() const { return _current_time; }
+    inline double speed() const { return _speed; }
 
-    inline void set_time_start(double time_start) { time_start_ = time_start; }
-    inline void set_time_end(double time_end) { time_end_ = time_end; }
-    inline void set_current_time(double current_time) { current_time_ = current_time; }
-    inline void set_speed(double speed) { speed_ = speed; }
+    inline void setTimeStart(double time_start) { _time_start = time_start; }
+    inline void setTimeEnd(double time_end) { _time_end = time_end; }
+    inline void setCurrentTime(double current_time) { _current_time = current_time; }
+    inline void setSpeed(double speed) { _speed = speed; }
 
 private:
 
-    double time_start_   = 0.0;
-    double time_end_     = 1.0;
-    double current_time_ = 0.0;
-    double speed_        = 1.0;
+    double _time_start   = 0.0;
+    double _time_end     = 1.0;
+    double _current_time = 0.0;
+    double _speed        = 1.0;
 };
 
 } // namespace pro

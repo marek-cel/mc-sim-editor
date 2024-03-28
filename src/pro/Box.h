@@ -36,17 +36,17 @@ public:
 
     Box();
 
-    inline bool CanBeAnimated() const override { return false; }
+    inline bool canBeAnimated() const override { return false; }
 
-    inline bool CanBeParent() const override { return false; }
+    inline bool canBeParent() const override { return false; }
 
-    std::unique_ptr<Component> Clone() const override;
+    std::unique_ptr<Component> clone() const override;
 
-    inline const char* GetTagName() const override { return kTagName; }
+    inline const char* getTagName() const override { return kTagName; }
 
 protected:
 
-    osg::ref_ptr<osg::Geode> geode_;
+    osg::ref_ptr<osg::Geode> _geode;
 };
 
 } // namespace pro

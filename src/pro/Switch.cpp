@@ -25,56 +25,56 @@ namespace pro {
 Switch::Switch(osg::Switch* pat)
     : Group(pat ? pat : new osg::Switch())
 {
-    switch_ = dynamic_cast<osg::Switch*>(node_.get());
-    SetName("Switch");
+    _switch = dynamic_cast<osg::Switch*>(_node.get());
+    setName("Switch");
 }
 
-std::unique_ptr<Component> Switch::Clone() const
+std::unique_ptr<Component> Switch::clone() const
 {
     std::unique_ptr<Switch> sw = std::make_unique<Switch>();
-    sw->SetName(GetName());
-    sw->CloneChildren(&children_);
+    sw->setName(getName());
+    sw->cloneChildren(&_children);
     return sw;
 }
 
-void Switch::SetVisible(bool visible)
+void Switch::setVisible(bool visible)
 {
-    visible_ = visible;
+    _visible = visible;
 
-    if ( visible_ )
+    if ( _visible )
     {
-        switch_->setAllChildrenOn();
+        _switch->setAllChildrenOn();
     }
     else
     {
-        switch_->setAllChildrenOff();
+        _switch->setAllChildrenOff();
     }
 }
 
-Result Switch::ReadParameters(const QDomElement* node)
+Result Switch::readParameters(const QDomElement* node)
 {
     ////////////////////////////////////////////
-    Result result = Group::ReadParameters(node);
+    Result result = Group::readParameters(node);
     ////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
 
     bool visible = node->attribute("visible").toInt();
-    SetVisible(visible);
+    setVisible(visible);
 
     return result;
 }
 
-Result Switch::SaveParameters(QDomDocument* doc, QDomElement* node)
+Result Switch::saveParameters(QDomDocument* doc, QDomElement* node)
 {
     /////////////////////////////////////////////////
-    Result result = Group::SaveParameters(doc, node);
+    Result result = Group::saveParameters(doc, node);
     /////////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
 
     QDomAttr node_visible = doc->createAttribute( "visible" );
-    node_visible.setValue(QString::number(GetVisible() ? 1 : 0));
+    node_visible.setValue(QString::number(getVisible() ? 1 : 0));
     node->setAttributeNode(node_visible);
 
     return result;

@@ -27,7 +27,7 @@
 namespace mc {
 namespace pro {
 
-Result Assembly::Export(QString file)
+Result Assembly::exportModel(QString file)
 {
     osgUtil::Optimizer optimizer;
 
@@ -42,14 +42,14 @@ Result Assembly::Export(QString file)
             //osgUtil::Optimizer::OPTIMIZE_TEXTURE_SETTINGS |
             osgUtil::Optimizer::STATIC_OBJECT_DETECTION;
 
-    optimizer.optimize(root_->GetNode(), options);
+    optimizer.optimize(_root->getNode(), options);
 
-    osgDB::writeNodeFile(*root_->GetNode(), file.toStdString());
+    osgDB::writeNodeFile(*_root->getNode(), file.toStdString());
 
     return Result::Success;
 }
 
-Result Assembly::Read(const QDomElement* node)
+Result Assembly::read(const QDomElement* node)
 {
     if ( node->isNull() )
     {
@@ -62,41 +62,41 @@ Result Assembly::Read(const QDomElement* node)
         return Result::Failure;
     }
 
-    Components::Type type = Components::Instance()->GetComponentByTagName(root_node.tagName());
+    Components::Type type = Components::instance()->getComponentByTagName(root_node.tagName());
     if ( !type.component || !type.can_be_parent )
     {
         return Result::Failure;
     }
 
-    std::shared_ptr<Component> comp = std::move(type.component->Clone());
-    comp->SetProjFile(proj_file_);
+    std::shared_ptr<Component> comp = std::move(type.component->clone());
+    comp->setProjFile(_proj_file);
     std::shared_ptr<Group> group = std::dynamic_pointer_cast<Group>(comp);
     if ( !group )
     {
         return Result::Failure;
     }
 
-    root_ = group;
-    return root_->Read(&root_node);
+    _root = group;
+    return _root->read(&root_node);
 }
 
-Result Assembly::Save(QDomDocument* doc, QDomElement* parent)
+Result Assembly::save(QDomDocument* doc, QDomElement* parent)
 {
     QDomElement node = doc->createElement("assembly");
     parent->appendChild(node);
 
-    return root_->Save(doc, &node);
+    return _root->save(doc, &node);
 }
 
-void Assembly::SetProjFile(QString proj_file)
+void Assembly::setProjFile(QString proj_file)
 {
-    proj_file_ = proj_file;
-    root_->SetProjFile(proj_file);
+    _proj_file = proj_file;
+    _root->setProjFile(proj_file);
 }
 
-void Assembly::SetAnimationTime(double time)
+void Assembly::setAnimationTime(double time)
 {
-    root_->SetAnimationTime(time);
+    _root->setAnimationTime(time);
 }
 
 } // namespace pro

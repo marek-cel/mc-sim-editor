@@ -36,25 +36,24 @@ class Assembly
 public:
 
     /** */
-    Result Export(QString file);
+    Result exportModel(QString file);
 
-    osg::ref_ptr<osg::Node> GetScene() const;
+    osg::ref_ptr<osg::Node> getScene() const;
 
-    Result Read(const QDomElement* node);
+    Result read(const QDomElement* node);
 
-    Result Save(QDomDocument* doc, QDomElement* parent);
+    Result save(QDomDocument* doc, QDomElement* parent);
 
-    void SetProjFile(QString proj_file);
+    void setProjFile(QString proj_file);
 
-    inline std::shared_ptr<Group> GetRoot() { return root_; }
+    inline std::shared_ptr<Group> getRoot() { return _root; }
 
-    void SetAnimationTime(double time);
+    void setAnimationTime(double time);
 
 private:
 
-    std::shared_ptr<Group> root_ = std::make_shared<Group>();
-
-    QString proj_file_;
+    std::shared_ptr<Group> _root = std::make_shared<Group>();
+    QString _proj_file;
 };
 
 } // namespace pro

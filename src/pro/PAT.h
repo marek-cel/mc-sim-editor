@@ -40,48 +40,48 @@ public:
 
     PAT(osg::PositionAttitudeTransform* pat = nullptr);
 
-    std::unique_ptr<Component> Clone() const override;
+    std::unique_ptr<Component> clone() const override;
 
-    inline const char* GetTagName() const override { return kTagName; }
+    inline const char* getTagName() const override { return kTagName; }
 
-    void SetPx(double px);
-    void SetPy(double py);
-    void SetPz(double pz);
+    void setPx(double px);
+    void setPy(double py);
+    void setPz(double pz);
 
-    void SetAx(double ax);
-    void SetAy(double ay);
-    void SetAz(double az);
+    void setAx(double ax);
+    void setAy(double ay);
+    void setAz(double az);
 
-    void SetConvention(Convention convention);
+    void setConvention(Convention convention);
 
-    inline double px() const { return px_; }
-    inline double py() const { return py_; }
-    inline double pz() const { return pz_; }
+    inline double px() const { return _px; }
+    inline double py() const { return _py; }
+    inline double pz() const { return _pz; }
 
-    inline double ax() const { return ax_; }
-    inline double ay() const { return ay_; }
-    inline double az() const { return az_; }
+    inline double ax() const { return _ax; }
+    inline double ay() const { return _ay; }
+    inline double az() const { return _az; }
 
     inline Convention convention() const { return convention_; }
 
 protected:
 
-    osg::ref_ptr<osg::PositionAttitudeTransform> pat_;
+    osg::ref_ptr<osg::PositionAttitudeTransform> _pat;
 
-    double px_ = 0.0;
-    double py_ = 0.0;
-    double pz_ = 0.0;
+    double _px = 0.0;
+    double _py = 0.0;
+    double _pz = 0.0;
 
-    double ax_ = 0.0;
-    double ay_ = 0.0;
-    double az_ = 0.0;
+    double _ax = 0.0;
+    double _ay = 0.0;
+    double _az = 0.0;
 
     Convention convention_ = Convention::XYZ;
 
-    virtual Result ReadParameters(const QDomElement* node) override;
-    virtual Result SaveParameters(QDomDocument* doc, QDomElement* node) override;
+    virtual Result readParameters(const QDomElement* node) override;
+    virtual Result saveParameters(QDomDocument* doc, QDomElement* node) override;
 
-    void UpdatePositionAndAttitude();
+    void updatePositionAndAttitude();
 };
 
 } // namespace pro

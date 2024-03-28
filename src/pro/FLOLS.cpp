@@ -31,22 +31,22 @@ const double FLOLS::kSectorDegUnto = osg::DegreesToRadians(110.0f);
 FLOLS::FLOLS()
     : PAT()
 {
-    SetName("FLOLS");
-    Create();
+    setName("FLOLS");
+    create();
 }
 
-std::unique_ptr<Component> FLOLS::Clone() const
+std::unique_ptr<Component> FLOLS::clone() const
 {
     std::unique_ptr<FLOLS> rotor = std::make_unique<FLOLS>();
-    rotor->SetName(GetName());
+    rotor->setName(getName());
     return rotor;
 }
 
-void FLOLS::Create()
+void FLOLS::create()
 {
     osg::ref_ptr<osgSim::LightPointNode> lpn = new osgSim::LightPointNode();
 
-    CreateIFLOLS(lpn);
+    createIFLOLS(lpn);
 
     osg::ref_ptr<osg::Texture2D> texture = cgi::Textures::get("../data/lightpoint.png");
     if ( texture.valid() )
@@ -56,18 +56,18 @@ void FLOLS::Create()
         ss->setTextureAttributeAndModes(0, texture.get(), osg::StateAttribute::ON);
     }
 
-    pat_->addChild(lpn.get());
+    _pat->addChild(lpn.get());
 }
 
-void FLOLS::CreateIFLOLS(osgSim::LightPointNode* lpn)
+void FLOLS::createIFLOLS(osgSim::LightPointNode* lpn)
 {
-    CreateIFLOLS_Datum(lpn);
-    CreateIFLOLS_Ball(lpn);
-    CreateIFLOLS_WaveOff(lpn);
-    CreateIFLOLS_CutOff(lpn);
+    createIFLOLS_Datum(lpn);
+    createIFLOLS_Ball(lpn);
+    createIFLOLS_WaveOff(lpn);
+    createIFLOLS_CutOff(lpn);
 }
 
-void FLOLS::CreateIFLOLS_Datum(osgSim::LightPointNode* lpn)
+void FLOLS::createIFLOLS_Datum(osgSim::LightPointNode* lpn)
 {
     const double radius    = 4.0 * 0.3;
     const double intensity = 1.0;
@@ -99,7 +99,7 @@ void FLOLS::CreateIFLOLS_Datum(osgSim::LightPointNode* lpn)
     }
 }
 
-void FLOLS::CreateIFLOLS_Ball(osgSim::LightPointNode* lpn)
+void FLOLS::createIFLOLS_Ball(osgSim::LightPointNode* lpn)
 {
     const double radius    = 4.0 * 0.3;
     const double intensity = 5.0;
@@ -211,7 +211,7 @@ void FLOLS::CreateIFLOLS_Ball(osgSim::LightPointNode* lpn)
     lpn->addLightPoint(lp_8);
 }
 
-void FLOLS::CreateIFLOLS_WaveOff(osgSim::LightPointNode* lpn)
+void FLOLS::createIFLOLS_WaveOff(osgSim::LightPointNode* lpn)
 {
     const double radius    = 4.0 * 0.3;
     const double intensity = 5.0;
@@ -279,7 +279,7 @@ void FLOLS::CreateIFLOLS_WaveOff(osgSim::LightPointNode* lpn)
     }
 }
 
-void FLOLS::CreateIFLOLS_CutOff(osgSim::LightPointNode* lpn)
+void FLOLS::createIFLOLS_CutOff(osgSim::LightPointNode* lpn)
 {
     const double radius    = 4.0 * 0.3;
     const double intensity = 5.0;

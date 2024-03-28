@@ -46,7 +46,7 @@ void Model::setProject(std::shared_ptr<pro::Project> proj)
 
     if ( proj )
     {
-        _assembly->addChild(proj->GetAssembly()->GetRoot()->GetNode().get());
+        _assembly->addChild(proj->getAssembly()->getRoot()->getNode().get());
     }
 }
 

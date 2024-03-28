@@ -30,70 +30,70 @@ namespace pro {
 File::File()
     : Component(new osg::Group())
 {
-    group_ = dynamic_cast<osg::Group*>(Component::node_.get());
-    SetName("File");
+    _group = dynamic_cast<osg::Group*>(Component::_node.get());
+    setName("File");
 }
 
-std::unique_ptr<Component> File::Clone() const
+std::unique_ptr<Component> File::clone() const
 {
     std::unique_ptr<File> file = std::make_unique<File>();
-    file->SetName(GetName());
+    file->setName(getName());
     return file;
 }
 
-void File::SetFile(QString file)
+void File::setFile(QString file)
 {
-    group_->removeChild(0, group_->getNumChildren());
-    file_ = file;
-    ReloadFile();
+    _group->removeChild(0, _group->getNumChildren());
+    _file = file;
+    reloadFile();
 }
 
-void File::SetProjFile(QString proj_file)
+void File::setProjFile(QString proj_file)
 {
-    Component::SetProjFile(proj_file);
-    ReloadFile();
+    Component::setProjFile(proj_file);
+    reloadFile();
 }
 
-void File::ReloadFile()
+void File::reloadFile()
 {
-    if ( file_.length() == 0 ) return;
+    if ( _file.length() == 0 ) return;
 
-    QDir proj_dir = QFileInfo(proj_file_).absoluteDir();
-    QString file = proj_dir.absoluteFilePath(file_);
+    QDir proj_dir = QFileInfo(_proj_file).absoluteDir();
+    QString file = proj_dir.absoluteFilePath(_file);
 
-    node_ = cgi::Models::get(file.toStdString());
-    if ( node_.valid() )
+    _node = cgi::Models::get(file.toStdString());
+    if ( _node.valid() )
     {
-        SetTransparencyMode(node_.get());
-        group_->removeChildren(0, group_->getNumChildren());
-        group_->addChild(node_.get());
+        setTransparencyMode(_node.get());
+        _group->removeChildren(0, _group->getNumChildren());
+        _group->addChild(_node.get());
     }
 }
 
-Result File::ReadParameters(const QDomElement* node)
+Result File::readParameters(const QDomElement* node)
 {
     ////////////////////////////////////////////////
-    Result result = Component::ReadParameters(node);
+    Result result = Component::readParameters(node);
     ////////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
 
     QString file = node->attribute("file");
-    SetFile(file);
+    setFile(file);
 
     return result;
 }
 
-Result File::SaveParameters(QDomDocument* doc, QDomElement* node)
+Result File::saveParameters(QDomDocument* doc, QDomElement* node)
 {
     /////////////////////////////////////////////////////
-    Result result = Component::SaveParameters(doc, node);
+    Result result = Component::saveParameters(doc, node);
     /////////////////////////////////////////////////////
 
     if ( result == Result::Failure ) return result;
 
     QDomAttr node_file = doc->createAttribute("file");
-    node_file.setValue(file_);
+    node_file.setValue(_file);
     node->setAttributeNode(node_file);
 
     return result;
