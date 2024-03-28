@@ -65,14 +65,14 @@ private:
 
     Ui::MainWindow* _ui = nullptr;
 
-    QShortcut* _shortcut_save   = nullptr;  ///< save shortcut
-    QShortcut* _shortcut_reload = nullptr;  ///< reload shortcut
+    QShortcut* _sc_save   = nullptr;        ///< save shortcut
+    QShortcut* _sc_reload = nullptr;        ///< reload shortcut
 
-    RecentActions _recent_actions;          ///< recent action items
+    RecentActions _recentActions;           ///< recent action items
 
     std::shared_ptr<pro::Project> _proj;    ///< current project
 
-    int _recent_files_max = 10;
+    int _recentFilesMax = 10;
 
     bool _saved = true;                     ///< specifies if current file is saved or if there are unsaved changes
 

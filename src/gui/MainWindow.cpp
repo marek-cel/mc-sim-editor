@@ -37,8 +37,8 @@ MainWindow::MainWindow(QWidget* parent)
 {
     _ui->setupUi(this);
 
-    _shortcut_save   = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this, SLOT(on_actionSave_triggered()));
-    _shortcut_reload = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_R), this, SLOT(on_actionReload_triggered()));
+    _sc_save   = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_S), this, SLOT(on_actionSave_triggered()));
+    _sc_reload = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_R), this, SLOT(on_actionReload_triggered()));
 
     connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), _ui->widgetComp  , SLOT(setProject(std::shared_ptr<pro::Project>)));
     connect(this, SIGNAL(projectCreated(std::shared_ptr<pro::Project>)), _ui->widgetScene , SLOT(setProject(std::shared_ptr<pro::Project>)));
@@ -85,14 +85,14 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 void MainWindow::addRecentFile(QString file)
 {
-    QStringList recent_files;
-    for ( auto action : _recent_actions )
+    QStringList recentFiles;
+    for ( auto action : _recentActions )
     {
         action->disconnect();
-        recent_files.push_back(action->file());
+        recentFiles.push_back(action->file());
     }
 
-    _recent_actions.clear();
+    _recentActions.clear();
     _ui->menuRecentFiles->clear();
 
     if ( file.length() > 0 )
@@ -100,21 +100,21 @@ void MainWindow::addRecentFile(QString file)
 #       ifdef WIN32
         if ( recent_files.contains(file, Qt::CaseInsensitive) )
 #       else
-        if ( recent_files.contains(file, Qt::CaseSensitive) )
+        if ( recentFiles.contains(file, Qt::CaseSensitive) )
 #       endif
         {
-            recent_files.move(recent_files.indexOf(file),0);
+            recentFiles.move(recentFiles.indexOf(file),0);
         }
         else
         {
-            recent_files.push_front(file);
+            recentFiles.push_front(file);
         }
     }
 
-    for ( int i = 0; i < recent_files.size() && i < _recent_files_max; ++i )
+    for ( int i = 0; i < recentFiles.size() && i < _recentFilesMax; ++i )
     {
-        RecentAction* action = new RecentAction(recent_files.at(i), _ui->menuRecentFiles);
-        _recent_actions.push_back(action);
+        RecentAction* action = new RecentAction(recentFiles.at(i), _ui->menuRecentFiles);
+        _recentActions.push_back(action);
 
         connect(action, SIGNAL(triggered(RecentAction*)), SLOT(recentFile_triggered(RecentAction*)));
         _ui->menuRecentFiles->addAction(action);
@@ -307,7 +307,7 @@ void MainWindow::settingsRead_RecentFiles(QSettings& settings)
     for ( auto file : recent_files )
     {
         RecentAction* action = new RecentAction(file, _ui->menuRecentFiles);
-        _recent_actions.push_back(action);
+        _recentActions.push_back(action);
         connect(action, SIGNAL(triggered(RecentAction*)), SLOT(recentFile_triggered(RecentAction*)));
         _ui->menuRecentFiles->addAction(action);
     }
@@ -335,7 +335,7 @@ void MainWindow::settingsSave()
 void MainWindow::settingsSave_RecentFiles(QSettings& settings)
 {
     QStringList recent_files;
-    for ( auto action : _recent_actions )
+    for ( auto action : _recentActions )
     {
         recent_files.push_back(action->file());
     }
@@ -375,11 +375,11 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::on_actionClearRecent_triggered()
 {
-    for ( auto action : _recent_actions )
+    for ( auto action : _recentActions )
     {
         action->disconnect(this, SLOT(recentFile_triggered(RecentAction*)));
     }
-    _recent_actions.clear();
+    _recentActions.clear();
     _ui->menuRecentFiles->clear();
 }
 
