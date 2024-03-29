@@ -115,7 +115,7 @@ private slots:
     void on_lineEditShaftFile_textChanged(const QString &arg1);
     void on_spinBoxBladesNo_valueChanged(int arg1);
     void on_spinBoxHingeOffset_valueChanged(double arg1);
-    void on_radioButtonCW_toggled(bool checked);
+    void on_radioCW_toggled(bool checked);
 
     // slots specific for Trans
     void on_spinBoxTransPx_valueChanged(double arg1);

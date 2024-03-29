@@ -609,7 +609,7 @@ void FormComp::on_spinBoxHingeOffset_valueChanged(double arg1)
     }
 }
 
-void FormComp::on_radioButtonCW_toggled(bool checked)
+void FormComp::on_radioCW_toggled(bool checked)
 {
     if ( _comp.expired() ) return;
 
