@@ -26,11 +26,9 @@ set(LIBS
 )
 
 target_link_libraries(${PROJECT_NAME} 
-    -Wl,--start-group
-    cgi
     gui
+    cgi
     pro
     ${LIBS}
-    -Wl,--end-group
 )
 
