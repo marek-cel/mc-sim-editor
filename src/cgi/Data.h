@@ -32,6 +32,8 @@ struct Data
     double camera_y = 0.0;
     double camera_z = 0.0;
 
+    double camera_dist = 0.0;
+
     int win_width  = 0;
     int win_height = 0;
 

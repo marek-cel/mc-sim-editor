@@ -46,11 +46,14 @@ Manager::~Manager() {}
 void Manager::update()
 {
     osg::Quat q = _manipulator->getMatrix().getRotate();
+    osg::Vec3 v = _manipulator->getMatrix().getTrans();
 
     _data->camera_w = q.w();
     _data->camera_x = q.x();
     _data->camera_y = q.y();
     _data->camera_z = q.z();
+
+    _data->camera_dist = v.length();
 
     _cgi->update();
     _hud->update();

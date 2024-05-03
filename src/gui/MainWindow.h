@@ -59,7 +59,9 @@ signals:
 
 protected:
 
-    virtual void closeEvent(QCloseEvent* event) override;
+    void closeEvent(QCloseEvent* event) override;
+
+    void timerEvent(QTimerEvent* event) override;
 
 private:
 
@@ -73,6 +75,8 @@ private:
     std::shared_ptr<pro::Project> _proj;    ///< current project
 
     int _recentFilesMax = 10;
+
+    int _timerId = 0;
 
     bool _saved = true;                     ///< specifies if current file is saved or if there are unsaved changes
 
@@ -96,6 +100,7 @@ private:
     void settingsSave();
     void settingsSave_RecentFiles(QSettings& settings);
 
+    void updateStatusBar();
     void updateWindowTitle();
 
 private slots:

@@ -51,6 +51,8 @@ public:
         return _manipulator.get();
     }
 
+    inline std::shared_ptr<Data> getData() { return _data; }
+
     /** Returns root node. */
     inline osg::Group* getNodeCGI() { return _cgi->root().get(); }
 

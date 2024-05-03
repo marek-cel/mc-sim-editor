@@ -53,11 +53,15 @@ MainWindow::MainWindow(QWidget* parent)
 
     settingsRead();
     newProject();
+
+    _timerId = startTimer(50);
 }
 
 MainWindow::~MainWindow()
 {
     settingsSave();
+
+    if ( _timerId ) { killTimer(_timerId); } _timerId = 0;
 
     if ( _ui ) { delete _ui; } _ui = nullptr;
 }
@@ -81,6 +85,15 @@ void MainWindow::closeEvent(QCloseEvent* event)
     ///////////////////////////////
     QMainWindow::closeEvent(event);
     ///////////////////////////////
+}
+
+void MainWindow::timerEvent(QTimerEvent* event)
+{
+    ///////////////////////////////
+    QMainWindow::timerEvent(event);
+    ///////////////////////////////
+
+    updateStatusBar();
 }
 
 void MainWindow::addRecentFile(QString file)
@@ -341,6 +354,16 @@ void MainWindow::settingsSave_RecentFiles(QSettings& settings)
     }
 
     settings.setValue("recent_files", recent_files);
+}
+
+void MainWindow::updateStatusBar()
+{
+    QString msg = "";
+
+    msg += tr("Camera distance: ");
+    msg += QString::number(_ui->widgetCGI->getManagerCGI()->getData()->camera_dist, 'f', 2);
+
+    _ui->statusbar->showMessage(msg);
 }
 
 void MainWindow::updateWindowTitle()
