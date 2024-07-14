@@ -94,6 +94,9 @@ private slots:
     void on_spinBoxAx_valueChanged(double arg1);
     void on_spinBoxAy_valueChanged(double arg1);
     void on_spinBoxAz_valueChanged(double arg1);
+    void on_spinBoxSx_valueChanged(double arg1);
+    void on_spinBoxSy_valueChanged(double arg1);
+    void on_spinBoxSz_valueChanged(double arg1);
 
     // slots specific for LOD
     void on_listIntervals_currentRowChanged(int currentRow);

@@ -73,6 +73,24 @@ void PAT::setAz(double az)
     updatePositionAndAttitude();
 }
 
+void PAT::setSx(double sx)
+{
+    _sx = sx;
+    updatePositionAndAttitude();
+}
+
+void PAT::setSy(double sy)
+{
+    _sy = sy;
+    updatePositionAndAttitude();
+}
+
+void PAT::setSz(double sz)
+{
+    _sz = sz;
+    updatePositionAndAttitude();
+}
+
 void PAT::setConvention(Convention convention)
 {
     convention_ = convention;
@@ -94,6 +112,10 @@ Result PAT::readParameters(const QDomElement* node)
     _ax = node->attribute("ax").toDouble();
     _ay = node->attribute("ay").toDouble();
     _az = node->attribute("az").toDouble();
+
+    _sx = node->attribute("sx", "1.0").toDouble();
+    _sy = node->attribute("sy", "1.0").toDouble();
+    _sz = node->attribute("sz", "1.0").toDouble();
 
     if ( node->attribute("convention").toInt() == 0 )
     {
@@ -125,6 +147,10 @@ Result PAT::saveParameters(QDomDocument* doc, QDomElement* node)
     QDomAttr node_ay = doc->createAttribute("ay");
     QDomAttr node_az = doc->createAttribute("az");
 
+    QDomAttr node_sx = doc->createAttribute("sx");
+    QDomAttr node_sy = doc->createAttribute("sy");
+    QDomAttr node_sz = doc->createAttribute("sz");
+
     QDomAttr node_convention = doc->createAttribute("convention");
 
     node_px.setValue(QString::number(px(), 'f', 6));
@@ -134,6 +160,10 @@ Result PAT::saveParameters(QDomDocument* doc, QDomElement* node)
     node_ax.setValue(QString::number(ax(), 'f', 12));
     node_ay.setValue(QString::number(ay(), 'f', 12));
     node_az.setValue(QString::number(az(), 'f', 12));
+
+    node_sx.setValue(QString::number(sx(), 'f', 6));
+    node_sy.setValue(QString::number(sy(), 'f', 6));
+    node_sz.setValue(QString::number(sz(), 'f', 6));
 
     node_convention.setValue(QString::number(static_cast<int>(convention_)));
 
@@ -145,6 +175,10 @@ Result PAT::saveParameters(QDomDocument* doc, QDomElement* node)
     node->setAttributeNode(node_ay);
     node->setAttributeNode(node_az);
 
+    node->setAttributeNode(node_sx);
+    node->setAttributeNode(node_sy);
+    node->setAttributeNode(node_sz);
+
     node->setAttributeNode(node_convention);
 
     return result;
@@ -153,6 +187,7 @@ Result PAT::saveParameters(QDomDocument* doc, QDomElement* node)
 void PAT::updatePositionAndAttitude()
 {
     osg::Vec3d pos(_px, _py, _pz);
+    osg::Vec3d scale(_sx, _sy, _sz);
     osg::Quat att;
 
     if ( convention_ == Convention::ZYX )
@@ -170,6 +205,7 @@ void PAT::updatePositionAndAttitude()
 
     _pat->setPosition(pos);
     _pat->setAttitude(att);
+    _pat->setScale(scale);
 }
 
 } // namespace pro
