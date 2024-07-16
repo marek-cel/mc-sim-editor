@@ -34,9 +34,9 @@ Box::Box()
     _geode->addDrawable(shape.get());
 }
 
-std::unique_ptr<Component> Box::clone() const
+std::shared_ptr<Component> Box::clone() const
 {
-    std::unique_ptr<Box> box = std::make_unique<Box>();
+    std::shared_ptr<Box> box = std::make_shared<Box>();
     box->setName(getName());
     return box;
 }

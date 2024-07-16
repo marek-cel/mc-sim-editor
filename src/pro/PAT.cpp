@@ -29,9 +29,16 @@ PAT::PAT(osg::PositionAttitudeTransform* pat)
     setName("PAT");
 }
 
-std::unique_ptr<Component> PAT::clone() const
+std::shared_ptr<Component> PAT::clone() const
 {
-    std::unique_ptr<PAT> pat = std::make_unique<PAT>();
+    std::shared_ptr<PAT> pat = std::make_shared<PAT>();
+    pat->_px = _px;
+    pat->_py = _py;
+    pat->_pz = _pz;
+    pat->_ax = _ax;
+    pat->_ay = _ay;
+    pat->_az = _az;
+    pat->convention_ = convention_;
     pat->setName(getName());
     pat->cloneChildren(&_children);
     return pat;

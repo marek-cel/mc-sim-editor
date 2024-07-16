@@ -64,6 +64,7 @@ private:
 
     QAction* _action_rename = nullptr;
     QAction* _action_remove = nullptr;
+    QAction* _action_duplicate = nullptr;
 
     QAction* _action_move = nullptr;
 
@@ -78,6 +79,7 @@ private:
 
     void addComponent();
     void removeComponent();
+    void duplicateComponent();
 
     void moveComponent(std::shared_ptr<pro::Group> new_parent);
 
@@ -96,6 +98,8 @@ private slots:
 
     void actionRename_triggered();
     void actionRemove_triggered();
+
+    void actionDuplicate_triggered();
 
     void actionMove_triggered();
 

@@ -40,7 +40,7 @@ public:
 
     virtual bool canBeAnimated() const = 0;
     virtual bool canBeParent() const = 0;
-    virtual std::unique_ptr<Component> clone() const = 0;
+    virtual std::shared_ptr<Component> clone() const = 0;
     virtual const char* getTagName() const = 0;
 
     virtual Result read(const QDomElement* node);

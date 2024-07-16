@@ -34,9 +34,9 @@ File::File()
     setName("File");
 }
 
-std::unique_ptr<Component> File::clone() const
+std::shared_ptr<Component> File::clone() const
 {
-    std::unique_ptr<File> file = std::make_unique<File>();
+    std::shared_ptr<File> file = std::make_shared<File>();
     file->setName(getName());
     return file;
 }

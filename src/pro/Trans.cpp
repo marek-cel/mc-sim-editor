@@ -29,9 +29,9 @@ Trans::Trans(osg::MatrixTransform* mt)
     setName("Matrix Transform");
 }
 
-std::unique_ptr<Component> Trans::clone() const
+std::shared_ptr<Component> Trans::clone() const
 {
-    std::unique_ptr<Trans> mt = std::make_unique<Trans>();
+    std::shared_ptr<Trans> mt = std::make_shared<Trans>();
     mt->setName(getName());
     mt->cloneChildren(&_children);
     return mt;

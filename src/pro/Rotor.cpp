@@ -33,9 +33,9 @@ Rotor::Rotor()
     setName("Rotor");
 }
 
-std::unique_ptr<Component> Rotor::clone() const
+std::shared_ptr<Component> Rotor::clone() const
 {
-    std::unique_ptr<Rotor> rotor = std::make_unique<Rotor>();
+    std::shared_ptr<Rotor> rotor = std::make_shared<Rotor>();
     rotor->setName(getName());
     return rotor;
 }

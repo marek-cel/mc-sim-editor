@@ -34,7 +34,7 @@ public:
 
     Switch(osg::Switch* sw = nullptr);
 
-    std::unique_ptr<Component> clone() const override;
+    std::shared_ptr<Component> clone() const override;
 
     inline const char* getTagName() const override { return kTagName; }
 

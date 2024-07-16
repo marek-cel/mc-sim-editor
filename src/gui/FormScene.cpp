@@ -134,6 +134,35 @@ void FormScene::removeComponent()
     }
 }
 
+void FormScene::duplicateComponent()
+{
+    QModelIndex index = _ui->treeScene->currentIndex();
+    std::shared_ptr<pro::Component> comp = getComponentByIndex(index);
+
+    if ( comp )
+    {
+        if ( comp->getParent().expired() )
+        {
+            return;
+        }
+
+        std::shared_ptr<pro::Component> parent = comp->getParent().lock();
+
+        if ( parent )
+        {
+            std::shared_ptr<pro::Group> group = std::dynamic_pointer_cast<pro::Group>(parent);
+
+            if ( group )
+            {
+                std::shared_ptr<pro::Component> duplicate = comp->clone();
+                group->addChild(duplicate);
+                updateTreeWidgetScene();
+                emit(projectChanged());
+            }
+        }
+    }
+}
+
 void FormScene::moveComponent(std::shared_ptr<pro::Group> new_parent)
 {
     QModelIndex index = _ui->treeScene->currentIndex();
@@ -214,6 +243,10 @@ void FormScene::createSceneMenu()
     connect(_action_remove, SIGNAL(triggered()), this, SLOT(actionRemove_triggered()));
     _scene_menu->addAction(_action_rename);
     _scene_menu->addAction(_action_remove);
+
+    _action_duplicate = new QAction(tr("Duplicate"), this);
+    connect(_action_duplicate, SIGNAL(triggered()), this, SLOT(actionDuplicate_triggered()));
+    _scene_menu->addAction(_action_duplicate);
 
     _scene_menu->addSeparator();
     _action_move = new QAction(tr("Move"), this);
@@ -312,6 +345,11 @@ void FormScene::actionRemove_triggered()
     {
         removeComponent();
     }
+}
+
+void FormScene::actionDuplicate_triggered()
+{
+    duplicateComponent();
 }
 
 void FormScene::actionMove_triggered()

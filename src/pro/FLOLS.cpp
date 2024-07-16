@@ -35,9 +35,9 @@ FLOLS::FLOLS()
     create();
 }
 
-std::unique_ptr<Component> FLOLS::clone() const
+std::shared_ptr<Component> FLOLS::clone() const
 {
-    std::unique_ptr<FLOLS> rotor = std::make_unique<FLOLS>();
+    std::shared_ptr<FLOLS> rotor = std::make_shared<FLOLS>();
     rotor->setName(getName());
     return rotor;
 }

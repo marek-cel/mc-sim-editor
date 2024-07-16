@@ -32,9 +32,9 @@ Group::Group(osg::Group* group)
     setName("Group");
 }
 
-std::unique_ptr<Component> Group::clone() const
+std::shared_ptr<Component> Group::clone() const
 {
-    std::unique_ptr<Group> group = std::make_unique<Group>();
+    std::shared_ptr<Group> group = std::make_shared<Group>();
     group->setName(getName());
     group->cloneChildren(&_children);
     return group;
@@ -140,7 +140,7 @@ void Group::cloneChildren(const Children* children)
 {
     for ( auto child : *children )
     {
-        addChild(std::shared_ptr<Component>(child->clone()));
+        addChild(child->clone());
     }
 }
 

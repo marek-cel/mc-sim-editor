@@ -29,9 +29,9 @@ Switch::Switch(osg::Switch* pat)
     setName("Switch");
 }
 
-std::unique_ptr<Component> Switch::clone() const
+std::shared_ptr<Component> Switch::clone() const
 {
-    std::unique_ptr<Switch> sw = std::make_unique<Switch>();
+    std::shared_ptr<Switch> sw = std::make_shared<Switch>();
     sw->setName(getName());
     sw->cloneChildren(&_children);
     return sw;

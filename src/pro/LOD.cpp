@@ -40,9 +40,9 @@ Result LOD::addChild(std::shared_ptr<Component> child)
     return Result::Success;
 }
 
-std::unique_ptr<Component> LOD::clone() const
+std::shared_ptr<Component> LOD::clone() const
 {
-    std::unique_ptr<LOD> lod = std::make_unique<LOD>();
+    std::shared_ptr<LOD> lod = std::make_shared<LOD>();
     lod->setName(getName());
     lod->cloneChildren(&_children);
     return lod;
