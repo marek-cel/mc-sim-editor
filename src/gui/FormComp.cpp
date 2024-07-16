@@ -227,6 +227,10 @@ void FormComp::updateParametersPAT(std::shared_ptr<pro::Component> comp)
         Utils::setNoEmitValue(_ui->spinBoxAx, pat->ax());
         Utils::setNoEmitValue(_ui->spinBoxAy, pat->ay());
         Utils::setNoEmitValue(_ui->spinBoxAz, pat->az());
+
+        Utils::setNoEmitValue(_ui->spinBoxSx, pat->sx());
+        Utils::setNoEmitValue(_ui->spinBoxSy, pat->sy());
+        Utils::setNoEmitValue(_ui->spinBoxSz, pat->sz());
     }
 }
 
@@ -433,6 +437,45 @@ void FormComp::on_spinBoxAz_valueChanged(double arg1)
     if ( pat )
     {
         pat->setAz(arg1);
+        emit(projectChanged());
+    }
+}
+
+void FormComp::on_spinBoxSx_valueChanged(double arg1)
+{
+    if ( _comp.expired() ) return;
+
+    std::shared_ptr<pro::Component> comp = _comp.lock();
+    std::shared_ptr<pro::PAT> pat = std::dynamic_pointer_cast<pro::PAT>(comp);
+    if ( pat )
+    {
+        pat->setSx(arg1);
+        emit(projectChanged());
+    }
+}
+
+void FormComp::on_spinBoxSy_valueChanged(double arg1)
+{
+    if ( _comp.expired() ) return;
+
+    std::shared_ptr<pro::Component> comp = _comp.lock();
+    std::shared_ptr<pro::PAT> pat = std::dynamic_pointer_cast<pro::PAT>(comp);
+    if ( pat )
+    {
+        pat->setSy(arg1);
+        emit(projectChanged());
+    }
+}
+
+void FormComp::on_spinBoxSz_valueChanged(double arg1)
+{
+    if ( _comp.expired() ) return;
+
+    std::shared_ptr<pro::Component> comp = _comp.lock();
+    std::shared_ptr<pro::PAT> pat = std::dynamic_pointer_cast<pro::PAT>(comp);
+    if ( pat )
+    {
+        pat->setSz(arg1);
         emit(projectChanged());
     }
 }

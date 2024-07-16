@@ -52,6 +52,10 @@ public:
     void setAy(double ay);
     void setAz(double az);
 
+    void setSx(double sx);
+    void setSy(double sy);
+    void setSz(double sz);
+
     void setConvention(Convention convention);
 
     inline double px() const { return _px; }
@@ -61,6 +65,10 @@ public:
     inline double ax() const { return _ax; }
     inline double ay() const { return _ay; }
     inline double az() const { return _az; }
+
+    inline double sx() const { return _sx; }
+    inline double sy() const { return _sy; }
+    inline double sz() const { return _sz; }
 
     inline Convention convention() const { return convention_; }
 
@@ -75,6 +83,10 @@ protected:
     double _ax = 0.0;
     double _ay = 0.0;
     double _az = 0.0;
+
+    double _sx = 1.0;
+    double _sy = 1.0;
+    double _sz = 1.0;
 
     Convention convention_ = Convention::XYZ;
 
