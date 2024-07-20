@@ -47,6 +47,8 @@ public:
 
     ~FormScene();
 
+    std::shared_ptr<pro::Component> getMarkedComponent();
+
 public slots:
 
     void setProject(std::shared_ptr<pro::Project> proj);
@@ -65,9 +67,8 @@ private:
     QAction* _action_rename = nullptr;
     QAction* _action_remove = nullptr;
     QAction* _action_duplicate = nullptr;
-
+    QAction* _action_mark = nullptr;
     QAction* _action_move = nullptr;
-
     QAction* _action_anims_turn_on  = nullptr;
     QAction* _action_anims_turn_off = nullptr;
 
@@ -75,12 +76,14 @@ private:
 
     std::weak_ptr<pro::Project> _proj;
 
+    QModelIndex _marked_index;
+
     std::shared_ptr<pro::Component> getComponentByIndex(QModelIndex index);
 
     void addComponent();
     void removeComponent();
     void duplicateComponent();
-
+    void markComponent();
     void moveComponent(std::shared_ptr<pro::Group> new_parent);
 
     void addTreeWidgetSceneItem(pro::Component* comp, int index = 0,
@@ -98,11 +101,9 @@ private slots:
 
     void actionRename_triggered();
     void actionRemove_triggered();
-
     void actionDuplicate_triggered();
-
+    void actionMark_triggered();
     void actionMove_triggered();
-
     void actionAnimsOn_triggered();
     void actionAnimsOff_triggered();
 

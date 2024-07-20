@@ -7,6 +7,7 @@ HEADERS += \
     $$PWD/Geometry.h \
     $$PWD/Grid.h \
     $$PWD/HUD.h \
+    $$PWD/Intersections.h \
     $$PWD/Manager.h \
     $$PWD/ManipulatorOrbit.h \
     $$PWD/ManipulatorTrack.h \
@@ -22,6 +23,7 @@ SOURCES += \
     $$PWD/Geometry.cpp \
     $$PWD/Grid.cpp \
     $$PWD/HUD.cpp \
+    $$PWD/Intersections.cpp \
     $$PWD/Manager.cpp \
     $$PWD/ManipulatorOrbit.cpp \
     $$PWD/ManipulatorTrack.cpp \

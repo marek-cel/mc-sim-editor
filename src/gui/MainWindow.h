@@ -60,7 +60,7 @@ signals:
 protected:
 
     void closeEvent(QCloseEvent* event) override;
-
+    void mousePressEvent(QMouseEvent* event) override;
     void timerEvent(QTimerEvent* event) override;
 
 private:

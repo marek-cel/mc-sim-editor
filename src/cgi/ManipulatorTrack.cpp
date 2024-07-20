@@ -22,10 +22,22 @@
 namespace mc {
 namespace cgi {
 
-ManipulatorTrack::ManipulatorTrack()
+ManipulatorTrack::ManipulatorTrack(std::weak_ptr<Intersections> intersections)
     : osgGA::TrackballManipulator()
+    , _intersections(intersections)
 {
     setWheelZoomFactor(-getWheelZoomFactor());
+}
+
+bool ManipulatorTrack::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us)
+{
+    if ( !_intersections.expired() )
+    {
+        std::shared_ptr<Intersections> isect = _intersections.lock();
+        isect->handle(ea, us);
+    }
+
+    return osgGA::TrackballManipulator::handle(ea, us);
 }
 
 bool ManipulatorTrack::handleFrame(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us)

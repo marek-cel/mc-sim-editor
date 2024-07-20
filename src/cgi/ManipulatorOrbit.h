@@ -19,17 +19,20 @@
 #ifndef MC_SIM_EDITOR_CGI_MANIPULATORORBIT_H_
 #define MC_SIM_EDITOR_CGI_MANIPULATORORBIT_H_
 
+#include <memory>
 #include <osgGA/NodeTrackerManipulator>
+#include <cgi/Intersections.h>
 
 namespace mc {
 namespace cgi {
 
-/** */
 class ManipulatorOrbit : public osgGA::NodeTrackerManipulator
 {
 public:
 
-    ManipulatorOrbit();
+    ManipulatorOrbit(std::weak_ptr<Intersections> intersections);
+
+    bool handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us) override;
 
 protected:
 
@@ -39,6 +42,8 @@ protected:
                                          const double dy);
 
 private:
+
+    std::weak_ptr<Intersections> _intersections;
 
     void boundDistance();
 };

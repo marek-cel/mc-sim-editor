@@ -24,6 +24,7 @@
 
 #include <cgi/CGI.h>
 #include <cgi/HUD.h>
+#include <cgi/Intersections.h>
 
 namespace mc {
 
@@ -75,6 +76,8 @@ private:
 
     std::shared_ptr<CGI> _cgi;
     std::shared_ptr<HUD> _hud;
+
+    std::shared_ptr<Intersections> _intersections;
 
     osg::ref_ptr<osgGA::CameraManipulator> _manipulator;    ///< current manipulator
 

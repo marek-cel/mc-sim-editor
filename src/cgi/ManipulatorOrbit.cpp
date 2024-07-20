@@ -22,12 +22,24 @@
 namespace mc {
 namespace cgi {
 
-ManipulatorOrbit::ManipulatorOrbit()
+ManipulatorOrbit::ManipulatorOrbit(std::weak_ptr<Intersections> intersections)
     : osgGA::NodeTrackerManipulator()
+    , _intersections(intersections)
 {
     setTrackerMode(NODE_CENTER);
 
     setWheelZoomFactor(-getWheelZoomFactor());
+}
+
+bool ManipulatorOrbit::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us)
+{
+    if ( !_intersections.expired() )
+    {
+        std::shared_ptr<Intersections> isect = _intersections.lock();
+        isect->handle(ea, us);
+    }
+
+    return osgGA::NodeTrackerManipulator::handle(ea, us);
 }
 
 bool ManipulatorOrbit::handleFrame(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& us)

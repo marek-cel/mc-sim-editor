@@ -44,6 +44,11 @@ FormScene::~FormScene()
     if ( _ui ) { delete _ui; } _ui = nullptr;
 }
 
+std::shared_ptr<pro::Component> FormScene::getMarkedComponent()
+{
+    return getComponentByIndex(_marked_index);
+}
+
 void FormScene::setProject(std::shared_ptr<pro::Project> proj)
 {
     _proj = proj;
@@ -163,6 +168,11 @@ void FormScene::duplicateComponent()
     }
 }
 
+void FormScene::markComponent()
+{
+    _marked_index = _ui->treeScene->currentIndex();
+}
+
 void FormScene::moveComponent(std::shared_ptr<pro::Group> new_parent)
 {
     QModelIndex index = _ui->treeScene->currentIndex();
@@ -247,6 +257,10 @@ void FormScene::createSceneMenu()
     _action_duplicate = new QAction(tr("Duplicate"), this);
     connect(_action_duplicate, SIGNAL(triggered()), this, SLOT(actionDuplicate_triggered()));
     _scene_menu->addAction(_action_duplicate);
+
+    _action_mark = new QAction(tr("Mark for multiply"), this);
+    connect(_action_mark, SIGNAL(triggered()), this, SLOT(actionMark_triggered()));
+    _scene_menu->addAction(_action_mark);
 
     _scene_menu->addSeparator();
     _action_move = new QAction(tr("Move"), this);
@@ -350,6 +364,11 @@ void FormScene::actionRemove_triggered()
 void FormScene::actionDuplicate_triggered()
 {
     duplicateComponent();
+}
+
+void FormScene::actionMark_triggered()
+{
+    markComponent();
 }
 
 void FormScene::actionMove_triggered()

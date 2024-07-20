@@ -24,6 +24,8 @@
 #include <osgViewer/Viewer>
 #include <osgViewer/ViewerEventHandlers>
 
+#include <QDebug>
+
 #include <cgi/Model.h>
 
 namespace mc {
@@ -164,6 +166,15 @@ void WidgetCGI::setCameraManipulatorTrack()
 {
     _manager_cgi->setCameraManipulatorTrack();
     getOsgViewer()->setCameraManipulator(_manager_cgi->getCameraManipulator());
+}
+
+void WidgetCGI::mousePressEvent(QMouseEvent* event)
+{
+    ////////////////////////////////
+    QWidget::mousePressEvent(event);
+    ////////////////////////////////
+
+    qDebug() << "pressed";
 }
 
 void WidgetCGI::resizeEvent(QResizeEvent* event)

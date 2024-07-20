@@ -20,6 +20,7 @@
 #include <gui/MainWindow.h>
 #include <ui_MainWindow.h>
 
+#include <QDebug>
 #include <QFileDialog>
 #include <QMessageBox>
 
@@ -85,6 +86,15 @@ void MainWindow::closeEvent(QCloseEvent* event)
     ///////////////////////////////
     QMainWindow::closeEvent(event);
     ///////////////////////////////
+}
+
+void MainWindow::mousePressEvent(QMouseEvent* event)
+{
+    ////////////////////////////////////
+    QMainWindow::mousePressEvent(event);
+    ////////////////////////////////////
+
+    qDebug() << "pressed";
 }
 
 void MainWindow::timerEvent(QTimerEvent* event)

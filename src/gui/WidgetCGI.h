@@ -58,6 +58,7 @@ public slots:
 
 protected:
 
+    void mousePressEvent(QMouseEvent* event) override;
     void resizeEvent(QResizeEvent* event) override;
     void timerEvent(QTimerEvent* event) override;
 

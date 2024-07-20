@@ -35,8 +35,10 @@ Manager::Manager()
     Builder::buildCGI(_data, _cgi);
     Builder::buildHUD(_data, _hud);
 
-    _manipulatorOrbit = new ManipulatorOrbit();
-    _manipulatorTrack = new ManipulatorTrack();
+    _intersections = std::make_shared<Intersections>(_cgi->root());
+
+    _manipulatorOrbit = new ManipulatorOrbit(_intersections);
+    _manipulatorTrack = new ManipulatorTrack(_intersections);
 
     _manipulator = _manipulatorTrack;
 }
