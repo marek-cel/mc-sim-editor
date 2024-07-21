@@ -38,6 +38,9 @@ std::shared_ptr<Component> File::clone() const
 {
     std::shared_ptr<File> file = std::make_shared<File>();
     file->setName(getName());
+    file->setFile(getFile());
+    file->_depth_sorted_bin_value = _depth_sorted_bin_value;
+    file->_depth_sorted_bin_state = _depth_sorted_bin_state;
     return file;
 }
 

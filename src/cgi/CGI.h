@@ -19,6 +19,8 @@
 #ifndef MC_SIM_EDITOR_CGI_CGI_H_
 #define MC_SIM_EDITOR_CGI_CGI_H_
 
+#include <osg/Switch>
+
 #include <cgi/Component.h>
 
 namespace mc {
@@ -31,6 +33,12 @@ public:
 
     /** */
     CGI(std::shared_ptr<Data> data);
+
+private:
+
+    osg::ref_ptr<osg::Switch> _lightSwitch;
+
+    void createLight();
 };
 
 } // namespace cgi

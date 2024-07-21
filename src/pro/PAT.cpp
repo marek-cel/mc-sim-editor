@@ -38,6 +38,9 @@ std::shared_ptr<Component> PAT::clone() const
     pat->_ax = _ax;
     pat->_ay = _ay;
     pat->_az = _az;
+    pat->_sx = _sx;
+    pat->_sy = _sy;
+    pat->_sz = _sz;
     pat->convention_ = convention_;
     pat->setName(getName());
     pat->cloneChildren(&_children);
